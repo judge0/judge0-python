@@ -1,4 +1,5 @@
 from typing import Optional, Union
+from collections.abc import Iterable
 
 from .clients import Client
 from .common import Flavor
@@ -7,6 +8,7 @@ from .submission import Submission
 
 
 def resolve_client(
+    *,
     client: Optional[Union[Client, Flavor]] = None,
     submissions: Optional[Union[Submission, list[Submission]]] = None,
 ) -> Union[Client, None]:
@@ -19,6 +21,9 @@ def resolve_client(
     # User explicitly choose the flavor of the client.
     if isinstance(client, Flavor):
         return _get_implicit_client(flavor=client)
+
+    if client is None and isinstance(submissions, list) and len(submissions) == 0:
+        raise ValueError("Client cannot be determined from empty submissions.")
 
     # client is None and we have to determine a flavor of the client from the
     # submissions and the languages.
@@ -42,12 +47,102 @@ def resolve_client(
     )
 
 
-def wait(
-    client: Client,
-    submissions: Union[Submission, list[Submission]],
+def create_submissions(
     *,
+    client: Optional[Union[Client, Flavor]] = None,
+    submissions: Union[Submission, list[Submission]] = None,
+) -> Union[Submission, list[Submission]]:
+    client = resolve_client(client=client, submissions=submissions)
+
+    MAX_SUBMISSION_BATCH_SIZE = (
+        20  # TODO: move to client.config.MAX_SUBMISSION_BATCH_SIZE
+    )
+    ENABLE_BATCHED_SUBMISSIONS = (
+        True  # TODO: Move to client.config.ENABLE_BATCHED_SUBMISSIONS
+    )
+    actual_batch_size = (
+        MAX_SUBMISSION_BATCH_SIZE if ENABLE_BATCHED_SUBMISSIONS else 1
+    )  # TODO: Move to client.config.BATCH_SIZE which should be calculated field
+
+    if isinstance(submissions, (list, tuple)):
+        if len(submissions) == 0:
+            return submissions
+        elif len(submissions) == 1:
+            return [client.create_submission(submissions[0])]
+        else:
+            if actual_batch_size > 1:
+                submissions_left = client.create_submissions(
+                    submissions=submissions[:actual_batch_size]
+                )
+            else:
+                submissions_left = client.create_submission(submissions[0])
+
+            if not isinstance(submissions_left, list):
+                submissions_left = [submissions_left]
+
+            submissions_right = create_submissions(
+                client=client, submissions=submissions[actual_batch_size:]
+            )
+            if not isinstance(submissions_right, list):
+                submissions_right = [submissions_right]
+
+            return [*submissions_left, *submissions_right]
+    else:
+        return client.create_submission(submissions)
+
+
+def get_submissions(
+    *,
+    client: Optional[Union[Client, Flavor]] = None,
+    submissions: Union[Submission, list[Submission]] = None,
+) -> Union[Submission, list[Submission]]:
+    client = resolve_client(client=client, submissions=submissions)
+
+    MAX_SUBMISSION_BATCH_SIZE = (
+        20  # TODO: move to client.config.MAX_SUBMISSION_BATCH_SIZE
+    )
+    ENABLE_BATCHED_SUBMISSIONS = (
+        True  # TODO: Move to client.config.ENABLE_BATCHED_SUBMISSIONS
+    )
+    actual_batch_size = (
+        MAX_SUBMISSION_BATCH_SIZE if ENABLE_BATCHED_SUBMISSIONS else 1
+    )  # TODO: Move to client.config.BATCH_SIZE which should be calculated field
+
+    if isinstance(submissions, (list, tuple)):
+        if len(submissions) == 0:
+            return submissions
+        elif len(submissions) == 1:
+            return [client.get_submission(submissions[0])]
+        else:
+            if actual_batch_size > 1:
+                submissions_left = client.get_submissions(
+                    submissions=submissions[:actual_batch_size]
+                )
+            else:
+                submissions_left = client.get_submission(submissions[0])
+
+            if not isinstance(submissions_left, list):
+                submissions_left = [submissions_left]
+
+            submissions_right = get_submissions(
+                client=client, submissions=submissions[actual_batch_size:]
+            )
+            if not isinstance(submissions_right, list):
+                submissions_right = [submissions_right]
+
+            return [*submissions_left, *submissions_right]
+    else:
+        return client.get_submission(submissions)
+
+
+def wait(
+    *,
+    client: Optional[Union[Client, Flavor]] = None,
+    submissions: Union[Submission, list[Submission]] = None,
     retry_mechanism: Optional[RetryMechanism] = None,
 ) -> Union[Submission, list[Submission]]:
+    client = resolve_client(client=client, submissions=submissions)
+
     if retry_mechanism is None:
         retry_mechanism = RegularPeriodRetry()
 
@@ -61,15 +156,8 @@ def wait(
         }
 
     while len(submissions_to_check) > 0 and not retry_mechanism.is_done():
-        # We differentiate between getting a single submission and multiple
-        # submissions to be consistent with the API, even though the API
-        # allows to get single submission with the same endpoint as for getting
-        # the multiple submissions.
-        if len(submissions_to_check) == 1:
-            client.get_submission(*submissions_to_check.values())
-        else:
-            client.get_submissions(submissions_to_check.values())
-
+        # TODO: list should not be needed if use collections.abc.Iterable for isinstance check.
+        get_submissions(client=client, submissions=list(submissions_to_check.values()))
         for token in list(submissions_to_check):
             submission = submissions_to_check[token]
             if submission.is_done():
@@ -104,24 +192,11 @@ def _execute(
     if source_code is not None:
         submissions = Submission(source_code=source_code, **kwargs)
 
-    # TODO: Since kwargs is ignored if submissions argument is provided, maybe
-    # use warnings if submission and kwargs are provided?
-
-    # There is no need to check for other cases since we are explicitly
-    # checking for submissions and source_code arguments.
-    if client is None:
-        if isinstance(submissions, list) and len(submissions) == 0:
-            raise ValueError("Client cannot be determined from empty submissions.")
-
-    client = resolve_client(client, submissions=submissions)
-
-    if isinstance(submissions, (list, tuple)):
-        submissions = client.create_submissions(submissions)
-    else:
-        submissions = client.create_submission(submissions)
+    client = resolve_client(client=client, submissions=submissions)
+    submissions = create_submissions(client=client, submissions=submissions)
 
     if wait_for_result:
-        return wait(client, submissions)
+        return wait(client=client, submissions=submissions)
     else:
         return submissions
 
