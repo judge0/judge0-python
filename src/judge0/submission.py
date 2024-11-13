@@ -1,4 +1,5 @@
 from typing import Union
+import copy
 
 from .common import decode, encode, Language, Status
 
@@ -153,3 +154,6 @@ class Submission:
         else:
             # TODO: When status is changed to `Status`, refactor this as well.
             return self.status["id"] not in (Status.IN_QUEUE, Status.PROCESSING)
+
+    def copy(self) -> "Submission":
+        return copy.deepcopy(self)

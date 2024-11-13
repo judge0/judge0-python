@@ -5,6 +5,8 @@ from .common import Flavor
 from .retry import RegularPeriodRetry, RetryMechanism
 from .submission import Submission
 
+TestCase = tuple[Optional[str], Optional[str]]  # TODO: Use NamedTuple or dataclass
+
 
 def resolve_client(
     client: Optional[Union[Client, Flavor]] = None,
@@ -85,12 +87,21 @@ def wait(
     return submissions
 
 
+# TODO: Type of return value should follow the table below.
+# | submissions      | test_cases     | return           |
+# |------------------|----------------|------------------|
+# | Submission       | TestCase       | Submission       |
+# | Submission       | list[TestCase] | list[Submission] |
+# | list[Submission] | TestCase       | list[Submission] |
+# | list[Submission] | list[TestCase] | list[Submission] |
+# TODO: We should write tests for this table.
 def _execute(
     *,
     client: Optional[Union[Client, Flavor]] = None,
     submissions: Optional[Union[Submission, list[Submission]]] = None,
     source_code: Optional[str] = None,
     wait_for_result: bool = False,
+    test_cases: Optional[Union[TestCase, list[TestCase]]] = None,
     **kwargs,
 ) -> Union[Submission, list[Submission]]:
     if submissions is not None and source_code is not None:
@@ -115,15 +126,50 @@ def _execute(
 
     client = resolve_client(client, submissions=submissions)
 
-    if isinstance(submissions, (list, tuple)):
-        submissions = client.create_submissions(submissions)
+    test_cases_list = []
+    if isinstance(test_cases, list):
+        test_cases_list = test_cases
+        if len(test_cases_list) == 0:
+            test_cases_list = [None]
     else:
-        submissions = client.create_submission(submissions)
+        test_cases_list = [test_cases]
+
+    submissions_list = []
+    if isinstance(submissions, Submission):
+        submissions_list = [submissions]
+    else:
+        submissions_list = submissions
+
+    result_submissions = []
+    for submission in submissions_list:
+        for test_case in test_cases_list:
+            submission_copy = submission.copy()
+            if test_case is not None:
+                if len(test_case) > 0:
+                    submission_copy.stdin = test_case[0]
+
+                if len(test_case) > 1:
+                    submission_copy.expected_output = test_case[1]
+            result_submissions.append(submission_copy)
+
+    # We differentiate between creating a single submission and multiple
+    # submissions to be consistent with the API, even though the API
+    # allows to create single submission with the same endpoint as for
+    # creating the multiple submissions.
+    if isinstance(result_submissions, Submission):
+        result_submissions = client.create_submission(result_submissions)
+    elif len(result_submissions) == 1:
+        result_submissions = [client.create_submission(result_submissions[0])]
+    else:
+        result_submissions = client.create_submissions(result_submissions)
 
     if wait_for_result:
-        return wait(client, submissions)
+        result_submissions = wait(client, result_submissions)
+
+    if isinstance(submissions, Submission) and not isinstance(test_cases, list):
+        return result_submissions[0]
     else:
-        return submissions
+        return result_submissions
 
 
 def async_execute(
@@ -131,6 +177,7 @@ def async_execute(
     client: Optional[Union[Client, Flavor]] = None,
     submissions: Optional[Union[Submission, list[Submission]]] = None,
     source_code: Optional[str] = None,
+    test_cases: Optional[Union[TestCase, list[TestCase]]] = None,
     **kwargs,
 ) -> Union[Submission, list[Submission]]:
     return _execute(
@@ -138,6 +185,7 @@ def async_execute(
         submissions=submissions,
         source_code=source_code,
         wait_for_result=False,
+        test_cases=test_cases,
         **kwargs,
     )
 
@@ -147,6 +195,7 @@ def sync_execute(
     client: Optional[Union[Client, Flavor]] = None,
     submissions: Optional[Union[Submission, list[Submission]]] = None,
     source_code: Optional[str] = None,
+    test_cases: Optional[Union[TestCase, list[TestCase]]] = None,
     **kwargs,
 ) -> Union[Submission, list[Submission]]:
     return _execute(
@@ -154,10 +203,13 @@ def sync_execute(
         submissions=submissions,
         source_code=source_code,
         wait_for_result=True,
+        test_cases=test_cases,
         **kwargs,
     )
 
 
 execute = sync_execute
-run = execute
+
+run = sync_execute
+sync_run = sync_execute
 async_run = async_execute
