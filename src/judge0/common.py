@@ -1,6 +1,8 @@
 from base64 import b64decode, b64encode
 from enum import IntEnum
 
+from typing import Union, Optional, Any
+
 
 class Language(IntEnum):
     PYTHON = 0
@@ -33,9 +35,21 @@ class Status(IntEnum):
     EXEC_FORMAT_ERROR = 14
 
 
-def encode(text: str) -> str:
-    return b64encode(bytes(text, "utf-8")).decode()
+def encode(content: Any) -> Optional[str]:
+    if isinstance(content, str):
+        return b64encode(bytes(content, "utf-8")).decode()
+    if isinstance(content, bytes):
+        return b64encode(content).decode()
+    if hasattr(content, "encode"):
+        return b64encode(content.encode()).decode()
+    return None
 
 
-def decode(b64_encoded_str: str) -> str:
-    return b64decode(b64_encoded_str.encode()).decode(errors="backslashreplace")
+def decode(content: Any) -> Optional[str]:
+    if isinstance(content, str):
+        return b64decode(content.encode()).decode(errors="backslashreplace")
+    if isinstance(content, bytes):
+        return b64decode(content.decode(errors="backslashreplace")).decode(
+            errors="backslashreplace"
+        )
+    return None

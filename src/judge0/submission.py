@@ -3,42 +3,42 @@ from typing import Union
 from .common import decode, encode, Language, Status
 
 ENCODED_REQUEST_FIELDS = {
-    "source_code",
     "additional_files",
-    "stdin",
     "expected_output",
+    "source_code",
+    "stdin",
 }
 ENCODED_RESPONSE_FIELDS = {"stdout", "stderr", "compile_output"}
 ENCODED_FIELDS = ENCODED_REQUEST_FIELDS | ENCODED_RESPONSE_FIELDS
 EXTRA_REQUEST_FIELDS = {
-    "compiler_options",
-    "command_line_arguments",
-    "cpu_time_limit",
-    "cpu_extra_time",
-    "wall_time_limit",
-    "memory_limit",
-    "stack_limit",
-    "max_processes_and_or_threads",
-    "enable_per_process_and_thread_time_limit",
-    "enable_per_process_and_thread_memory_limit",
-    "max_file_size",
-    "redirect_stderr_to_stdout",
-    "enable_network",
-    "number_of_runs",
     "callback_url",
+    "command_line_arguments",
+    "compiler_options",
+    "cpu_extra_time",
+    "cpu_time_limit",
+    "enable_network",
+    "enable_per_process_and_thread_memory_limit",
+    "enable_per_process_and_thread_time_limit",
+    "max_file_size",
+    "max_processes_and_or_threads",
+    "memory_limit",
+    "number_of_runs",
+    "redirect_stderr_to_stdout",
+    "stack_limit",
+    "wall_time_limit",
 }
 EXTRA_RESPONSE_FIELDS = {
-    "message",
+    "created_at",
     "exit_code",
     "exit_signal",
-    "status",
-    "created_at",
     "finished_at",
-    "token",
-    "time",
-    "wall_time",
     "memory",
+    "message",
     "post_execution_filesystem",
+    "status",
+    "time",
+    "token",
+    "wall_time",
 }
 REQUEST_FIELDS = ENCODED_REQUEST_FIELDS | EXTRA_REQUEST_FIELDS
 RESPONSE_FIELDS = ENCODED_RESPONSE_FIELDS | EXTRA_RESPONSE_FIELDS
@@ -135,10 +135,10 @@ class Submission:
             "language_id": self.language_id,
         }
 
-        if self.stdin is not None:
-            body["stdin"] = encode(self.stdin)
-        if self.expected_output is not None:
-            body["expected_output"] = encode(self.expected_output)
+        for field in ENCODED_REQUEST_FIELDS:
+            value = getattr(self, field)
+            if value is not None:
+                body[field] = encode(value)
 
         for field in EXTRA_REQUEST_FIELDS:
             value = getattr(self, field)
