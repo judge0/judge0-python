@@ -1,7 +1,7 @@
 [project]
 name = "judge0"
-version = "0.0.3"
-description = "The official Python library for Judge0."
+version = "0.0.4-dev"
+description = "The official Python SDK for Judge0."
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [{ name = "Judge0", email = "contact@judge0.com" }]
