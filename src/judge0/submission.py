@@ -126,7 +126,7 @@ class Submission(BaseModel):
         URL for a callback to report execution results or status.
     """
 
-    source_code: Optional[str] = Field(default=None, repr=True)
+    source_code: Optional[Union[str, bytes]] = Field(default=None, repr=True)
     language: Union[LanguageAlias, int] = Field(
         default=LanguageAlias.PYTHON,
         repr=True,
