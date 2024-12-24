@@ -4,6 +4,9 @@ on:
   push:
     branches: ["master"]
     paths: ["src/**", "tests/**"]
+  pull_request:
+    branches: ["master"]
+    paths: ["src/**", "tests/**"]
 
 permissions:
   contents: read
