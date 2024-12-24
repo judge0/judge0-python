@@ -208,7 +208,7 @@ class Submission(BaseModel):
             return value
 
     def set_attributes(self, attributes: dict[str, Any]) -> None:
-        """Set Submissions attributes while taking into account different
+        """Set submissions attributes while taking into account different
         attribute's types.
 
         Parameters
@@ -236,7 +236,7 @@ class Submission(BaseModel):
 
     def as_body(self, client: "Client") -> dict:
         """Prepare Submission as a dictionary while taking into account
-        the `client`'s restrictions.
+        the client's restrictions.
         """
         body = {
             "source_code": encode(self.source_code),

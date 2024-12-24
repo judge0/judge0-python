@@ -188,6 +188,11 @@ def wait(
     retry_strategy : RetryStrategy, optional
         A retry strategy.
 
+    Returns
+    -------
+    Submission or Submissions
+        A single submission or a list of submissions.
+
     Raises
     ------
     ClientResolutionError
