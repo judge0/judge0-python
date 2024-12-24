@@ -113,11 +113,8 @@ def _get_implicit_client(flavor: Flavor) -> Client:
 CE = Flavor.CE
 EXTRA_CE = Flavor.EXTRA_CE
 
-# TODO: Let's use getattr and setattr for this language ALIASES and raise an
-# exception if a value already exists.
-PYTHON = LanguageAlias.PYTHON
-CPP = LanguageAlias.CPP
-JAVA = LanguageAlias.JAVA
-CPP_GCC = LanguageAlias.CPP_GCC
-CPP_CLANG = LanguageAlias.CPP_CLANG
-PYTHON_FOR_ML = LanguageAlias.PYTHON_FOR_ML
+for lang in LanguageAlias:
+    if lang.name in globals():
+        raise ValueError(f"Language alias {lang.name} already exists in globals.")
+    globals()[lang.name] = lang
+    __all__.append(lang.name)
