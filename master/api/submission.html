@@ -103,7 +103,6 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">&lt;no title&gt;</a>
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Submission Module</span>
 </nav>
 <div id="content" role="main">
@@ -155,7 +154,7 @@ configuration.</p></li>
 <dt class="sig sig-object py" id="judge0.submission.Submission.as_body">
 <span class="sig-name descname"><span class="pre">as_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.submission.Submission.as_body" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.as_body'">¶</a></dt>
 <dd><p>Prepare Submission as a dictionary while taking into account
-the <cite>client</cite>’s restrictions.</p>
+the client’s restrictions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
@@ -187,7 +186,7 @@ IN_QUEUE and not PROCESSING.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="judge0.submission.Submission.set_attributes">
 <span class="sig-name descname"><span class="pre">set_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.submission.Submission.set_attributes" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.set_attributes'">¶</a></dt>
-<dd><p>Set Submissions attributes while taking into account different
+<dd><p>Set submissions attributes while taking into account different
 attribute’s types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -199,106 +198,6 @@ value.</p>
 </dd>
 </dl>
 </dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.submission.Submission.process_encoded_fields">
-<span class="sig-name descname"><span class="pre">process_encoded_fields</span></span><a class="headerlink" href="#judge0.submission.Submission.process_encoded_fields" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.process_encoded_fields'">¶</a></dt>
-<dd><p>classmethod(function) -&gt; method</p>
-<p>Convert a function to be a class method.</p>
-<p>A class method receives the class as implicit first argument,
-just like an instance method receives the instance.
-To declare a class method, use this idiom:</p>
-<blockquote>
-<div><dl>
-<dt>class C:</dt><dd><p>@classmethod
-def f(cls, arg1, arg2, …):</p>
-<blockquote>
-<div><p>…</p>
-</div></blockquote>
-</dd>
-</dl>
-</div></blockquote>
-<p>It can be called either on the class (e.g. C.f()) or on an instance
-(e.g. C().f()).  The instance is ignored except for its class.
-If a class method is called for a derived class, the derived class
-object is passed as the implied first argument.</p>
-<p>Class methods are different than C++ or Java static methods.
-If you want those, see the staticmethod builtin.</p>
-</dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.submission.Submission.process_language">
-<span class="sig-name descname"><span class="pre">process_language</span></span><a class="headerlink" href="#judge0.submission.Submission.process_language" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.process_language'">¶</a></dt>
-<dd><p>classmethod(function) -&gt; method</p>
-<p>Convert a function to be a class method.</p>
-<p>A class method receives the class as implicit first argument,
-just like an instance method receives the instance.
-To declare a class method, use this idiom:</p>
-<blockquote>
-<div><dl>
-<dt>class C:</dt><dd><p>@classmethod
-def f(cls, arg1, arg2, …):</p>
-<blockquote>
-<div><p>…</p>
-</div></blockquote>
-</dd>
-</dl>
-</div></blockquote>
-<p>It can be called either on the class (e.g. C.f()) or on an instance
-(e.g. C().f()).  The instance is ignored except for its class.
-If a class method is called for a derived class, the derived class
-object is passed as the implied first argument.</p>
-<p>Class methods are different than C++ or Java static methods.
-If you want those, see the staticmethod builtin.</p>
-</dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.submission.Submission.process_post_execution_filesystem">
-<span class="sig-name descname"><span class="pre">process_post_execution_filesystem</span></span><a class="headerlink" href="#judge0.submission.Submission.process_post_execution_filesystem" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.process_post_execution_filesystem'">¶</a></dt>
-<dd><p>classmethod(function) -&gt; method</p>
-<p>Convert a function to be a class method.</p>
-<p>A class method receives the class as implicit first argument,
-just like an instance method receives the instance.
-To declare a class method, use this idiom:</p>
-<blockquote>
-<div><dl>
-<dt>class C:</dt><dd><p>@classmethod
-def f(cls, arg1, arg2, …):</p>
-<blockquote>
-<div><p>…</p>
-</div></blockquote>
-</dd>
-</dl>
-</div></blockquote>
-<p>It can be called either on the class (e.g. C.f()) or on an instance
-(e.g. C().f()).  The instance is ignored except for its class.
-If a class method is called for a derived class, the derived class
-object is passed as the implied first argument.</p>
-<p>Class methods are different than C++ or Java static methods.
-If you want those, see the staticmethod builtin.</p>
-</dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.submission.Submission.process_status">
-<span class="sig-name descname"><span class="pre">process_status</span></span><a class="headerlink" href="#judge0.submission.Submission.process_status" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.process_status'">¶</a></dt>
-<dd><p>classmethod(function) -&gt; method</p>
-<p>Convert a function to be a class method.</p>
-<p>A class method receives the class as implicit first argument,
-just like an instance method receives the instance.
-To declare a class method, use this idiom:</p>
-<blockquote>
-<div><dl>
-<dt>class C:</dt><dd><p>@classmethod
-def f(cls, arg1, arg2, …):</p>
-<blockquote>
-<div><p>…</p>
-</div></blockquote>
-</dd>
-</dl>
-</div></blockquote>
-<p>It can be called either on the class (e.g. C.f()) or on an instance
-(e.g. C().f()).  The instance is ignored except for its class.
-If a class method is called for a derived class, the derived class
-object is passed as the implied first argument.</p>
-<p>Class methods are different than C++ or Java static methods.
-If you want those, see the staticmethod builtin.</p>
-</dd></dl>
 </dd></dl>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -309,10 +208,6 @@ If you want those, see the staticmethod builtin.</p>
 <li><a :data-current="activeSection === '#judge0.submission.Submission.is_done'" class="reference internal" href="#judge0.submission.Submission.is_done"><code class="docutils literal notranslate"><span class="pre">Submission.is_done()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.submission.Submission.pre_execution_copy'" class="reference internal" href="#judge0.submission.Submission.pre_execution_copy"><code class="docutils literal notranslate"><span class="pre">Submission.pre_execution_copy()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.submission.Submission.set_attributes'" class="reference internal" href="#judge0.submission.Submission.set_attributes"><code class="docutils literal notranslate"><span class="pre">Submission.set_attributes()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.submission.Submission.process_encoded_fields'" class="reference internal" href="#judge0.submission.Submission.process_encoded_fields"><code class="docutils literal notranslate"><span class="pre">Submission.process_encoded_fields</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.submission.Submission.process_language'" class="reference internal" href="#judge0.submission.Submission.process_language"><code class="docutils literal notranslate"><span class="pre">Submission.process_language</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.submission.Submission.process_post_execution_filesystem'" class="reference internal" href="#judge0.submission.Submission.process_post_execution_filesystem"><code class="docutils literal notranslate"><span class="pre">Submission.process_post_execution_filesystem</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.submission.Submission.process_status'" class="reference internal" href="#judge0.submission.Submission.process_status"><code class="docutils literal notranslate"><span class="pre">Submission.process_status</span></code></a></li>
 </ul>
 </li>
 </ul>

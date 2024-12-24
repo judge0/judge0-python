@@ -103,365 +103,35 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">&lt;no title&gt;</a>
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Clients Module</span>
 </nav>
 <div id="content" role="main">
-<section id="module-judge0.clients">
-<span id="clients-module"></span><h1>Clients Module<a class="headerlink" href="#module-judge0.clients" title="Link to this heading">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="judge0.clients.ATD">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">ATD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host_header_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATD" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATD'">¶</a></dt>
-<dd><p>Base class for all AllThingsDev clients.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATD.API_KEY_ENV">
-<span class="sig-name descname"><span class="pre">API_KEY_ENV</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'JUDGE0_ATD_API_KEY'</span></em><a class="headerlink" href="#judge0.clients.ATD.API_KEY_ENV" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATD.API_KEY_ENV'">¶</a></dt>
-<dd></dd></dl>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">ATDJudge0CE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE'">¶</a></dt>
-<dd><p>AllThingsDev client for CE flavor.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.create_submission">
-<span class="sig-name descname"><span class="pre">create_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.create_submission" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.create_submission'">¶</a></dt>
-<dd><p>Send submission for execution to a client.</p>
-<p>Directly send a submission to create_submission route for execution.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>submission</strong> (<a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><em>Submission</em></a>) – A submission to create.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A submission with updated token attribute.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission">Submission</a></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.create_submissions">
-<span class="sig-name descname"><span class="pre">create_submissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submissions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.create_submissions" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.create_submissions'">¶</a></dt>
-<dd><p>Send submissions for execution to a client.</p>
-<p>Directly send submissions to create_submissions route for execution.
-Cannot handle more submissions than the client supports.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>submissions</strong> (<em>Submissions</em>) – A sequence of submissions to create.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A sequence of submissions with updated token attribute.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Submissions</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.get_about">
-<span class="sig-name descname"><span class="pre">get_about</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.get_about" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.get_about'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.get_config_info">
-<span class="sig-name descname"><span class="pre">get_config_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.get_config_info" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.get_config_info'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="types.html#judge0.base_types.Config" title="judge0.base_types.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.get_language">
-<span class="sig-name descname"><span class="pre">get_language</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.get_language" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.get_language'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="types.html#judge0.base_types.Language" title="judge0.base_types.Language"><code class="xref py py-class docutils literal notranslate"><span class="pre">Language</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.get_languages">
-<span class="sig-name descname"><span class="pre">get_languages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.get_languages" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.get_languages'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="types.html#judge0.base_types.Language" title="judge0.base_types.Language"><code class="xref py py-class docutils literal notranslate"><span class="pre">Language</span></code></a>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.get_statuses">
-<span class="sig-name descname"><span class="pre">get_statuses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.get_statuses" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.get_statuses'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.get_submission">
-<span class="sig-name descname"><span class="pre">get_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.get_submission" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.get_submission'">¶</a></dt>
-<dd><p>Get submissions status.</p>
-<p>Directly send submission’s token to get_submission route for status
-check. By default, all submissions attributes (fields) are requested.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>submission</strong> (<a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><em>Submission</em></a>) – Submission to update.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A Submission with updated attributes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission">Submission</a></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.get_submissions">
-<span class="sig-name descname"><span class="pre">get_submissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submissions</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE.get_submissions" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.get_submissions'">¶</a></dt>
-<dd><p>Get submissions status.</p>
-<p>Directly send submissions’ tokens to get_submissions route for status
-check. By default, all submissions attributes (fields) are requested.
-Cannot handle more submissions than the client supports.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>submissions</strong> (<em>Submissions</em>) – Submissions to update.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A sequence of submissions with updated attributes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Submissions</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_ABOUT_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_ABOUT_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'01fc1c98-ceee-4f49-8614-f2214703e25f'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_ABOUT_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_ABOUT_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_CONFIG_INFO_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_CONFIG_INFO_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'b7aab45d-5eb0-4519-b092-89e5af4fc4f3'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_CONFIG_INFO_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_CONFIG_INFO_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_CREATE_SUBMISSIONS_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'402b857c-1126-4450-bfd8-22e1f2cbff2f'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSION_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_CREATE_SUBMISSION_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'6e65686d-40b0-4bf7-a12f-1f6d033c4473'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSION_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSION_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://judge0-ce.proxy-production.allthingsdev.co'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSIONS_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_GET_SUBMISSIONS_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'e42f2a26-5b02-472a-80c9-61c4bdae32ec'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSIONS_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSIONS_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSION_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_GET_SUBMISSION_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'b7032b8b-86da-40b4-b9d3-b1f5e2b4ee1e'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSION_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSION_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_HOST">
-<span class="sig-name descname"><span class="pre">DEFAULT_HOST</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Judge0-CE.allthingsdev.co'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_HOST" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_HOST'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGES_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_LANGUAGES_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'03824deb-bd18-4456-8849-69d78e1383cc'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGES_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGES_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGE_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_LANGUAGE_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'a50ae6b1-23c1-40eb-b34c-88bc8cf2c764'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGE_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGE_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.DEFAULT_STATUSES_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_STATUSES_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'c37b603f-6f99-4e31-a361-7154c734f19b'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.DEFAULT_STATUSES_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.DEFAULT_STATUSES_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE.HOME_URL">
-<span class="sig-name descname"><span class="pre">HOME_URL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://www.allthingsdev.co/apimarketplace/judge0-ce/66b683c8b7b7ad054eb6ff8f'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0CE.HOME_URL" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE.HOME_URL'">¶</a></dt>
-<dd></dd></dl>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">ATDJudge0ExtraCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE'">¶</a></dt>
-<dd><p>AllThingsDev client for Extra CE flavor.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.create_submission">
-<span class="sig-name descname"><span class="pre">create_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.create_submission" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.create_submission'">¶</a></dt>
-<dd><p>Send submission for execution to a client.</p>
-<p>Directly send a submission to create_submission route for execution.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>submission</strong> (<a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><em>Submission</em></a>) – A submission to create.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A submission with updated token attribute.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission">Submission</a></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.create_submissions">
-<span class="sig-name descname"><span class="pre">create_submissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submissions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.create_submissions" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.create_submissions'">¶</a></dt>
-<dd><p>Send submissions for execution to a client.</p>
-<p>Directly send submissions to create_submissions route for execution.
-Cannot handle more submissions than the client supports.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>submissions</strong> (<em>Submissions</em>) – A sequence of submissions to create.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A sequence of submissions with updated token attribute.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Submissions</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.get_about">
-<span class="sig-name descname"><span class="pre">get_about</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.get_about" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.get_about'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.get_config_info">
-<span class="sig-name descname"><span class="pre">get_config_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.get_config_info" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.get_config_info'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="types.html#judge0.base_types.Config" title="judge0.base_types.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.get_language">
-<span class="sig-name descname"><span class="pre">get_language</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.get_language" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.get_language'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="types.html#judge0.base_types.Language" title="judge0.base_types.Language"><code class="xref py py-class docutils literal notranslate"><span class="pre">Language</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.get_languages">
-<span class="sig-name descname"><span class="pre">get_languages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.get_languages" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.get_languages'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="types.html#judge0.base_types.Language" title="judge0.base_types.Language"><code class="xref py py-class docutils literal notranslate"><span class="pre">Language</span></code></a>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.get_statuses">
-<span class="sig-name descname"><span class="pre">get_statuses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.get_statuses" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.get_statuses'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.get_submission">
-<span class="sig-name descname"><span class="pre">get_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.get_submission" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.get_submission'">¶</a></dt>
-<dd><p>Get submissions status.</p>
-<p>Directly send submission’s token to get_submission route for status
-check. By default, all submissions attributes (fields) are requested.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>submission</strong> (<a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><em>Submission</em></a>) – Submission to update.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A Submission with updated attributes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission">Submission</a></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.get_submissions">
-<span class="sig-name descname"><span class="pre">get_submissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submissions</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.get_submissions" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.get_submissions'">¶</a></dt>
-<dd><p>Get submissions status.</p>
-<p>Directly send submissions’ tokens to get_submissions route for status
-check. By default, all submissions attributes (fields) are requested.
-Cannot handle more submissions than the client supports.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>submissions</strong> (<em>Submissions</em>) – Submissions to update.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A sequence of submissions with updated attributes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Submissions</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_ABOUT_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_ABOUT_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1fd631a1-be6a-47d6-bf4c-987e357e3096'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_ABOUT_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_ABOUT_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_CONFIG_INFO_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_CONFIG_INFO_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'46e05354-2a43-436a-9458-5d111456f0ff'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CONFIG_INFO_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CONFIG_INFO_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_CREATE_SUBMISSIONS_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'c64df5d3-edfd-4b08-8687-561af2f80d2f'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSION_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_CREATE_SUBMISSION_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'be2d195e-dd58-4770-9f3c-d6c0fbc2b6e5'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSION_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSION_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://judge0-extra-ce.proxy-production.allthingsdev.co'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSIONS_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_GET_SUBMISSIONS_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'5d173718-8e6a-4cf5-9d8c-db5e6386d037'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSIONS_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSIONS_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSION_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_GET_SUBMISSION_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'c3a457cd-37a6-4106-97a8-9e60a223abbc'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSION_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSION_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_HOST">
-<span class="sig-name descname"><span class="pre">DEFAULT_HOST</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Judge0-Extra-CE.allthingsdev.co'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_HOST" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_HOST'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGES_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_LANGUAGES_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'774ecece-1200-41f7-a992-38f186c90803'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGES_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGES_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGE_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_LANGUAGE_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'10465a84-2a2c-4213-845f-45e3c04a5867'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGE_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGE_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.DEFAULT_STATUSES_ENDPOINT">
-<span class="sig-name descname"><span class="pre">DEFAULT_STATUSES_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'a2843b3c-673d-4966-9a14-2e7d76dcd0cb'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_STATUSES_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_STATUSES_ENDPOINT'">¶</a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE.HOME_URL">
-<span class="sig-name descname"><span class="pre">HOME_URL</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://www.allthingsdev.co/apimarketplace/judge0-extra-ce/66b68838b7b7ad054eb70690'</span></em><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE.HOME_URL" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE.HOME_URL'">¶</a></dt>
-<dd></dd></dl>
-</dd></dl>
+<section id="clients-module">
+<h1>Clients Module<a class="headerlink" href="#clients-module" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.clients.Client">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_headers</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retry_strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client'">¶</a></dt>
-<dd><dl class="py method">
+<dd><p>Base class for all clients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> (<em>str</em>) – Client’s default endpoint.</p></li>
+<li><p><strong>auth_headers</strong> (<em>dict</em>) – Request authentication headers.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.clients.Client.API_KEY_ENV">
+<span class="sig-name descname"><span class="pre">API_KEY_ENV</span></span><a class="headerlink" href="#judge0.clients.Client.API_KEY_ENV" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.API_KEY_ENV'">¶</a></dt>
+<dd><p>Environment variable where judge0-python should look for API key for
+the client. Set to default values for ATD, RapidAPI, and Sulu clients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="judge0.clients.Client.create_submission">
 <span class="sig-name descname"><span class="pre">create_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client.create_submission" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.create_submission'">¶</a></dt>
 <dd><p>Send submission for execution to a client.</p>
@@ -499,27 +169,42 @@ Cannot handle more submissions than the client supports.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="judge0.clients.Client.get_about">
 <span class="sig-name descname"><span class="pre">get_about</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client.get_about" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.get_about'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+<dd><p>Get general information about judge0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>General information about judge0.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="judge0.clients.Client.get_config_info">
 <span class="sig-name descname"><span class="pre">get_config_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client.get_config_info" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.get_config_info'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="types.html#judge0.base_types.Config" title="judge0.base_types.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span></p>
+<dd><p>Get information about client’s configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Client’s configuration.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="types.html#judge0.base_types.Config" title="judge0.base_types.Config">Config</a></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="judge0.clients.Client.get_language">
 <span class="sig-name descname"><span class="pre">get_language</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client.get_language" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.get_language'">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Get language corresponding to the id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>language_id</strong> (<em>int</em>) – Language id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Language corresponding to the passed id.</p>
+</dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="types.html#judge0.base_types.Language" title="judge0.base_types.Language"><code class="xref py py-class docutils literal notranslate"><span class="pre">Language</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#judge0.base_types.Language" title="judge0.base_types.Language">Language</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -528,26 +213,40 @@ Cannot handle more submissions than the client supports.</p>
 <span class="sig-name descname"><span class="pre">get_language_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client.get_language_id" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.get_language_id'">¶</a></dt>
 <dd><p>Get language id corresponding to the language alias for the client.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>language</strong> (<a class="reference internal" href="types.html#judge0.base_types.LanguageAlias" title="judge0.base_types.LanguageAlias"><em>LanguageAlias</em></a><em> or </em><em>int</em>) – Language alias or language id.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Language id corresponding to the language alias.</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="judge0.clients.Client.get_languages">
 <span class="sig-name descname"><span class="pre">get_languages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client.get_languages" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.get_languages'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="types.html#judge0.base_types.Language" title="judge0.base_types.Language"><code class="xref py py-class docutils literal notranslate"><span class="pre">Language</span></code></a>]</span></p>
+<dd><p>Get a list of supported languages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of supported languages.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of language</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="judge0.clients.Client.get_statuses">
 <span class="sig-name descname"><span class="pre">get_statuses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client.get_statuses" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.get_statuses'">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+<dd><p>Get a list of possible submission statuses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of possible submission statues.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -593,24 +292,51 @@ Cannot handle more submissions than the client supports.</p>
 <span class="sig-name descname"><span class="pre">is_language_supported</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Client.is_language_supported" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.is_language_supported'">¶</a></dt>
 <dd><p>Check if language is supported by the client.</p>
 <dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>language</strong> (<a class="reference internal" href="types.html#judge0.base_types.LanguageAlias" title="judge0.base_types.LanguageAlias"><em>LanguageAlias</em></a><em> or </em><em>int</em>) – Language alias or language id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Return True if language is supported by the client, otherwise returns
+False.</p>
+</dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.clients.Client.API_KEY_ENV">
-<span class="sig-name descname"><span class="pre">API_KEY_ENV</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.clients.Client.API_KEY_ENV" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.API_KEY_ENV'">¶</a></dt>
-<dd></dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="judge0.clients.Client.version">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#judge0.clients.Client.version" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Client.version'">¶</a></dt>
+<dd><p>Property corresponding to the current client’s version.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="judge0.clients.ATD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">ATD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host_header_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATD" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATD'">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.Client" title="judge0.clients.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a></p>
+<p>Base class for all AllThingsDev clients.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.clients.ATD.API_KEY_ENV">
+<span class="sig-name descname"><span class="pre">API_KEY_ENV</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'JUDGE0_ATD_API_KEY'</span></em><a class="headerlink" href="#judge0.clients.ATD.API_KEY_ENV" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATD.API_KEY_ENV'">¶</a></dt>
 <dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="judge0.clients.ATDJudge0CE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">ATDJudge0CE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0CE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0CE'">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.ATD" title="judge0.clients.ATD"><code class="xref py py-class docutils literal notranslate"><span class="pre">ATD</span></code></a></p>
+<p>AllThingsDev client for CE flavor.</p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="judge0.clients.ATDJudge0ExtraCE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">ATDJudge0ExtraCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.ATDJudge0ExtraCE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.ATDJudge0ExtraCE'">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.ATD" title="judge0.clients.ATD"><code class="xref py py-class docutils literal notranslate"><span class="pre">ATD</span></code></a></p>
+<p>AllThingsDev client for Extra CE flavor.</p>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.clients.Rapid">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">Rapid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host_header_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Rapid" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Rapid'">¶</a></dt>
-<dd><p>Base class for all RapidAPI clients.</p>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.Client" title="judge0.clients.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a></p>
+<p>Base class for all RapidAPI clients.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.clients.Rapid.API_KEY_ENV">
 <span class="sig-name descname"><span class="pre">API_KEY_ENV</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'JUDGE0_RAPID_API_KEY'</span></em><a class="headerlink" href="#judge0.clients.Rapid.API_KEY_ENV" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Rapid.API_KEY_ENV'">¶</a></dt>
@@ -619,7 +345,8 @@ Cannot handle more submissions than the client supports.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.clients.RapidJudge0CE">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">RapidJudge0CE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.RapidJudge0CE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.RapidJudge0CE'">¶</a></dt>
-<dd><p>RapidAPI client for CE flavor.</p>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.Rapid" title="judge0.clients.Rapid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rapid</span></code></a></p>
+<p>RapidAPI client for CE flavor.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.clients.RapidJudge0CE.DEFAULT_ENDPOINT">
 <span class="sig-name descname"><span class="pre">DEFAULT_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://judge0-ce.p.rapidapi.com'</span></em><a class="headerlink" href="#judge0.clients.RapidJudge0CE.DEFAULT_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.RapidJudge0CE.DEFAULT_ENDPOINT'">¶</a></dt>
@@ -636,7 +363,8 @@ Cannot handle more submissions than the client supports.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.clients.RapidJudge0ExtraCE">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">RapidJudge0ExtraCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.RapidJudge0ExtraCE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.RapidJudge0ExtraCE'">¶</a></dt>
-<dd><p>RapidAPI client for Extra CE flavor.</p>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.Rapid" title="judge0.clients.Rapid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rapid</span></code></a></p>
+<p>RapidAPI client for Extra CE flavor.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.clients.RapidJudge0ExtraCE.DEFAULT_ENDPOINT">
 <span class="sig-name descname"><span class="pre">DEFAULT_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://judge0-extra-ce.p.rapidapi.com'</span></em><a class="headerlink" href="#judge0.clients.RapidJudge0ExtraCE.DEFAULT_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.RapidJudge0ExtraCE.DEFAULT_ENDPOINT'">¶</a></dt>
@@ -653,7 +381,16 @@ Cannot handle more submissions than the client supports.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.clients.Sulu">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">Sulu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.Sulu" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Sulu'">¶</a></dt>
-<dd><p>Base class for all Sulu clients.</p>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.Client" title="judge0.clients.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a></p>
+<p>Base class for all Sulu clients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> (<em>str</em>) – Default request endpoint.</p></li>
+<li><p><strong>api_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Sulu API key.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.clients.Sulu.API_KEY_ENV">
 <span class="sig-name descname"><span class="pre">API_KEY_ENV</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'JUDGE0_SULU_API_KEY'</span></em><a class="headerlink" href="#judge0.clients.Sulu.API_KEY_ENV" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.Sulu.API_KEY_ENV'">¶</a></dt>
@@ -662,7 +399,13 @@ Cannot handle more submissions than the client supports.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.clients.SuluJudge0CE">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">SuluJudge0CE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.SuluJudge0CE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.SuluJudge0CE'">¶</a></dt>
-<dd><p>Sulu client for CE flavor.</p>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.Sulu" title="judge0.clients.Sulu"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sulu</span></code></a></p>
+<p>Sulu client for CE flavor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Sulu API key.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.clients.SuluJudge0CE.DEFAULT_ENDPOINT">
 <span class="sig-name descname"><span class="pre">DEFAULT_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://judge0-ce.p.sulu.sh'</span></em><a class="headerlink" href="#judge0.clients.SuluJudge0CE.DEFAULT_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.SuluJudge0CE.DEFAULT_ENDPOINT'">¶</a></dt>
@@ -675,7 +418,13 @@ Cannot handle more submissions than the client supports.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.clients.SuluJudge0ExtraCE">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.clients.</span></span><span class="sig-name descname"><span class="pre">SuluJudge0ExtraCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.clients.SuluJudge0ExtraCE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.SuluJudge0ExtraCE'">¶</a></dt>
-<dd><p>Sulu client for Extra CE flavor.</p>
+<dd><p>Bases: <a class="reference internal" href="#judge0.clients.Sulu" title="judge0.clients.Sulu"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sulu</span></code></a></p>
+<p>Sulu client for Extra CE flavor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_key</strong> (<em>str</em>) – Sulu API key.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.clients.SuluJudge0ExtraCE.DEFAULT_ENDPOINT">
 <span class="sig-name descname"><span class="pre">DEFAULT_ENDPOINT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://judge0-extra-ce.p.sulu.sh'</span></em><a class="headerlink" href="#judge0.clients.SuluJudge0ExtraCE.DEFAULT_ENDPOINT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.clients.SuluJudge0ExtraCE.DEFAULT_ENDPOINT'">¶</a></dt>
@@ -689,59 +438,8 @@ Cannot handle more submissions than the client supports.</p>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#judge0.clients.ATD'" class="reference internal" href="#judge0.clients.ATD"><code class="docutils literal notranslate"><span class="pre">ATD</span></code></a><ul>
-<li><a :data-current="activeSection === '#judge0.clients.ATD.API_KEY_ENV'" class="reference internal" href="#judge0.clients.ATD.API_KEY_ENV"><code class="docutils literal notranslate"><span class="pre">ATD.API_KEY_ENV</span></code></a></li>
-</ul>
-</li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE'" class="reference internal" href="#judge0.clients.ATDJudge0CE"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE</span></code></a><ul>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.create_submission'" class="reference internal" href="#judge0.clients.ATDJudge0CE.create_submission"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.create_submission()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.create_submissions'" class="reference internal" href="#judge0.clients.ATDJudge0CE.create_submissions"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.create_submissions()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.get_about'" class="reference internal" href="#judge0.clients.ATDJudge0CE.get_about"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.get_about()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.get_config_info'" class="reference internal" href="#judge0.clients.ATDJudge0CE.get_config_info"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.get_config_info()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.get_language'" class="reference internal" href="#judge0.clients.ATDJudge0CE.get_language"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.get_language()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.get_languages'" class="reference internal" href="#judge0.clients.ATDJudge0CE.get_languages"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.get_languages()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.get_statuses'" class="reference internal" href="#judge0.clients.ATDJudge0CE.get_statuses"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.get_statuses()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.get_submission'" class="reference internal" href="#judge0.clients.ATDJudge0CE.get_submission"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.get_submission()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.get_submissions'" class="reference internal" href="#judge0.clients.ATDJudge0CE.get_submissions"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.get_submissions()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_ABOUT_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_ABOUT_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_ABOUT_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_CONFIG_INFO_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_CONFIG_INFO_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_CONFIG_INFO_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSION_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_CREATE_SUBMISSION_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_CREATE_SUBMISSION_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSIONS_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSIONS_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_GET_SUBMISSIONS_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSION_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_GET_SUBMISSION_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_GET_SUBMISSION_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_HOST'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_HOST"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_HOST</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGES_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGES_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_LANGUAGES_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGE_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_LANGUAGE_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_LANGUAGE_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.DEFAULT_STATUSES_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0CE.DEFAULT_STATUSES_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.DEFAULT_STATUSES_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE.HOME_URL'" class="reference internal" href="#judge0.clients.ATDJudge0CE.HOME_URL"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE.HOME_URL</span></code></a></li>
-</ul>
-</li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE</span></code></a><ul>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.create_submission'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.create_submission"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.create_submission()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.create_submissions'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.create_submissions"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.create_submissions()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.get_about'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.get_about"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.get_about()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.get_config_info'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.get_config_info"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.get_config_info()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.get_language'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.get_language"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.get_language()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.get_languages'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.get_languages"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.get_languages()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.get_statuses'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.get_statuses"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.get_statuses()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.get_submission'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.get_submission"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.get_submission()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.get_submissions'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.get_submissions"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.get_submissions()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_ABOUT_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_ABOUT_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_ABOUT_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CONFIG_INFO_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CONFIG_INFO_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_CONFIG_INFO_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSION_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSION_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSION_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSIONS_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSIONS_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSIONS_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSION_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSION_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSION_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_HOST'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_HOST"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_HOST</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGES_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGES_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_LANGUAGES_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGE_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_LANGUAGE_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_LANGUAGE_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.DEFAULT_STATUSES_ENDPOINT'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.DEFAULT_STATUSES_ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.DEFAULT_STATUSES_ENDPOINT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE.HOME_URL'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE.HOME_URL"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE.HOME_URL</span></code></a></li>
-</ul>
-</li>
 <li><a :data-current="activeSection === '#judge0.clients.Client'" class="reference internal" href="#judge0.clients.Client"><code class="docutils literal notranslate"><span class="pre">Client</span></code></a><ul>
+<li><a :data-current="activeSection === '#judge0.clients.Client.API_KEY_ENV'" class="reference internal" href="#judge0.clients.Client.API_KEY_ENV"><code class="docutils literal notranslate"><span class="pre">Client.API_KEY_ENV</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.clients.Client.create_submission'" class="reference internal" href="#judge0.clients.Client.create_submission"><code class="docutils literal notranslate"><span class="pre">Client.create_submission()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.clients.Client.create_submissions'" class="reference internal" href="#judge0.clients.Client.create_submissions"><code class="docutils literal notranslate"><span class="pre">Client.create_submissions()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.clients.Client.get_about'" class="reference internal" href="#judge0.clients.Client.get_about"><code class="docutils literal notranslate"><span class="pre">Client.get_about()</span></code></a></li>
@@ -753,10 +451,15 @@ Cannot handle more submissions than the client supports.</p>
 <li><a :data-current="activeSection === '#judge0.clients.Client.get_submission'" class="reference internal" href="#judge0.clients.Client.get_submission"><code class="docutils literal notranslate"><span class="pre">Client.get_submission()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.clients.Client.get_submissions'" class="reference internal" href="#judge0.clients.Client.get_submissions"><code class="docutils literal notranslate"><span class="pre">Client.get_submissions()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.clients.Client.is_language_supported'" class="reference internal" href="#judge0.clients.Client.is_language_supported"><code class="docutils literal notranslate"><span class="pre">Client.is_language_supported()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.clients.Client.API_KEY_ENV'" class="reference internal" href="#judge0.clients.Client.API_KEY_ENV"><code class="docutils literal notranslate"><span class="pre">Client.API_KEY_ENV</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.clients.Client.version'" class="reference internal" href="#judge0.clients.Client.version"><code class="docutils literal notranslate"><span class="pre">Client.version</span></code></a></li>
 </ul>
 </li>
+<li><a :data-current="activeSection === '#judge0.clients.ATD'" class="reference internal" href="#judge0.clients.ATD"><code class="docutils literal notranslate"><span class="pre">ATD</span></code></a><ul>
+<li><a :data-current="activeSection === '#judge0.clients.ATD.API_KEY_ENV'" class="reference internal" href="#judge0.clients.ATD.API_KEY_ENV"><code class="docutils literal notranslate"><span class="pre">ATD.API_KEY_ENV</span></code></a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0CE'" class="reference internal" href="#judge0.clients.ATDJudge0CE"><code class="docutils literal notranslate"><span class="pre">ATDJudge0CE</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.clients.ATDJudge0ExtraCE'" class="reference internal" href="#judge0.clients.ATDJudge0ExtraCE"><code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.clients.Rapid'" class="reference internal" href="#judge0.clients.Rapid"><code class="docutils literal notranslate"><span class="pre">Rapid</span></code></a><ul>
 <li><a :data-current="activeSection === '#judge0.clients.Rapid.API_KEY_ENV'" class="reference internal" href="#judge0.clients.Rapid.API_KEY_ENV"><code class="docutils literal notranslate"><span class="pre">Rapid.API_KEY_ENV</span></code></a></li>
 </ul>

@@ -15,7 +15,7 @@
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
 <link href="submission.html" rel="next" title="Submission Module"/>
-<link href="index.html" rel="prev" title="&lt;no title&gt;"/>
+<link href="../index.html" rel="prev" title="Judge0 Python SDK documentation"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -103,7 +103,6 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">&lt;no title&gt;</a>
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">API Module</span>
 </nav>
 <div id="content" role="main">
@@ -112,37 +111,6 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="judge0.api.async_execute">
 <span class="sig-prename descclassname"><span class="pre">judge0.api.</span></span><span class="sig-name descname"><span class="pre">async_execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.api.async_execute" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.api.async_execute'">¶</a></dt>
-<dd><p>Create submission(s).</p>
-<p>Aliases: <cite>async_run</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>client</strong> (<a class="reference internal" href="clients.html#judge0.clients.Client" title="judge0.clients.Client"><em>Client</em></a><em> or </em><a class="reference internal" href="types.html#judge0.base_types.Flavor" title="judge0.base_types.Flavor"><em>Flavor</em></a><em>, </em><em>optional</em>) – A client where submissions should be created. If None, will try to be
-resolved.</p></li>
-<li><p><strong>submissions</strong> (<a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><em>Submission</em></a><em> or </em><em>Submissions</em><em>, </em><em>optional</em>) – Submission or submissions for execution.</p></li>
-<li><p><strong>source_code</strong> (<em>str</em><em>, </em><em>optional</em>) – A source code of a program.</p></li>
-<li><p><strong>test_cases</strong> (<em>TestCaseType</em><em> or </em><em>TestCases</em><em>, </em><em>optional</em>) – A single test or a list of test cases</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A single submission if submissions arguments is of type Submission or
-source_code argument is provided, and test_cases argument is of type
-TestCase. Otherwise returns a list of submissions.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission">Submission</a> or Submissions</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>ClientResolutionError</strong> – If client cannot be resolved from the submissions or the flavor.</p></li>
-<li><p><strong>ValueError</strong> – If both or neither submissions and source_code arguments are provided.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py function">
-<dt class="sig sig-object py" id="judge0.api.async_run">
-<span class="sig-prename descclassname"><span class="pre">judge0.api.</span></span><span class="sig-name descname"><span class="pre">async_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.api.async_run" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.api.async_run'">¶</a></dt>
 <dd><p>Create submission(s).</p>
 <p>Aliases: <cite>async_run</cite>.</p>
 <dl class="field-list simple">
@@ -343,37 +311,6 @@ TestCase. Otherwise returns a list of submissions.</p>
 </dl>
 </dd></dl>
 <dl class="py function">
-<dt class="sig sig-object py" id="judge0.api.sync_run">
-<span class="sig-prename descclassname"><span class="pre">judge0.api.</span></span><span class="sig-name descname"><span class="pre">sync_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.api.sync_run" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.api.sync_run'">¶</a></dt>
-<dd><p>Create submission(s) and wait for their finish.</p>
-<p>Aliases: <cite>execute</cite>, <cite>run</cite>, <cite>sync_run</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>client</strong> (<a class="reference internal" href="clients.html#judge0.clients.Client" title="judge0.clients.Client"><em>Client</em></a><em> or </em><a class="reference internal" href="types.html#judge0.base_types.Flavor" title="judge0.base_types.Flavor"><em>Flavor</em></a><em>, </em><em>optional</em>) – A client where submissions should be created. If None, will try to be
-resolved.</p></li>
-<li><p><strong>submissions</strong> (<a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><em>Submission</em></a><em> or </em><em>Submissions</em><em>, </em><em>optional</em>) – Submission(s) for execution.</p></li>
-<li><p><strong>source_code</strong> (<em>str</em><em>, </em><em>optional</em>) – A source code of a program.</p></li>
-<li><p><strong>test_cases</strong> (<em>TestCaseType</em><em> or </em><em>TestCases</em><em>, </em><em>optional</em>) – A single test or a list of test cases</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A single submission if submissions arguments is of type Submission or
-source_code argument is provided, and test_cases argument is of type
-TestCase. Otherwise returns a list of submissions.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission">Submission</a> or Submissions</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>ClientResolutionError</strong> – If client cannot be resolved from the submissions or the flavor.</p></li>
-<li><p><strong>ValueError</strong> – If both or neither submissions and source_code arguments are provided.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py function">
 <dt class="sig sig-object py" id="judge0.api.wait">
 <span class="sig-prename descclassname"><span class="pre">judge0.api.</span></span><span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retry_strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.api.wait" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.api.wait'">¶</a></dt>
 <dd><p>Wait for all the submissions to finish.</p>
@@ -385,11 +322,14 @@ TestCase. Otherwise returns a list of submissions.</p>
 <li><p><strong>retry_strategy</strong> (<em>RetryStrategy</em><em>, </em><em>optional</em>) – A retry strategy.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ClientResolutionError</strong> – Raised if client resolution fails.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single submission or a list of submissions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Submission</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Submission</span></code></a>]]</span></p>
+<dd class="field-odd"><p><a class="reference internal" href="submission.html#judge0.submission.Submission" title="judge0.submission.Submission">Submission</a> or Submissions</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ClientResolutionError</strong> – Raised if client resolution fails.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -398,7 +338,6 @@ TestCase. Otherwise returns a list of submissions.</p>
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#judge0.api.async_execute'" class="reference internal" href="#judge0.api.async_execute"><code class="docutils literal notranslate"><span class="pre">async_execute()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.api.async_run'" class="reference internal" href="#judge0.api.async_run"><code class="docutils literal notranslate"><span class="pre">async_run()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.api.create_submissions'" class="reference internal" href="#judge0.api.create_submissions"><code class="docutils literal notranslate"><span class="pre">create_submissions()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.api.create_submissions_from_test_cases'" class="reference internal" href="#judge0.api.create_submissions_from_test_cases"><code class="docutils literal notranslate"><span class="pre">create_submissions_from_test_cases()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.api.execute'" class="reference internal" href="#judge0.api.execute"><code class="docutils literal notranslate"><span class="pre">execute()</span></code></a></li>
@@ -406,7 +345,6 @@ TestCase. Otherwise returns a list of submissions.</p>
 <li><a :data-current="activeSection === '#judge0.api.get_submissions'" class="reference internal" href="#judge0.api.get_submissions"><code class="docutils literal notranslate"><span class="pre">get_submissions()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.api.run'" class="reference internal" href="#judge0.api.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.api.sync_execute'" class="reference internal" href="#judge0.api.sync_execute"><code class="docutils literal notranslate"><span class="pre">sync_execute()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.api.sync_run'" class="reference internal" href="#judge0.api.sync_run"><code class="docutils literal notranslate"><span class="pre">sync_run()</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.api.wait'" class="reference internal" href="#judge0.api.wait"><code class="docutils literal notranslate"><span class="pre">wait()</span></code></a></li>
 </ul>
 </div>
