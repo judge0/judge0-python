@@ -1,7 +1,7 @@
 import copy
 
 from dataclasses import dataclass
-from enum import IntEnum
+from enum import IntEnum, auto
 from typing import Optional, Protocol, runtime_checkable, Sequence, Union
 
 from pydantic import BaseModel
@@ -59,13 +59,73 @@ class Language(BaseModel):
 
 class LanguageAlias(IntEnum):
     """Language enumeration."""
-
-    PYTHON = 0
-    CPP = 1
-    JAVA = 2
-    CPP_GCC = 3
-    CPP_CLANG = 4
-    PYTHON_FOR_ML = 5
+    ASSEMBLY = auto()
+    BASH = auto()
+    BASIC = auto()
+    BOSQUE = auto()
+    C = auto()
+    C3 = auto()
+    CLOJURE = auto()
+    COBOL = auto()
+    COMMON_LISP = auto()
+    CPP = auto()
+    CPP_CLANG = auto()
+    CPP_GCC = auto()
+    CPP_TEST = auto()
+    CPP_TEST_CLANG = auto()
+    CPP_TEST_GCC = auto()
+    CSHARP = auto()
+    CSHARP_DOTNET = auto()
+    CSHARP_MONO = auto()
+    CSHARP_TEST = auto()
+    C_CLANG = auto()
+    C_GCC = auto()
+    D = auto()
+    DART = auto()
+    ELIXIR = auto()
+    ERLANG = auto()
+    EXECUTABLE = auto()
+    FORTRAN = auto()
+    FSHARP = auto()
+    GO = auto()
+    GROOVY = auto()
+    HASKELL = auto()
+    JAVA = auto()
+    JAVAFX = auto()
+    JAVASCRIPT = auto()
+    JAVA_JDK = auto()
+    JAVA_OPENJDK = auto()
+    JAVA_TEST = auto()
+    KOTLIN = auto()
+    LUA = auto()
+    MPI_C = auto()
+    MPI_CPP = auto()
+    MPI_PYTHON = auto()
+    MULTI_FILE = auto()
+    NIM = auto()
+    OBJECTIVE_C = auto()
+    OCAML = auto()
+    OCTAVE = auto()
+    PASCAL = auto()
+    PERL = auto()
+    PHP = auto()
+    PLAIN_TEXT = auto()
+    PROLOG = auto()
+    PYTHON = auto()
+    PYTHON2 = auto()
+    PYTHON2_PYPY = auto()
+    PYTHON3 = auto()
+    PYTHON3_PYPY = auto()
+    PYTHON_FOR_ML = auto()
+    PYTHON_PYPY = auto()
+    R = auto()
+    RUBY = auto()
+    RUST = auto()
+    SCALA = auto()
+    SQLITE = auto()
+    SWIFT = auto()
+    TYPESCRIPT = auto()
+    VISUAL_BASIC = auto()
 
 
 class Flavor(IntEnum):

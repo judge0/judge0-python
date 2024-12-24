@@ -49,5 +49,15 @@ docs = ["sphinx==7.4.7"]
 
 [tool.flake8]
 docstring-convention = "numpy"
-extend-ignore = ["D205", "D400", "D105", "D100", "D101", "D102", "D103", "F821"]
+extend-ignore = [
+    'D100',
+    'D101',
+    'D102',
+    'D103',
+    'D104',
+    'D105',
+    'D205',
+    'D400',
+    'F821',
+]
 max-line-length = 88
