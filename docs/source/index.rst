@@ -25,15 +25,14 @@ You can run minimal Hello World example in three easy steps:
 3. Run the script.
 
 Want to learn more
-------------------
-
+==================
 
 To learn what is happening behind the scenes and how to best use Judge0 Python
 SDK to facilitate the development of your own product see In Depth guide and
 Examples.
 
 Getting Involved
-----------------
+================
 
 TODO
 
@@ -43,7 +42,10 @@ TODO
       :titlesonly:
       :hidden:
 
-      api/index
+      api/api
+      api/submission
+      api/clients
+      api/types
 
 .. toctree::
       :caption: Getting Involved
@@ -51,4 +53,5 @@ TODO
       :titlesonly:
       :hidden:
 
-      contributors_guide/index
+      contributors_guide/contributing
+      contributors_guide/release_notes

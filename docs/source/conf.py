@@ -21,7 +21,7 @@ release = ""
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinx.ext.autosummary",
+    # "sphinx.ext.autosummary",
     "sphinx_autodoc_typehints",
     "sphinx_multiversion",
 ]
@@ -47,7 +47,7 @@ sys.path.insert(0, os.path.abspath("../../src/"))  # Adjust as needed
 
 autodoc_default_options = {
     "members": True,
-    "undoc-members": True,
+    "undoc-members": False,
     "private-members": False,
     "special-members": False,
     "inherited-members": False,

@@ -10,6 +10,24 @@ from .utils import handle_too_many_requests_error_for_preview_client
 
 
 class Client:
+    """Base class for all clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Client's default endpoint.
+    auth_headers : dict
+        Request authentication headers.
+
+    Attributes
+    ----------
+    API_KEY_ENV : str
+        Environment variable where judge0-python should look for API key for
+        the client. Set to default values for ATD, RapidAPI, and Sulu clients.
+    """
+
+    # Environment variable where judge0-python should look for API key for
+    # the client. Set to default values for ATD, RapidAPI, and Sulu clients.
     API_KEY_ENV: ClassVar[str] = None
 
     def __init__(
@@ -24,7 +42,6 @@ class Client:
         self.retry_strategy = retry_strategy
         self.session = requests.Session()
 
-        # TODO: Should be handled differently.
         try:
             self.languages = self.get_languages()
             self.config = self.get_config_info()
@@ -39,6 +56,13 @@ class Client:
 
     @handle_too_many_requests_error_for_preview_client
     def get_about(self) -> dict:
+        """Get general information about judge0.
+
+        Returns
+        -------
+        dict
+            General information about judge0.
+        """
         response = self.session.get(
             f"{self.endpoint}/about",
             headers=self.auth_headers,
@@ -48,6 +72,13 @@ class Client:
 
     @handle_too_many_requests_error_for_preview_client
     def get_config_info(self) -> Config:
+        """Get information about client's configuration.
+
+        Returns
+        -------
+        Config
+            Client's configuration.
+        """
         response = self.session.get(
             f"{self.endpoint}/config_info",
             headers=self.auth_headers,
@@ -57,6 +88,18 @@ class Client:
 
     @handle_too_many_requests_error_for_preview_client
     def get_language(self, language_id: int) -> Language:
+        """Get language corresponding to the id.
+
+        Parameters
+        ----------
+        language_id : int
+            Language id.
+
+        Returns
+        -------
+        Language
+            Language corresponding to the passed id.
+        """
         request_url = f"{self.endpoint}/languages/{language_id}"
         response = self.session.get(request_url, headers=self.auth_headers)
         response.raise_for_status()
@@ -64,6 +107,13 @@ class Client:
 
     @handle_too_many_requests_error_for_preview_client
     def get_languages(self) -> list[Language]:
+        """Get a list of supported languages.
+
+        Returns
+        -------
+        list of language
+            A list of supported languages.
+        """
         request_url = f"{self.endpoint}/languages"
         response = self.session.get(request_url, headers=self.auth_headers)
         response.raise_for_status()
@@ -71,6 +121,13 @@ class Client:
 
     @handle_too_many_requests_error_for_preview_client
     def get_statuses(self) -> list[dict]:
+        """Get a list of possible submission statuses.
+
+        Returns
+        -------
+        list of dict
+            A list of possible submission statues.
+        """
         response = self.session.get(
             f"{self.endpoint}/statuses",
             headers=self.auth_headers,
@@ -80,20 +137,43 @@ class Client:
 
     @property
     def version(self):
+        """Property corresponding to the current client's version."""
         if not hasattr(self, "_version"):
             _version = self.get_about()["version"]
             setattr(self, "_version", _version)
         return self._version
 
     def get_language_id(self, language: Union[LanguageAlias, int]) -> int:
-        """Get language id corresponding to the language alias for the client."""
+        """Get language id corresponding to the language alias for the client.
+
+        Parameters
+        ----------
+        language : LanguageAlias or int
+            Language alias or language id.
+
+        Returns
+        -------
+            Language id corresponding to the language alias.
+        """
         if isinstance(language, LanguageAlias):
             supported_language_ids = LANGUAGE_TO_LANGUAGE_ID[self.version]
             language = supported_language_ids.get(language, -1)
         return language
 
     def is_language_supported(self, language: Union[LanguageAlias, int]) -> bool:
-        """Check if language is supported by the client."""
+        """Check if language is supported by the client.
+
+        Parameters
+        ----------
+        language : LanguageAlias or int
+            Language alias or language id.
+
+        Returns
+        -------
+        bool
+            Return True if language is supported by the client, otherwise returns
+            False.
+        """
         language_id = self.get_language_id(language)
         return any(language_id == lang.id for lang in self.languages)
 
@@ -207,9 +287,6 @@ class Client:
                     f"Client {type(self).__name__} does not support language "
                     f"{submission.language}!"
                 )
-
-        # TODO: Maybe raise an exception if the number of submissions is bigger
-        # than the batch size a client supports?
 
         submissions_body = [submission.as_body(self) for submission in submissions]
 
@@ -516,7 +593,15 @@ class RapidJudge0ExtraCE(Rapid):
 
 
 class Sulu(Client):
-    """Base class for all Sulu clients."""
+    """Base class for all Sulu clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    api_key : str, optional
+        Sulu API key.
+    """
 
     API_KEY_ENV: ClassVar[str] = "JUDGE0_SULU_API_KEY"
 
@@ -530,7 +615,13 @@ class Sulu(Client):
 
 
 class SuluJudge0CE(Sulu):
-    """Sulu client for CE flavor."""
+    """Sulu client for CE flavor.
+
+    Parameters
+    ----------
+    api_key : str, optional
+        Sulu API key.
+    """
 
     DEFAULT_ENDPOINT: ClassVar[str] = "https://judge0-ce.p.sulu.sh"
     HOME_URL: ClassVar[str] = "https://sparkhub.sulu.sh/apis/judge0/judge0-ce/readme"
@@ -544,7 +635,13 @@ class SuluJudge0CE(Sulu):
 
 
 class SuluJudge0ExtraCE(Sulu):
-    """Sulu client for Extra CE flavor."""
+    """Sulu client for Extra CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        Sulu API key.
+    """
 
     DEFAULT_ENDPOINT: ClassVar[str] = "https://judge0-extra-ce.p.sulu.sh"
     HOME_URL: ClassVar[str] = (
