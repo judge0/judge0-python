@@ -41,6 +41,7 @@ html_sidebars = {
         "versioning.html",
     ],
 }
+pygments_style = "sphinx"
 
 sys.path.insert(0, os.path.abspath("../../src/"))  # Adjust as needed
 
