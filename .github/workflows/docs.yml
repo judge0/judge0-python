@@ -49,7 +49,7 @@ jobs:
         echo '<!DOCTYPE html>
         <html>
         <head>
-            <meta http-equiv="refresh" content="0; URL='${{ env.latest_release }}/index.html">
+            <meta http-equiv="refresh" content="0; URL=${{ env.latest_release }}/index.html">
         </head>
         </html>' > docs/build/html/index.html
       env:
