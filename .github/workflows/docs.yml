@@ -40,9 +40,7 @@ jobs:
         git fetch --tags
         # Get the latest tag
         latest_tag=$(git tag --sort=-creatordate | head -n 1)
-        # Remove the 'v' prefix if it exists
-        latest_tag_no_v=${latest_tag#v}
-        echo "LATEST_RELEASE=$latest_tag_no_v" >> $GITHUB_ENV
+        echo "LATEST_RELEASE=$latest_tag" >> $GITHUB_ENV
     
     - name: Generate index.html for judge0.github.io/judge0-python.
       run: |
