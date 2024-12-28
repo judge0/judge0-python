@@ -1,7 +1,10 @@
 {% if versions %}
+{% set master_version = versions | selectattr('name', 'equalto', 'master') | list %}
+{% set other_versions = versions | rejectattr('name', 'equalto', 'master') | sort(attribute='name', reverse=true) %}
+{% set sorted_versions = master_version + other_versions %}
 <h3>{{ _('Versions') }}</h3>
 <ul>
-    {%- for item in versions %}
+    {%- for item in sorted_versions %}
     <li><a href="{{ item.url }}">{{ item.name }}</a></li>
     {%- endfor %}
 </ul>
