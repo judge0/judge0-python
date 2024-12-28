@@ -10,6 +10,8 @@
 import os
 import sys
 
+from sphinxawesome_theme.postprocess import Icons
+
 project = "Judge0 Python SDK"
 copyright = "2024, Judge0"
 author = "Judge0"
@@ -45,6 +47,8 @@ pygments_style = "sphinx"
 
 sys.path.insert(0, os.path.abspath("../../src/"))  # Adjust as needed
 
+# -- Awesome theme config --
+html_permalinks_icon = Icons.permalinks_icon
 
 autodoc_default_options = {
     "members": True,
