@@ -49,9 +49,11 @@ jobs:
         echo '<!DOCTYPE html>
         <html>
         <head>
-            <meta http-equiv="refresh" content="0; URL='$GITHUB_ENV/LATEST_RELEASE'/index.html">
+            <meta http-equiv="refresh" content="0; URL='${{ env.latest_release }}/index.html">
         </head>
         </html>' > docs/build/html/index.html
+      env:
+        latest_release: ${{ env.LATEST_RELEASE }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
