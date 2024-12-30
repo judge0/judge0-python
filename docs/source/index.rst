@@ -34,7 +34,20 @@ Examples.
 Getting Involved
 ================
 
-TODO
+Getting involved in any open-source project is simple and rewarding, with
+multiple ways to contribute to its growth and success. You can help by:
+
+1. `reporting bugs <https://github.com/judge0/judge0-python/issues>`_ by
+   creating a detailed issue describing the problem, along with any relevant code or
+   steps to reproduce it, so it can be addressed effectively,
+2. creating a `pull request <https://github.com/judge0/judge0-python/pulls>`_ for
+   an existing issue; we welcome improvements, fixes, and new features that align
+   with the project's goals, and
+3. you can show support by starring the `repository <https://github.com/judge0/judge0-python>`_,
+   letting us know that we’re doing a good job and helping us gain visibility within
+   the open-source community.
+
+Every contribution, big or small, is valuable!
 
 .. toctree::
       :caption: API
