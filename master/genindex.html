@@ -105,6 +105,7 @@
 <li class="toctree-l1"><a class="reference internal" href="api/submission.html">Submission Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/clients.html">Clients Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/types.html">Types Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/retry.html">Retry Module</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
 <ul>
@@ -443,14 +444,24 @@
 </li>
       <li><a href="api/types.html#judge0.base_types.TestCase.input">input (judge0.base_types.TestCase attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.Status.INTERNAL_ERROR">INTERNAL_ERROR (judge0.base_types.Status attribute)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.Language.is_archived">is_archived (judge0.base_types.Language attribute)</a>
 </li>
-      <li><a href="api/submission.html#judge0.submission.Submission.is_done">is_done() (judge0.submission.Submission method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/retry.html#judge0.retry.MaxRetries.is_done">is_done() (judge0.retry.MaxRetries method)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/retry.html#judge0.retry.MaxWaitTime.is_done">(judge0.retry.MaxWaitTime method)</a>
 </li>
+        <li><a href="api/retry.html#judge0.retry.RegularPeriodRetry.is_done">(judge0.retry.RegularPeriodRetry method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RetryStrategy.is_done">(judge0.retry.RetryStrategy method)</a>
+</li>
+        <li><a href="api/submission.html#judge0.submission.Submission.is_done">(judge0.submission.Submission method)</a>
+</li>
+      </ul></li>
       <li><a href="api/clients.html#judge0.clients.Client.is_language_supported">is_language_supported() (judge0.clients.Client method)</a>
 </li>
   </ul></td>
@@ -472,8 +483,6 @@
 </li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.JAVASCRIPT">JAVASCRIPT (judge0.base_types.LanguageAlias attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li>
     judge0.api
 
@@ -481,11 +490,20 @@
         <li><a href="api/api.html#module-judge0.api">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li>
     judge0.base_types
 
       <ul style="list-style-type:none">
         <li><a href="api/types.html#module-judge0.base_types">module</a>
+</li>
+      </ul></li>
+      <li>
+    judge0.retry
+
+      <ul style="list-style-type:none">
+        <li><a href="api/retry.html#module-judge0.retry">module</a>
 </li>
       </ul></li>
       <li>
@@ -548,13 +566,17 @@
 </li>
       <li><a href="api/types.html#judge0.base_types.Config.max_queue_size">max_queue_size (judge0.base_types.Config attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.Config.max_stack_limit">max_stack_limit (judge0.base_types.Config attribute)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.Config.max_submission_batch_size">max_submission_batch_size (judge0.base_types.Config attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.Config.max_wall_time_limit">max_wall_time_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/retry.html#judge0.retry.MaxRetries">MaxRetries (class in judge0.retry)</a>
+</li>
+      <li><a href="api/retry.html#judge0.retry.MaxWaitTime">MaxWaitTime (class in judge0.retry)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.Config.memory_limit">memory_limit (judge0.base_types.Config attribute)</a>
 </li>
@@ -565,6 +587,8 @@
         <li><a href="api/api.html#module-judge0.api">judge0.api</a>
 </li>
         <li><a href="api/types.html#module-judge0.base_types">judge0.base_types</a>
+</li>
+        <li><a href="api/retry.html#module-judge0.retry">judge0.retry</a>
 </li>
         <li><a href="api/submission.html#module-judge0.submission">judge0.submission</a>
 </li>
@@ -661,12 +685,16 @@
 </li>
       <li><a href="api/types.html#judge0.base_types.Config.redirect_stderr_to_stdout">redirect_stderr_to_stdout (judge0.base_types.Config attribute)</a>
 </li>
-      <li><a href="api/types.html#judge0.base_types.LanguageAlias.RUBY">RUBY (judge0.base_types.LanguageAlias attribute)</a>
+      <li><a href="api/retry.html#judge0.retry.RegularPeriodRetry">RegularPeriodRetry (class in judge0.retry)</a>
 </li>
-      <li><a href="api/api.html#judge0.api.run">run() (in module judge0.api)</a>
+      <li><a href="api/retry.html#judge0.retry.RetryStrategy">RetryStrategy (class in judge0.retry)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.RUBY">RUBY (judge0.base_types.LanguageAlias attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/api.html#judge0.api.run">run() (in module judge0.api)</a>
+</li>
       <li><a href="api/types.html#judge0.base_types.Language.run_cmd">run_cmd (judge0.base_types.Language attribute)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.Status.RUNTIME_ERROR_NZEC">RUNTIME_ERROR_NZEC (judge0.base_types.Status attribute)</a>
@@ -702,6 +730,16 @@
 </li>
       <li><a href="api/types.html#judge0.base_types.Status">Status (class in judge0.base_types)</a>
 </li>
+      <li><a href="api/retry.html#judge0.retry.MaxRetries.step">step() (judge0.retry.MaxRetries method)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/retry.html#judge0.retry.MaxWaitTime.step">(judge0.retry.MaxWaitTime method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RegularPeriodRetry.step">(judge0.retry.RegularPeriodRetry method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RetryStrategy.step">(judge0.retry.RetryStrategy method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/submission.html#judge0.submission.Submission">Submission (class in judge0.submission)</a>
@@ -763,7 +801,17 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/api.html#judge0.api.wait">wait() (in module judge0.api)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/retry.html#judge0.retry.MaxRetries.wait">(judge0.retry.MaxRetries method)</a>
 </li>
+        <li><a href="api/retry.html#judge0.retry.MaxWaitTime.wait">(judge0.retry.MaxWaitTime method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RegularPeriodRetry.wait">(judge0.retry.RegularPeriodRetry method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RetryStrategy.wait">(judge0.retry.RetryStrategy method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.Config.wall_time_limit">wall_time_limit (judge0.base_types.Config attribute)</a>
