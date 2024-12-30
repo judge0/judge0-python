@@ -29,7 +29,7 @@ Want to learn more
 
 To learn what is happening behind the scenes and how to best use Judge0 Python
 SDK to facilitate the development of your own product see In Depth guide and
-Examples.
+`examples <https://github.com/judge0/judge0-python/tree/master/examples>`_.
 
 Getting Involved
 ================
