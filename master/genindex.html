@@ -33,7 +33,7 @@
       if (!userPreference) {localStorage.setItem('darkMode', mode)}
     </script>
 </head>
-  <body x-data="{ showSidebar: false, showScrollTop: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
+  <body x-data="{ showSidebar: false, showScrollTop: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }"@scroll.window="showScrollTop = pageYOffset > 100">
     <div x-cloak x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false"></div><div id="page" class="relative flex flex-col min-h-screen"><a href="#content" class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100">
       Skip to content
     </a><header
@@ -102,10 +102,12 @@
   <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/api.html">API Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/submission.html">Submission Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/clients.html">Clients Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/types.html">Types Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/errors.html">Errors Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/filesystem.html">Filesystem Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/retry.html">Retry Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/submission.html">Submission Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/types.html">Types Module</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
 <ul>
@@ -236,6 +238,8 @@
 </li>
       <li><a href="api/clients.html#judge0.clients.Client">Client (class in judge0.clients)</a>
 </li>
+      <li><a href="api/errors.html#judge0.errors.ClientResolutionError">ClientResolutionError</a>
+</li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.CLOJURE">CLOJURE (judge0.base_types.LanguageAlias attribute)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.COBOL">COBOL (judge0.base_types.LanguageAlias attribute)</a>
@@ -248,10 +252,12 @@
 </li>
       <li><a href="api/types.html#judge0.base_types.Config">Config (class in judge0.base_types)</a>
 </li>
-      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP">CPP (judge0.base_types.LanguageAlias attribute)</a>
+      <li><a href="api/filesystem.html#judge0.filesystem.File.content">content (judge0.filesystem.File attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP">CPP (judge0.base_types.LanguageAlias attribute)</a>
+</li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP_CLANG">CPP_CLANG (judge0.base_types.LanguageAlias attribute)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP_GCC">CPP_GCC (judge0.base_types.LanguageAlias attribute)</a>
@@ -338,16 +344,20 @@
 </li>
       <li><a href="api/types.html#judge0.base_types.Config.enable_per_process_and_thread_time_limit">enable_per_process_and_thread_time_limit (judge0.base_types.Config attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.Config.enable_submission_delete">enable_submission_delete (judge0.base_types.Config attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.Config.enable_wait_result">enable_wait_result (judge0.base_types.Config attribute)</a>
 </li>
-      <li><a href="api/types.html#judge0.base_types.Encodeable.encode">encode() (judge0.base_types.Encodeable method)</a>
+      <li><a href="api/types.html#judge0.base_types.Encodable">Encodable (class in judge0.base_types)</a>
 </li>
-      <li><a href="api/types.html#judge0.base_types.Encodeable">Encodeable (class in judge0.base_types)</a>
+      <li><a href="api/types.html#judge0.base_types.Encodable.encode">encode() (judge0.base_types.Encodable method)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/filesystem.html#judge0.filesystem.Filesystem.encode">(judge0.filesystem.Filesystem method)</a>
 </li>
+      </ul></li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.ERLANG">ERLANG (judge0.base_types.LanguageAlias attribute)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.Status.EXEC_FORMAT_ERROR">EXEC_FORMAT_ERROR (judge0.base_types.Status attribute)</a>
@@ -367,12 +377,18 @@
   <h2 id="F">F</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/filesystem.html#judge0.filesystem.File">File (class in judge0.filesystem)</a>
+</li>
+      <li><a href="api/filesystem.html#judge0.filesystem.Filesystem.files">files (judge0.filesystem.Filesystem attribute)</a>
+</li>
+      <li><a href="api/filesystem.html#judge0.filesystem.Filesystem">Filesystem (class in judge0.filesystem)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.Flavor">Flavor (class in judge0.base_types)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.FORTRAN">FORTRAN (judge0.base_types.LanguageAlias attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.TestCase.from_record">from_record() (judge0.base_types.TestCase class method)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.FSHARP">FSHARP (judge0.base_types.LanguageAlias attribute)</a>
@@ -448,8 +464,6 @@
 </li>
       <li><a href="api/types.html#judge0.base_types.Language.is_archived">is_archived (judge0.base_types.Language attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/retry.html#judge0.retry.MaxRetries.is_done">is_done() (judge0.retry.MaxRetries method)</a>
 
       <ul style="list-style-type:none">
@@ -462,7 +476,11 @@
         <li><a href="api/submission.html#judge0.submission.Submission.is_done">(judge0.submission.Submission method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/clients.html#judge0.clients.Client.is_language_supported">is_language_supported() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Iterable">Iterable (in module judge0.base_types)</a>
 </li>
   </ul></td>
   </tr>
@@ -493,10 +511,17 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li>
-    judge0.base_types
+    judge0.errors
 
       <ul style="list-style-type:none">
-        <li><a href="api/types.html#module-judge0.base_types">module</a>
+        <li><a href="api/errors.html#module-judge0.errors">module</a>
+</li>
+      </ul></li>
+      <li>
+    judge0.filesystem
+
+      <ul style="list-style-type:none">
+        <li><a href="api/filesystem.html#module-judge0.filesystem">module</a>
 </li>
       </ul></li>
       <li>
@@ -586,7 +611,9 @@
       <ul style="list-style-type:none">
         <li><a href="api/api.html#module-judge0.api">judge0.api</a>
 </li>
-        <li><a href="api/types.html#module-judge0.base_types">judge0.base_types</a>
+        <li><a href="api/errors.html#module-judge0.errors">judge0.errors</a>
+</li>
+        <li><a href="api/filesystem.html#module-judge0.filesystem">judge0.filesystem</a>
 </li>
         <li><a href="api/retry.html#module-judge0.retry">judge0.retry</a>
 </li>
@@ -609,7 +636,11 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.Language.name">name (judge0.base_types.Language attribute)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/filesystem.html#judge0.filesystem.File.name">(judge0.filesystem.File attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.NIM">NIM (judge0.base_types.LanguageAlias attribute)</a>
@@ -648,12 +679,14 @@
 </li>
       <li><a href="api/submission.html#judge0.submission.Submission.pre_execution_copy">pre_execution_copy() (judge0.submission.Submission method)</a>
 </li>
-      <li><a href="api/types.html#judge0.base_types.Status.PROCESSING">PROCESSING (judge0.base_types.Status attribute)</a>
+      <li><a href="api/errors.html#judge0.errors.PreviewClientLimitError">PreviewClientLimitError</a>
 </li>
-      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PROLOG">PROLOG (judge0.base_types.LanguageAlias attribute)</a>
+      <li><a href="api/types.html#judge0.base_types.Status.PROCESSING">PROCESSING (judge0.base_types.Status attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PROLOG">PROLOG (judge0.base_types.LanguageAlias attribute)</a>
+</li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON">PYTHON (judge0.base_types.LanguageAlias attribute)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON2">PYTHON2 (judge0.base_types.LanguageAlias attribute)</a>
@@ -765,8 +798,12 @@
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="api/types.html#judge0.base_types.TestCase">TestCase (class in judge0.base_types)</a>
 </li>
+      <li><a href="api/types.html#judge0.base_types.TestCases">TestCases (in module judge0.base_types)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.TestCaseType">TestCaseType (in module judge0.base_types)</a>
+</li>
       <li><a href="api/types.html#judge0.base_types.Status.TIME_LIMIT_EXCEEDED">TIME_LIMIT_EXCEEDED (judge0.base_types.Status attribute)</a>
 </li>
       <li><a href="api/types.html#judge0.base_types.LanguageAlias.TYPESCRIPT">TYPESCRIPT (judge0.base_types.LanguageAlias attribute)</a>
@@ -838,7 +875,22 @@
 </div>
 </div>
 </footer>
-  </div>
+  </div><button id="scrolltop"
+        x-cloak
+        @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-8 right-8 p-2 z-10 rounded-sm bg-gray-700 text-xs text-white transition-all duration-1000 hover:bg-gray-950 focus:bg-gray-950"
+        :class="{'opacity-0 invisible' : !showScrollTop}"
+>
+  <svg xmlns="http://www.w3.org/2000/svg"
+       height="14"
+       viewBox="0 96 960 960"
+       width="14"
+       class="inline fill-current mb-[2px]"
+       aria-hidden="true">
+    <path d="M450 896V370L202 618l-42-42 320-320 320 320-42 42-248-248v526h-60Z" />
+  </svg>
+  Back to top
+</button>
   
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>

@@ -56,10 +56,12 @@ Every contribution, big or small, is valuable!
       :hidden:
 
       api/api
-      api/submission
       api/clients
-      api/types
+      api/errors
+      api/filesystem
       api/retry
+      api/submission
+      api/types
 
 .. toctree::
       :caption: Getting Involved

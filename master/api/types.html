@@ -14,8 +14,8 @@
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="retry.html" rel="next" title="Retry Module"/>
-<link href="clients.html" rel="prev" title="Clients Module"/>
+<link href="../contributors_guide/contributing.html" rel="next" title="Contributing"/>
+<link href="submission.html" rel="prev" title="Submission Module"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -29,7 +29,7 @@
       if (!userPreference) {localStorage.setItem('darkMode', mode)}
     </script>
 </head>
-<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
+<body :class="{ 'overflow-hidden': showSidebar }" @scroll.window="showScrollTop = pageYOffset &gt; 100" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
 <div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
       Skip to content
     </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
@@ -71,10 +71,12 @@
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="submission.html">Submission Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clients.html">Clients Module</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Types Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="retry.html">Retry Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="submission.html">Submission Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Types Module</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
 <ul>
@@ -108,8 +110,10 @@
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Types Module</span>
 </nav>
 <div id="content" role="main">
-<section id="module-judge0.base_types">
-<span id="types-module"></span><h1>Types Module<a class="headerlink" href="#module-judge0.base_types" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<section id="types-module">
+<h1>Types Module<a class="headerlink" href="#types-module" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<section id="types">
+<h2>Types<a class="headerlink" href="#types" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#types'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.base_types.Config">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.Config" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Config'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
@@ -272,11 +276,11 @@
 <dd></dd></dl>
 </dd></dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="judge0.base_types.Encodeable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">Encodeable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.Encodeable" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Encodeable'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Encodable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">Encodable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.Encodable" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Encodable'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><dl class="py method">
-<dt class="sig sig-object py" id="judge0.base_types.Encodeable.encode">
-<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.Encodeable.encode" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Encodeable.encode'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Encodable.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.Encodable.encode" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Encodable.encode'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><p>Serialize the object to bytes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -302,28 +306,28 @@
 <dt class="sig sig-object py" id="judge0.base_types.Language">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">Language</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.Language" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Language.compile_cmd">
-<span class="sig-name descname"><span class="pre">compile_cmd</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.Language.compile_cmd" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.compile_cmd'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.base_types.Language.id">
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#judge0.base_types.Language.id" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.id'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Language.is_archived">
-<span class="sig-name descname"><span class="pre">is_archived</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.Language.is_archived" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.is_archived'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.base_types.Language.name">
 <span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#judge0.base_types.Language.name" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.name'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Language.run_cmd">
-<span class="sig-name descname"><span class="pre">run_cmd</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.Language.run_cmd" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.run_cmd'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Language.is_archived">
+<span class="sig-name descname"><span class="pre">is_archived</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.Language.is_archived" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.is_archived'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.base_types.Language.source_file">
 <span class="sig-name descname"><span class="pre">source_file</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.Language.source_file" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.source_file'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.Language.compile_cmd">
+<span class="sig-name descname"><span class="pre">compile_cmd</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.Language.compile_cmd" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.compile_cmd'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.Language.run_cmd">
+<span class="sig-name descname"><span class="pre">run_cmd</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.Language.run_cmd" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Language.run_cmd'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 </dd></dl>
 <dl class="py class">
@@ -604,22 +608,6 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">Status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.Status" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><p>Status enumeration.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.ACCEPTED">
-<span class="sig-name descname"><span class="pre">ACCEPTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#judge0.base_types.Status.ACCEPTED" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.ACCEPTED'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.COMPILATION_ERROR">
-<span class="sig-name descname"><span class="pre">COMPILATION_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#judge0.base_types.Status.COMPILATION_ERROR" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.COMPILATION_ERROR'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.EXEC_FORMAT_ERROR">
-<span class="sig-name descname"><span class="pre">EXEC_FORMAT_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">14</span></em><a class="headerlink" href="#judge0.base_types.Status.EXEC_FORMAT_ERROR" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.EXEC_FORMAT_ERROR'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.INTERNAL_ERROR">
-<span class="sig-name descname"><span class="pre">INTERNAL_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">13</span></em><a class="headerlink" href="#judge0.base_types.Status.INTERNAL_ERROR" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.INTERNAL_ERROR'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd></dd></dl>
-<dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.base_types.Status.IN_QUEUE">
 <span class="sig-name descname"><span class="pre">IN_QUEUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#judge0.base_types.Status.IN_QUEUE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.IN_QUEUE'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
@@ -628,20 +616,20 @@
 <span class="sig-name descname"><span class="pre">PROCESSING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#judge0.base_types.Status.PROCESSING" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.PROCESSING'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_NZEC">
-<span class="sig-name descname"><span class="pre">RUNTIME_ERROR_NZEC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_NZEC" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_NZEC'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Status.ACCEPTED">
+<span class="sig-name descname"><span class="pre">ACCEPTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#judge0.base_types.Status.ACCEPTED" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.ACCEPTED'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_OTHER">
-<span class="sig-name descname"><span class="pre">RUNTIME_ERROR_OTHER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_OTHER" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_OTHER'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Status.WRONG_ANSWER">
+<span class="sig-name descname"><span class="pre">WRONG_ANSWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#judge0.base_types.Status.WRONG_ANSWER" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.WRONG_ANSWER'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_SIGABRT">
-<span class="sig-name descname"><span class="pre">RUNTIME_ERROR_SIGABRT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Status.TIME_LIMIT_EXCEEDED">
+<span class="sig-name descname"><span class="pre">TIME_LIMIT_EXCEEDED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#judge0.base_types.Status.TIME_LIMIT_EXCEEDED" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.TIME_LIMIT_EXCEEDED'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_SIGFPE">
-<span class="sig-name descname"><span class="pre">RUNTIME_ERROR_SIGFPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Status.COMPILATION_ERROR">
+<span class="sig-name descname"><span class="pre">COMPILATION_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#judge0.base_types.Status.COMPILATION_ERROR" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.COMPILATION_ERROR'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_SIGSEGV">
@@ -652,18 +640,39 @@
 <span class="sig-name descname"><span class="pre">RUNTIME_ERROR_SIGXFSZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGXFSZ" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_SIGXFSZ'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.TIME_LIMIT_EXCEEDED">
-<span class="sig-name descname"><span class="pre">TIME_LIMIT_EXCEEDED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#judge0.base_types.Status.TIME_LIMIT_EXCEEDED" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.TIME_LIMIT_EXCEEDED'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_SIGFPE">
+<span class="sig-name descname"><span class="pre">RUNTIME_ERROR_SIGFPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.Status.WRONG_ANSWER">
-<span class="sig-name descname"><span class="pre">WRONG_ANSWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#judge0.base_types.Status.WRONG_ANSWER" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.WRONG_ANSWER'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_SIGABRT">
+<span class="sig-name descname"><span class="pre">RUNTIME_ERROR_SIGABRT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_NZEC">
+<span class="sig-name descname"><span class="pre">RUNTIME_ERROR_NZEC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_NZEC" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_NZEC'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.Status.RUNTIME_ERROR_OTHER">
+<span class="sig-name descname"><span class="pre">RUNTIME_ERROR_OTHER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#judge0.base_types.Status.RUNTIME_ERROR_OTHER" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.RUNTIME_ERROR_OTHER'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.Status.INTERNAL_ERROR">
+<span class="sig-name descname"><span class="pre">INTERNAL_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">13</span></em><a class="headerlink" href="#judge0.base_types.Status.INTERNAL_ERROR" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.INTERNAL_ERROR'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.Status.EXEC_FORMAT_ERROR">
+<span class="sig-name descname"><span class="pre">EXEC_FORMAT_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">14</span></em><a class="headerlink" href="#judge0.base_types.Status.EXEC_FORMAT_ERROR" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Status.EXEC_FORMAT_ERROR'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="judge0.base_types.TestCase">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">TestCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.TestCase" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.TestCase'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd><dl class="py attribute">
+<dd><p>Dataclass for test case.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.TestCase.input">
+<span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.TestCase.input" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.TestCase.input'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
 <dt class="sig sig-object py" id="judge0.base_types.TestCase.expected_output">
 <span class="sig-name descname"><span class="pre">expected_output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.TestCase.expected_output" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.TestCase.expected_output'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd></dd></dl>
@@ -672,20 +681,42 @@
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_case</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.base_types.TestCase.from_record" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.TestCase.from_record'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
 <dd><p>Create a TestCase from built-in types.</p>
 <dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>test_case</strong> (<a class="reference internal" href="#judge0.base_types.TestCaseType" title="judge0.base_types.TestCaseType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TestCaseType</span></code></a> or None) – Test case data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Created TestCase object or None if test_case is None.</p>
+</dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#judge0.base_types.TestCase" title="judge0.base_types.TestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></a>]</span></p>
+<dd class="field-odd"><p><a class="reference internal" href="#judge0.base_types.TestCase" title="judge0.base_types.TestCase">TestCase</a> or None</p>
 </dd>
 </dl>
 </dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="judge0.base_types.TestCase.input">
-<span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#judge0.base_types.TestCase.input" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.TestCase.input'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
-<dd></dd></dl>
 </dd></dl>
+</section>
+<section id="type-aliases">
+<h2>Type aliases<a class="headerlink" href="#type-aliases" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#type-aliases'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.Iterable">
+<span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">Iterable</span></span><a class="headerlink" href="#judge0.base_types.Iterable" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.Iterable'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.TestCaseType">
+<span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">TestCaseType</span></span><a class="headerlink" href="#judge0.base_types.TestCaseType" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.TestCaseType'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>alias of <a class="reference internal" href="#judge0.base_types.TestCase" title="judge0.base_types.TestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></a> | <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="judge0.base_types.TestCases">
+<span class="sig-prename descclassname"><span class="pre">judge0.base_types.</span></span><span class="sig-name descname"><span class="pre">TestCases</span></span><a class="headerlink" href="#judge0.base_types.TestCases" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.base_types.TestCases'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<a class="reference internal" href="#judge0.base_types.TestCase" title="judge0.base_types.TestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></a> | <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</p>
+</dd></dl>
+</section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
+<li><a :data-current="activeSection === '#types'" class="reference internal" href="#types">Types</a><ul>
 <li><a :data-current="activeSection === '#judge0.base_types.Config'" class="reference internal" href="#judge0.base_types.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
 <li><a :data-current="activeSection === '#judge0.base_types.Config.allow_enable_network'" class="reference internal" href="#judge0.base_types.Config.allow_enable_network"><code class="docutils literal notranslate"><span class="pre">Config.allow_enable_network</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.Config.allow_enable_per_process_and_thread_memory_limit'" class="reference internal" href="#judge0.base_types.Config.allow_enable_per_process_and_thread_memory_limit"><code class="docutils literal notranslate"><span class="pre">Config.allow_enable_per_process_and_thread_memory_limit</span></code></a></li>
@@ -728,8 +759,8 @@
 <li><a :data-current="activeSection === '#judge0.base_types.Config.wall_time_limit'" class="reference internal" href="#judge0.base_types.Config.wall_time_limit"><code class="docutils literal notranslate"><span class="pre">Config.wall_time_limit</span></code></a></li>
 </ul>
 </li>
-<li><a :data-current="activeSection === '#judge0.base_types.Encodeable'" class="reference internal" href="#judge0.base_types.Encodeable"><code class="docutils literal notranslate"><span class="pre">Encodeable</span></code></a><ul>
-<li><a :data-current="activeSection === '#judge0.base_types.Encodeable.encode'" class="reference internal" href="#judge0.base_types.Encodeable.encode"><code class="docutils literal notranslate"><span class="pre">Encodeable.encode()</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Encodable'" class="reference internal" href="#judge0.base_types.Encodable"><code class="docutils literal notranslate"><span class="pre">Encodable</span></code></a><ul>
+<li><a :data-current="activeSection === '#judge0.base_types.Encodable.encode'" class="reference internal" href="#judge0.base_types.Encodable.encode"><code class="docutils literal notranslate"><span class="pre">Encodable.encode()</span></code></a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#judge0.base_types.Flavor'" class="reference internal" href="#judge0.base_types.Flavor"><code class="docutils literal notranslate"><span class="pre">Flavor</span></code></a><ul>
@@ -738,12 +769,12 @@
 </ul>
 </li>
 <li><a :data-current="activeSection === '#judge0.base_types.Language'" class="reference internal" href="#judge0.base_types.Language"><code class="docutils literal notranslate"><span class="pre">Language</span></code></a><ul>
-<li><a :data-current="activeSection === '#judge0.base_types.Language.compile_cmd'" class="reference internal" href="#judge0.base_types.Language.compile_cmd"><code class="docutils literal notranslate"><span class="pre">Language.compile_cmd</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.Language.id'" class="reference internal" href="#judge0.base_types.Language.id"><code class="docutils literal notranslate"><span class="pre">Language.id</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Language.is_archived'" class="reference internal" href="#judge0.base_types.Language.is_archived"><code class="docutils literal notranslate"><span class="pre">Language.is_archived</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.Language.name'" class="reference internal" href="#judge0.base_types.Language.name"><code class="docutils literal notranslate"><span class="pre">Language.name</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Language.run_cmd'" class="reference internal" href="#judge0.base_types.Language.run_cmd"><code class="docutils literal notranslate"><span class="pre">Language.run_cmd</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Language.is_archived'" class="reference internal" href="#judge0.base_types.Language.is_archived"><code class="docutils literal notranslate"><span class="pre">Language.is_archived</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.Language.source_file'" class="reference internal" href="#judge0.base_types.Language.source_file"><code class="docutils literal notranslate"><span class="pre">Language.source_file</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Language.compile_cmd'" class="reference internal" href="#judge0.base_types.Language.compile_cmd"><code class="docutils literal notranslate"><span class="pre">Language.compile_cmd</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Language.run_cmd'" class="reference internal" href="#judge0.base_types.Language.run_cmd"><code class="docutils literal notranslate"><span class="pre">Language.run_cmd</span></code></a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#judge0.base_types.LanguageAlias'" class="reference internal" href="#judge0.base_types.LanguageAlias"><code class="docutils literal notranslate"><span class="pre">LanguageAlias</span></code></a><ul>
@@ -817,26 +848,34 @@
 </ul>
 </li>
 <li><a :data-current="activeSection === '#judge0.base_types.Status'" class="reference internal" href="#judge0.base_types.Status"><code class="docutils literal notranslate"><span class="pre">Status</span></code></a><ul>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.ACCEPTED'" class="reference internal" href="#judge0.base_types.Status.ACCEPTED"><code class="docutils literal notranslate"><span class="pre">Status.ACCEPTED</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.COMPILATION_ERROR'" class="reference internal" href="#judge0.base_types.Status.COMPILATION_ERROR"><code class="docutils literal notranslate"><span class="pre">Status.COMPILATION_ERROR</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.EXEC_FORMAT_ERROR'" class="reference internal" href="#judge0.base_types.Status.EXEC_FORMAT_ERROR"><code class="docutils literal notranslate"><span class="pre">Status.EXEC_FORMAT_ERROR</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.INTERNAL_ERROR'" class="reference internal" href="#judge0.base_types.Status.INTERNAL_ERROR"><code class="docutils literal notranslate"><span class="pre">Status.INTERNAL_ERROR</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.Status.IN_QUEUE'" class="reference internal" href="#judge0.base_types.Status.IN_QUEUE"><code class="docutils literal notranslate"><span class="pre">Status.IN_QUEUE</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.Status.PROCESSING'" class="reference internal" href="#judge0.base_types.Status.PROCESSING"><code class="docutils literal notranslate"><span class="pre">Status.PROCESSING</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_NZEC'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_NZEC"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_NZEC</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_OTHER'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_OTHER"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_OTHER</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_SIGABRT</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_SIGFPE</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.ACCEPTED'" class="reference internal" href="#judge0.base_types.Status.ACCEPTED"><code class="docutils literal notranslate"><span class="pre">Status.ACCEPTED</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.WRONG_ANSWER'" class="reference internal" href="#judge0.base_types.Status.WRONG_ANSWER"><code class="docutils literal notranslate"><span class="pre">Status.WRONG_ANSWER</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.TIME_LIMIT_EXCEEDED'" class="reference internal" href="#judge0.base_types.Status.TIME_LIMIT_EXCEEDED"><code class="docutils literal notranslate"><span class="pre">Status.TIME_LIMIT_EXCEEDED</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.COMPILATION_ERROR'" class="reference internal" href="#judge0.base_types.Status.COMPILATION_ERROR"><code class="docutils literal notranslate"><span class="pre">Status.COMPILATION_ERROR</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_SIGSEGV'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGSEGV"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_SIGSEGV</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_SIGXFSZ'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGXFSZ"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_SIGXFSZ</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.TIME_LIMIT_EXCEEDED'" class="reference internal" href="#judge0.base_types.Status.TIME_LIMIT_EXCEEDED"><code class="docutils literal notranslate"><span class="pre">Status.TIME_LIMIT_EXCEEDED</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.Status.WRONG_ANSWER'" class="reference internal" href="#judge0.base_types.Status.WRONG_ANSWER"><code class="docutils literal notranslate"><span class="pre">Status.WRONG_ANSWER</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_SIGFPE</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_SIGABRT</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_NZEC'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_NZEC"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_NZEC</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.RUNTIME_ERROR_OTHER'" class="reference internal" href="#judge0.base_types.Status.RUNTIME_ERROR_OTHER"><code class="docutils literal notranslate"><span class="pre">Status.RUNTIME_ERROR_OTHER</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.INTERNAL_ERROR'" class="reference internal" href="#judge0.base_types.Status.INTERNAL_ERROR"><code class="docutils literal notranslate"><span class="pre">Status.INTERNAL_ERROR</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.Status.EXEC_FORMAT_ERROR'" class="reference internal" href="#judge0.base_types.Status.EXEC_FORMAT_ERROR"><code class="docutils literal notranslate"><span class="pre">Status.EXEC_FORMAT_ERROR</span></code></a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#judge0.base_types.TestCase'" class="reference internal" href="#judge0.base_types.TestCase"><code class="docutils literal notranslate"><span class="pre">TestCase</span></code></a><ul>
+<li><a :data-current="activeSection === '#judge0.base_types.TestCase.input'" class="reference internal" href="#judge0.base_types.TestCase.input"><code class="docutils literal notranslate"><span class="pre">TestCase.input</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.TestCase.expected_output'" class="reference internal" href="#judge0.base_types.TestCase.expected_output"><code class="docutils literal notranslate"><span class="pre">TestCase.expected_output</span></code></a></li>
 <li><a :data-current="activeSection === '#judge0.base_types.TestCase.from_record'" class="reference internal" href="#judge0.base_types.TestCase.from_record"><code class="docutils literal notranslate"><span class="pre">TestCase.from_record()</span></code></a></li>
-<li><a :data-current="activeSection === '#judge0.base_types.TestCase.input'" class="reference internal" href="#judge0.base_types.TestCase.input"><code class="docutils literal notranslate"><span class="pre">TestCase.input</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#type-aliases'" class="reference internal" href="#type-aliases">Type aliases</a><ul>
+<li><a :data-current="activeSection === '#judge0.base_types.Iterable'" class="reference internal" href="#judge0.base_types.Iterable"><code class="docutils literal notranslate"><span class="pre">Iterable</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.TestCaseType'" class="reference internal" href="#judge0.base_types.TestCaseType"><code class="docutils literal notranslate"><span class="pre">TestCaseType</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.base_types.TestCases'" class="reference internal" href="#judge0.base_types.TestCases"><code class="docutils literal notranslate"><span class="pre">TestCases</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -851,7 +890,12 @@
 </div>
 </div>
 </footer>
-</div>
+</div><button :class="{'opacity-0 invisible' : !showScrollTop}" @click="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 p-2 z-10 rounded-sm bg-gray-700 text-xs text-white transition-all duration-1000 hover:bg-gray-950 focus:bg-gray-950" id="scrolltop" x-cloak="">
+<svg aria-hidden="true" class="inline fill-current mb-[2px]" height="14" viewbox="0 96 960 960" width="14" xmlns="http://www.w3.org/2000/svg">
+<path d="M450 896V370L202 618l-42-42 320-320 320 320-42 42-248-248v526h-60Z"></path>
+</svg>
+  Back to top
+</button>
 <script src="../_static/documentation_options.js?v=5929fcd5"></script>
 <script src="../_static/doctools.js?v=9a2dae69"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>

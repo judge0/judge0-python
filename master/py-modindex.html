@@ -36,7 +36,7 @@
 
 
 </head>
-  <body x-data="{ showSidebar: false, showScrollTop: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
+  <body x-data="{ showSidebar: false, showScrollTop: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }"@scroll.window="showScrollTop = pageYOffset > 100">
     <div x-cloak x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false"></div><div id="page" class="relative flex flex-col min-h-screen"><a href="#content" class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100">
       Skip to content
     </a><header
@@ -105,10 +105,12 @@
   <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/api.html">API Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/submission.html">Submission Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/clients.html">Clients Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/types.html">Types Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/errors.html">Errors Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/filesystem.html">Filesystem Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/retry.html">Retry Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/submission.html">Submission Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/types.html">Types Module</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
 <ul>
@@ -164,7 +166,12 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/types.html#module-judge0.base_types"><code class="xref">judge0.base_types</code></a></td><td>
+       <a href="api/errors.html#module-judge0.errors"><code class="xref">judge0.errors</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/filesystem.html#module-judge0.filesystem"><code class="xref">judge0.filesystem</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -188,7 +195,22 @@
 </div>
 </div>
 </footer>
-  </div>
+  </div><button id="scrolltop"
+        x-cloak
+        @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-8 right-8 p-2 z-10 rounded-sm bg-gray-700 text-xs text-white transition-all duration-1000 hover:bg-gray-950 focus:bg-gray-950"
+        :class="{'opacity-0 invisible' : !showScrollTop}"
+>
+  <svg xmlns="http://www.w3.org/2000/svg"
+       height="14"
+       viewBox="0 96 960 960"
+       width="14"
+       class="inline fill-current mb-[2px]"
+       aria-hidden="true">
+    <path d="M450 896V370L202 618l-42-42 320-320 320 320-42 42-248-248v526h-60Z" />
+  </svg>
+  Back to top
+</button>
   
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
