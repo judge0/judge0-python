@@ -11,6 +11,16 @@ from .base_types import Iterable
 
 
 class File(BaseModel):
+    """File object for storing file content.
+
+    Parameters
+    ----------
+    name : str
+        File name.
+    content : str or bytes, optional
+        File content. If str is provided, it will be encoded to bytes.
+    """
+
     name: str
     content: Optional[Union[str, bytes]] = None
 
@@ -29,6 +39,15 @@ class File(BaseModel):
 
 
 class Filesystem(BaseModel):
+    """Filesystem object for storing multiple files.
+
+    Parameters
+    ----------
+    content : str or bytes or File or Iterable[File] or Filesystem, optional
+        Filesystem content. If str or bytes is provided, it will be decoded to
+        files.
+    """
+
     files: list[File] = []
 
     def __init__(self, **data):
@@ -66,6 +85,7 @@ class Filesystem(BaseModel):
         return f"{self.__class__.__name__}(content={content_encoded!r})"
 
     def encode(self) -> bytes:
+        """Encode Filesystem object to bytes."""
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, "w") as zip_file:
             for file in self.files:

@@ -34,6 +34,10 @@ Types
 Type aliases
 ------------
 
+.. autoclass:: judge0.base_types.Iterable
+   :members:
+   :member-order: bysource
+
 .. autoclass:: judge0.base_types.TestCaseType
    :members:
    :member-order: bysource
