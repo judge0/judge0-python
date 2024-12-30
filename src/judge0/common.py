@@ -6,6 +6,7 @@ from judge0.base_types import Encodeable
 
 
 def encode(content: Union[bytes, str, Encodeable]) -> str:
+    """Encode content to base64 string."""
     if isinstance(content, bytes):
         return b64encode(content).decode()
     if isinstance(content, str):
@@ -16,6 +17,7 @@ def encode(content: Union[bytes, str, Encodeable]) -> str:
 
 
 def decode(content: Union[bytes, str]) -> str:
+    """Decode base64 encoded content."""
     if isinstance(content, bytes):
         return b64decode(
             content.decode(errors="backslashreplace"), validate=True

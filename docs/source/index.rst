@@ -60,6 +60,7 @@ Every contribution, big or small, is valuable!
       api/clients
       api/types
       api/retry
+      api/errors
 
 .. toctree::
       :caption: Getting Involved
