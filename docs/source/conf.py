@@ -35,6 +35,9 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinxawesome_theme"
+html_theme_options = {
+    "show_scrolltop": True,
+}
 html_show_sphinx = False
 html_sidebars = {
     "**": [

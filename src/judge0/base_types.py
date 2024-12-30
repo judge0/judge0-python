@@ -1,7 +1,7 @@
 import copy
 
 from dataclasses import dataclass
-from enum import IntEnum, auto
+from enum import auto, IntEnum
 from typing import Optional, Protocol, runtime_checkable, Sequence, Union
 
 from pydantic import BaseModel
@@ -14,6 +14,8 @@ TestCases = Iterable[TestCaseType]
 
 @dataclass(frozen=True)
 class TestCase:
+    """Dataclass for test case."""
+
     input: Optional[str] = None
     expected_output: Optional[str] = None
 
@@ -21,7 +23,18 @@ class TestCase:
     def from_record(
         cls, test_case: Union[TestCaseType, None]
     ) -> Union["TestCase", None]:
-        """Create a TestCase from built-in types."""
+        """Create a TestCase from built-in types.
+
+        Parameters
+        ----------
+        test_case: :obj:`TestCaseType` or None
+            Test case data.
+
+        Returns
+        -------
+        TestCase or None
+            Created TestCase object or None if test_case is None.
+        """
         if isinstance(test_case, (tuple, list)):
             test_case = {
                 field: value
@@ -42,7 +55,7 @@ class TestCase:
 
 
 @runtime_checkable
-class Encodeable(Protocol):
+class Encodable(Protocol):
     def encode(self) -> bytes:
         """Serialize the object to bytes."""
         ...
@@ -59,6 +72,7 @@ class Language(BaseModel):
 
 class LanguageAlias(IntEnum):
     """Language enumeration."""
+
     ASSEMBLY = auto()
     BASH = auto()
     BASIC = auto()
