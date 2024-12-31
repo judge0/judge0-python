@@ -134,7 +134,39 @@
 <li><p>Install the library and development dependencies</p></li>
 </ol>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>test<span class="o">]</span>
-</span><span id="line-2"><span class="gp">$ </span>pre-commit<span class="w"> </span>install
+</span><span id="line-2"><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>docs/requirements.txt<span class="w"> </span><span class="c1"># needed for building the docs</span>
+</span><span id="line-3"><span class="gp">$ </span>pre-commit<span class="w"> </span>install
+</span></code></pre></div>
+</div>
+</section>
+<section id="building-documentation">
+<h2>Building documentation<a class="headerlink" href="#building-documentation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#building-documentation'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Documentation is built using Sphinx. To build the documentation, run the</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>docs
+</span><span id="line-2"><span class="gp">$ </span>make<span class="w"> </span>html
+</span></code></pre></div>
+</div>
+<p>You should inspect the changes in the documentation by opening the
+<code class="docutils literal notranslate"><span class="pre">docs/build/html/index.html</span></code> file in your browser.</p>
+<p>You’ll see a different output since the documentation is build with
+<a class="reference external" href="https://github.com/sphinx-contrib/multiversion">sphinx-multiversion</a> extension.</p>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#testing'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>If you implemented a feature or fixed a bug, please add tests for it.</p>
+<p>Unfortunately, at the moment you cannot run full test suite because it requires
+access to API keys for all implemented API hubs (ATD, Sulu, and RapidAPI) and
+a private Judge0 instance. To partially address this situation, you can run and
+test your implemented feature and tests locally and use the GitHub CI pipeline
+to run the full test suite.</p>
+<p>To run the tests locally, you can use the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>pytest<span class="w"> </span>-svv<span class="w"> </span>tests<span class="w"> </span>-k<span class="w"> </span><span class="s1">'&lt;test_name&gt;'</span>
+</span></code></pre></div>
+</div>
+<p>To make the test compatible with the CI pipeline, you should use one of the
+client fixtures:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">test_my_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span><span id="line-2">    <span class="n">client</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="s2">"judge0_ce_client"</span><span class="p">)</span> <span class="c1"># or judge0_extra_ce_client</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -143,6 +175,8 @@
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#preparing-the-development-setup'" class="reference internal" href="#preparing-the-development-setup">Preparing the development setup</a></li>
+<li><a :data-current="activeSection === '#building-documentation'" class="reference internal" href="#building-documentation">Building documentation</a></li>
+<li><a :data-current="activeSection === '#testing'" class="reference internal" href="#testing">Testing</a></li>
 </ul>
 </div>
 </aside>
