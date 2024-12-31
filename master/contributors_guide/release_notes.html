@@ -119,7 +119,49 @@
 <div id="content" role="main">
 <section id="how-to-create-a-release">
 <h1>How to create a release<a class="headerlink" href="#how-to-create-a-release" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<p>TODO</p>
+<p>Creating a release is a simple process that involves a few steps:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt><strong>Prepare the release</strong>:</dt><dd><ol class="arabic simple">
+<li><p>Create a separate branch for the release. Name the branch <code class="docutils literal notranslate"><span class="pre">release-x.y.z</span></code>
+where <code class="docutils literal notranslate"><span class="pre">x.y.z</span></code> is the version number.</p></li>
+<li><p>Update the version number in <code class="docutils literal notranslate"><span class="pre">judge0/__init__.py</span></code>.</p></li>
+<li><p>Update the version number in <code class="docutils literal notranslate"><span class="pre">judge0/pyproject.toml</span></code>.</p></li>
+<li><p>Sync the branch with any changes from the master branch.</p></li>
+<li><p>Create a pull request for the release branch. Make sure that all tests pass.</p></li>
+<li><p>Merge the pull request.</p></li>
+<li><p>Pull the changes to your local repository and tag the commit (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">tag</span> <span class="pre">vX.Y.Z</span></code>) with the version number.</p></li>
+<li><p>Push the tags to the remote repository (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">master</span> <span class="pre">--tags</span></code>).</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Create release (notes) on GitHub</strong>.</dt><dd><ol class="arabic simple">
+<li><p>Go to the <a class="reference external" href="https://github.com/judge0/judge0-python/releases/new">releases page</a> on GitHub.</p></li>
+<li><p>Release title should be <code class="docutils literal notranslate"><span class="pre">Judge0</span> <span class="pre">Python</span> <span class="pre">SDK</span> <span class="pre">vX.Y.Z</span></code>.</p></li>
+<li><p>Release notes should include a changes from the previous release to the newest release.</p></li>
+<li><p>Use the <a class="reference external" href="https://github.com/judge0/judge0-python/blob/master/RELEASE_NOTES_TEMPLATE.md">template</a> from the repo to organize the changes.</p></li>
+<li><p>Create the release. (“Set as a pre-release” should NOT be checked.)</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Release on PyPI</strong>:</dt><dd><ol class="arabic simple">
+<li><p>Use the <a class="reference external" href="https://github.com/judge0/judge0-python/actions/workflows/publish.yml">GitHub Actions workflow</a> to create a release on PyPI.</p></li>
+<li><p>Select <cite>Run workflow</cite> and as <cite>Target repository</cite> select <cite>pypi</cite>.</p></li>
+<li><p>Click the <cite>Run workflow</cite> button.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<p>After the release is successfully published on PyPI, create a new pull request
+that updates the working version in  <code class="docutils literal notranslate"><span class="pre">judge0/__init__.py</span></code> and <code class="docutils literal notranslate"><span class="pre">judge0/pyproject.toml</span></code>
+to the minor version. Merge the pull request and you’re done! For example, if the
+new release was <code class="docutils literal notranslate"><span class="pre">1.2.2</span></code>, the working version should be updated to <code class="docutils literal notranslate"><span class="pre">1.3.0.dev0</span></code>.</p>
+<p>You’ve successfully created a release! Congratulations! 🎉</p>
 </section>
 </div></div>
 </main>
