@@ -14,7 +14,7 @@ TestCases = Iterable[TestCaseType]
 
 @dataclass(frozen=True)
 class TestCase:
-    """Dataclass for test case."""
+    """Test case data model."""
 
     input: Optional[str] = None
     expected_output: Optional[str] = None
@@ -62,6 +62,11 @@ class Encodable(Protocol):
 
 
 class Language(BaseModel):
+    """Language data model.
+
+    Stores information about a language supported by Judge0.
+    """
+
     id: int
     name: str
     is_archived: Optional[bool] = None
@@ -71,7 +76,12 @@ class Language(BaseModel):
 
 
 class LanguageAlias(IntEnum):
-    """Language enumeration."""
+    """Language alias enumeration.
+
+    Enumerates the programming languages supported by Judge0 client. Language
+    alias is resolved to the latest version of the language supported by the
+    selected client.
+    """
 
     ASSEMBLY = auto()
     BASH = auto()
@@ -143,14 +153,20 @@ class LanguageAlias(IntEnum):
 
 
 class Flavor(IntEnum):
-    """Judge0 flavor enumeration."""
+    """Flavor enumeration.
+
+    Enumerates the flavors supported by Judge0 client.
+    """
 
     CE = 0
     EXTRA_CE = 1
 
 
 class Status(IntEnum):
-    """Status enumeration."""
+    """Status enumeration.
+
+    Enumerates possible status codes of a submission.
+    """
 
     IN_QUEUE = 1
     PROCESSING = 2
@@ -172,7 +188,10 @@ class Status(IntEnum):
 
 
 class Config(BaseModel):
-    """Client config data."""
+    """Client config data model.
+
+    Stores configuration data for the Judge0 client.
+    """
 
     allow_enable_network: bool
     allow_enable_per_process_and_thread_memory_limit: bool
