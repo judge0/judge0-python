@@ -715,5 +715,5 @@ class SuluJudge0ExtraCE(Sulu):
         super().__init__(self.DEFAULT_ENDPOINT, api_key, **kwargs)
 
 
-CE = (RapidJudge0CE, SuluJudge0CE, ATDJudge0CE)
-EXTRA_CE = (RapidJudge0ExtraCE, SuluJudge0ExtraCE, ATDJudge0ExtraCE)
+CE = (SuluJudge0CE, RapidJudge0CE, ATDJudge0CE)
+EXTRA_CE = (SuluJudge0ExtraCE, RapidJudge0ExtraCE, ATDJudge0ExtraCE)
