@@ -47,13 +47,31 @@ You'll see a different output since the documentation is build with
 Testing
 -------
 
-If you implemented a feature or fixed a bug, please add tests for it.
+.. warning::
+    If you are implementing features or fixing bugs, you are expected to have
+    all of the three API keys (ATD, Sulu, and RapidAPI) setup and set in you
+    environment variables - ``JUDGE0_SULU_API_KEY``, ``JUDGE0_RAPID_API_KEY``,
+    and ``JUDGE0_ATD_API_KEY``.
 
-Unfortunately, at the moment you cannot run full test suite because it requires
-access to API keys for all implemented API hubs (ATD, Sulu, and RapidAPI) and
-a private Judge0 instance. To partially address this situation, you can run and
-test your implemented feature and tests locally and use the GitHub CI pipeline
-to run the full test suite.
+Every bug fix or new feature should have tests for it. The tests are located in
+the ``tests`` directory and are written using `pytest <https://docs.pytest.org/en/stable/>`_.
+
+While working with the tests, you should use the following fixtures:
+
+* ``default_ce_client`` - a client, chosen based on the environment variables set, that uses the CE flavor of the client.
+* ``default_extra_ce_client`` - a client, chosen based on the environment variables set, that uses the Extra CE flavor of the client.
+
+The ``default_ce_client`` and ``default_extra_ce_client`` are fixtures that
+return a client based on the environment variables set. This enables you to
+run the full test suite locally, but also to run the tests on the CI pipeline
+without changing the tests.
+
+You can use the fixtures in your tests like this:
+
+.. code-block:: python
+    
+    def test_my_test(request):
+        client = request.getfixturevalue("default_ce_client") # or default_extra_ce_client
 
 To run the tests locally, you can use the following command:
 
@@ -61,10 +79,15 @@ To run the tests locally, you can use the following command:
 
     $ pytest -svv tests -k '<test_name>'
 
-To make the test compatible with the CI pipeline, you should use one of the
-client fixtures:
+This will enable you to run a single test, without incurring the cost of
+running the full test suite. If you want to run the full test suite, you can
+use the following command:
 
-.. code-block:: python
-    
-    def test_my_test(request):
-        client = request.getfixturevalue("judge0_ce_client") # or judge0_extra_ce_client
+.. code-block:: console
+
+    $ pytest -svv tests
+
+or you can create a draft PR and let the CI pipeline run the tests for you.
+The CI pipeline will run the tests on every PR, using a private instance
+of Judge0, so you can be sure that your changes are not breaking the existing
+functionality.

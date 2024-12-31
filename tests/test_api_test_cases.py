@@ -207,7 +207,7 @@ class TestCreateSubmissionsFromTestCases:
 def test_test_cases_from_run(
     source_code_or_submissions, test_cases, expected_status, request
 ):
-    client = request.getfixturevalue("judge0_ce_client")
+    client = request.getfixturevalue("default_ce_client")
 
     if isinstance(source_code_or_submissions, str):
         submissions = judge0.run(
@@ -254,7 +254,7 @@ def test_test_cases_from_run(
     ],
 )
 def test_no_test_cases(submissions, expected_status, request):
-    client = request.getfixturevalue("judge0_ce_client")
+    client = request.getfixturevalue("default_ce_client")
 
     submissions = judge0.run(
         client=client,
@@ -269,7 +269,7 @@ def test_no_test_cases(submissions, expected_status, request):
 
 @pytest.mark.parametrize("n_submissions", [42, 84])
 def test_batched_test_cases(n_submissions, request):
-    client = request.getfixturevalue("judge0_ce_client")
+    client = request.getfixturevalue("default_ce_client")
     submissions = [
         Submission(source_code=f"print({i})", expected_output=f"{i}")
         for i in range(n_submissions)
