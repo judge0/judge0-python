@@ -46,8 +46,9 @@ class Client:
             self.languages = self.get_languages()
             self.config = self.get_config_info()
         except Exception as e:
+            home_url = getattr(self, "HOME_URL", None)
             raise RuntimeError(
-                f"Authentication failed. Visit {self.HOME_URL} to get or "
+                f"Authentication failed. Visit {home_url} to get or "
                 "review your authentication credentials."
             ) from e
 
