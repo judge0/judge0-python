@@ -353,10 +353,12 @@ def async_execute(
         resolved.
     submissions : Submission or Submissions, optional
         Submission or submissions for execution.
-    source_code: str, optional
+    source_code : str, optional
         A source code of a program.
-    test_cases: TestCaseType or TestCases, optional
+    test_cases : TestCaseType or TestCases, optional
         A single test or a list of test cases
+    **kwargs : dict
+        Additional keyword arguments to pass to the Submission constructor.
 
     Returns
     -------
@@ -405,6 +407,8 @@ def sync_execute(
         A source code of a program.
     test_cases: TestCaseType or TestCases, optional
         A single test or a list of test cases
+    **kwargs : dict
+        Additional keyword arguments to pass to the Submission constructor.
 
     Returns
     -------

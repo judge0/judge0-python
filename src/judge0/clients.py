@@ -356,7 +356,19 @@ class Client:
 
 
 class ATD(Client):
-    """Base class for all AllThingsDev clients."""
+    """Base class for all AllThingsDev clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    host_header_value : str
+        Value for the x-apihub-host header.
+    api_key : str
+        AllThingsDev API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
 
     API_KEY_ENV: ClassVar[str] = "JUDGE0_ATD_API_KEY"
 
@@ -376,7 +388,15 @@ class ATD(Client):
 
 
 class ATDJudge0CE(ATD):
-    """AllThingsDev client for CE flavor."""
+    """AllThingsDev client for CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        AllThingsDev API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
 
     DEFAULT_ENDPOINT: ClassVar[str] = (
         "https://judge0-ce.proxy-production.allthingsdev.co"
@@ -460,7 +480,15 @@ class ATDJudge0CE(ATD):
 
 
 class ATDJudge0ExtraCE(ATD):
-    """AllThingsDev client for Extra CE flavor."""
+    """AllThingsDev client for Extra CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        AllThingsDev API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
 
     DEFAULT_ENDPOINT: ClassVar[str] = (
         "https://judge0-extra-ce.proxy-production.allthingsdev.co"
@@ -545,7 +573,19 @@ class ATDJudge0ExtraCE(ATD):
 
 
 class Rapid(Client):
-    """Base class for all RapidAPI clients."""
+    """Base class for all RapidAPI clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    host_header_value : str
+        Value for the x-rapidapi-host header.
+    api_key : str
+        RapidAPI API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
 
     API_KEY_ENV: ClassVar[str] = "JUDGE0_RAPID_API_KEY"
 
@@ -562,7 +602,15 @@ class Rapid(Client):
 
 
 class RapidJudge0CE(Rapid):
-    """RapidAPI client for CE flavor."""
+    """RapidAPI client for CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        RapidAPI API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
 
     DEFAULT_ENDPOINT: ClassVar[str] = "https://judge0-ce.p.rapidapi.com"
     DEFAULT_HOST: ClassVar[str] = "judge0-ce.p.rapidapi.com"
@@ -578,7 +626,15 @@ class RapidJudge0CE(Rapid):
 
 
 class RapidJudge0ExtraCE(Rapid):
-    """RapidAPI client for Extra CE flavor."""
+    """RapidAPI client for Extra CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        RapidAPI API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
 
     DEFAULT_ENDPOINT: ClassVar[str] = "https://judge0-extra-ce.p.rapidapi.com"
     DEFAULT_HOST: ClassVar[str] = "judge0-extra-ce.p.rapidapi.com"
@@ -602,6 +658,8 @@ class Sulu(Client):
         Default request endpoint.
     api_key : str, optional
         Sulu API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
     """
 
     API_KEY_ENV: ClassVar[str] = "JUDGE0_SULU_API_KEY"
@@ -622,6 +680,8 @@ class SuluJudge0CE(Sulu):
     ----------
     api_key : str, optional
         Sulu API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
     """
 
     DEFAULT_ENDPOINT: ClassVar[str] = "https://judge0-ce.p.sulu.sh"
@@ -642,6 +702,8 @@ class SuluJudge0ExtraCE(Sulu):
     ----------
     api_key : str
         Sulu API key.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
     """
 
     DEFAULT_ENDPOINT: ClassVar[str] = "https://judge0-extra-ce.p.sulu.sh"
