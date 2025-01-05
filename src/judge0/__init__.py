@@ -111,6 +111,8 @@ def _get_preview_client(flavor: Flavor) -> Union[SuluJudge0CE, SuluJudge0ExtraCE
 
 
 def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
+    from json import loads
+
     ce_endpoint = os.getenv("JUDGE0_CE_ENDPOINT")
     ce_auth_header = os.getenv("JUDGE0_CE_AUTH_HEADERS")
     extra_ce_endpoint = os.getenv("JUDGE0_EXTRA_CE_ENDPOINT")
@@ -119,7 +121,7 @@ def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     if flavor == Flavor.CE and ce_endpoint is not None and ce_auth_header is not None:
         return Client(
             endpoint=ce_endpoint,
-            auth_headers=eval(ce_auth_header),
+            auth_headers=loads(ce_auth_header),
         )
 
     if (
@@ -129,7 +131,7 @@ def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     ):
         return Client(
             endpoint=extra_ce_endpoint,
-            auth_headers=eval(extra_ce_auth_header),
+            auth_headers=loads(extra_ce_auth_header),
         )
 
     return None

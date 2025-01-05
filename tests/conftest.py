@@ -1,3 +1,4 @@
+import json
 import os
 
 import pytest
@@ -16,7 +17,7 @@ def judge0_ce_client():
     if endpoint is None or auth_headers is None:
         return None
     else:
-        return clients.Client(endpoint=endpoint, auth_headers=eval(auth_headers))
+        return clients.Client(endpoint=endpoint, auth_headers=json.loads(auth_headers))
 
 
 @pytest.fixture(scope="session")
@@ -27,7 +28,7 @@ def judge0_extra_ce_client():
     if endpoint is None or auth_headers is None:
         return None
     else:
-        return clients.Client(endpoint=endpoint, auth_headers=eval(auth_headers))
+        return clients.Client(endpoint=endpoint, auth_headers=json.loads(auth_headers))
 
 
 @pytest.fixture(scope="session")
