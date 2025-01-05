@@ -1,6 +1,7 @@
 name: Test judge0-python
 
 on:
+  workflow_dispatch:
   push:
     branches: ["master"]
     paths: ["src/**", "tests/**"]
