@@ -63,6 +63,16 @@ Every contribution, big or small, is valuable!
       api/submission
       api/types
 
+
+.. toctree::
+      :caption: In Depth
+      :glob:
+      :titlesonly:
+      :hidden:
+
+      in_depth/client_resolution
+
+
 .. toctree::
       :caption: Getting Involved
       :glob:
