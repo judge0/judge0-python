@@ -62,10 +62,10 @@ the ``tests`` directory and are written using `pytest <https://docs.pytest.org/e
 
 While working with the tests, you should use the following fixtures:
 
-* ``default_ce_client`` - a client, chosen based on the environment variables set, that uses the CE flavor of the client.
-* ``default_extra_ce_client`` - a client, chosen based on the environment variables set, that uses the Extra CE flavor of the client.
+* ``ce_client`` - a client, chosen based on the environment variables set, that uses the CE flavor of the client.
+* ``extra_ce_client`` - a client, chosen based on the environment variables set, that uses the Extra CE flavor of the client.
 
-The ``default_ce_client`` and ``default_extra_ce_client`` are fixtures that
+The ``ce_client`` and ``extra_ce_client`` are fixtures that
 return a client based on the environment variables set. This enables you to
 run the full test suite locally, but also to run the tests on the CI pipeline
 without changing the tests.
@@ -75,7 +75,7 @@ You can use the fixtures in your tests like this:
 .. code-block:: python
     
     def test_my_test(request):
-        client = request.getfixturevalue("default_ce_client") # or default_extra_ce_client
+        client = request.getfixturevalue("ce_client") # or extra_ce_client
 
 To run the tests locally, you can use the following command:
 

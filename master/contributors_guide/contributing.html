@@ -188,16 +188,16 @@ and <code class="docutils literal notranslate"><span class="pre">JUDGE0_ATD_API_
 the <code class="docutils literal notranslate"><span class="pre">tests</span></code> directory and are written using <a class="reference external" href="https://docs.pytest.org/en/stable/" rel="nofollow noopener">pytest<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
 <p>While working with the tests, you should use the following fixtures:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">default_ce_client</span></code> - a client, chosen based on the environment variables set, that uses the CE flavor of the client.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">default_extra_ce_client</span></code> - a client, chosen based on the environment variables set, that uses the Extra CE flavor of the client.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ce_client</span></code> - a client, chosen based on the environment variables set, that uses the CE flavor of the client.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extra_ce_client</span></code> - a client, chosen based on the environment variables set, that uses the Extra CE flavor of the client.</p></li>
 </ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">default_ce_client</span></code> and <code class="docutils literal notranslate"><span class="pre">default_extra_ce_client</span></code> are fixtures that
+<p>The <code class="docutils literal notranslate"><span class="pre">ce_client</span></code> and <code class="docutils literal notranslate"><span class="pre">extra_ce_client</span></code> are fixtures that
 return a client based on the environment variables set. This enables you to
 run the full test suite locally, but also to run the tests on the CI pipeline
 without changing the tests.</p>
 <p>You can use the fixtures in your tests like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span><span class="w"> </span><span class="nf">test_my_test</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-</span><span id="line-2">    <span class="n">client</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="s2">"default_ce_client"</span><span class="p">)</span> <span class="c1"># or default_extra_ce_client</span>
+</span><span id="line-2">    <span class="n">client</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="s2">"ce_client"</span><span class="p">)</span> <span class="c1"># or extra_ce_client</span>
 </span></code></pre></div>
 </div>
 <p>To run the tests locally, you can use the following command:</p>
