@@ -24,7 +24,7 @@ Preparing the development setup
 
 .. code-block:: console
 
-    $ pip install -e [dev]
+    $ pip install -e .[dev]
     $ pre-commit install
 
 Building documentation
