@@ -85,12 +85,12 @@ def _get_implicit_client(flavor: Flavor) -> Client:
     # Let's check if we can find a self-hosted client.
     client = _get_custom_client(flavor)
 
-    # Try to find one of the predefined keys JUDGE0_{SULU,RAPID,ATD}_API_KEY
-    # in environment variables.
+    # Try to find one of the API keys JUDGE0_{SULU,RAPID,ATD}_API_KEY
+    # for hub clients.
     if client is None:
-        client = _get_predefined_client(flavor)
+        client = _get_hub_client(flavor)
 
-    # If we didn't find any of the possible predefined keys, initialize
+    # If we didn't find any of the possible keys, initialize
     # the preview Sulu client based on the flavor.
     if client is None:
         client = _get_preview_client(flavor)
@@ -137,7 +137,7 @@ def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     return None
 
 
-def _get_predefined_client(flavor: Flavor) -> Union[Client, None]:
+def _get_hub_client(flavor: Flavor) -> Union[Client, None]:
     from .clients import CE, EXTRA_CE
 
     if flavor == Flavor.CE:

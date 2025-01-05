@@ -10,7 +10,7 @@ load_dotenv()
 
 
 @pytest.fixture(scope="session")
-def judge0_ce_client():
+def custom_ce_client():
     endpoint = os.getenv("JUDGE0_CE_ENDPOINT")
     auth_headers = os.getenv("JUDGE0_CE_AUTH_HEADERS")
 
@@ -21,7 +21,7 @@ def judge0_ce_client():
 
 
 @pytest.fixture(scope="session")
-def judge0_extra_ce_client():
+def custom_extra_ce_client():
     endpoint = os.getenv("JUDGE0_EXTRA_CE_ENDPOINT")
     auth_headers = os.getenv("JUDGE0_EXTRA_CE_AUTH_HEADERS")
 
@@ -86,20 +86,38 @@ def sulu_extra_ce_client():
 
 
 @pytest.fixture(scope="session")
-def default_ce_client(judge0_ce_client, sulu_ce_client):
-    if judge0_ce_client is not None:
-        return judge0_ce_client
+def ce_client(
+    custom_ce_client,
+    sulu_ce_client,
+    rapid_ce_client,
+    atd_ce_client,
+):
+    if custom_ce_client is not None:
+        return custom_ce_client
     if sulu_ce_client is not None:
         return sulu_ce_client
+    if rapid_ce_client is not None:
+        return rapid_ce_client
+    if atd_ce_client is not None:
+        return atd_ce_client
 
-    pytest.fail("No default CE client available for testing.")
+    pytest.fail("No CE client available for testing.")
 
 
 @pytest.fixture(scope="session")
-def default_extra_ce_client(judge0_extra_ce_client, sulu_extra_ce_client):
-    if judge0_extra_ce_client is not None:
-        return judge0_extra_ce_client
+def extra_ce_client(
+    custom_extra_ce_client,
+    sulu_extra_ce_client,
+    rapid_extra_ce_client,
+    atd_extra_ce_client,
+):
+    if custom_extra_ce_client is not None:
+        return custom_extra_ce_client
     if sulu_extra_ce_client is not None:
         return sulu_extra_ce_client
+    if rapid_extra_ce_client is not None:
+        return rapid_extra_ce_client
+    if atd_extra_ce_client is not None:
+        return atd_extra_ce_client
 
-    pytest.fail("No default Extra CE client available for testing.")
+    pytest.fail("No Extra CE client available for testing.")

@@ -2,8 +2,9 @@
 
 import judge0
 import pytest
-from judge0 import Status, Submission, TestCase
 from judge0.api import create_submissions_from_test_cases
+from judge0.base_types import LanguageAlias, Status, TestCase
+from judge0.submission import Submission
 
 
 @pytest.mark.parametrize(
@@ -172,14 +173,20 @@ class TestCreateSubmissionsFromTestCases:
             [Status.ACCEPTED, Status.ACCEPTED],
         ],
         [
-            Submission(source_code="print(f'Hello, {input()}')"),
+            Submission(
+                source_code="print(f'Hello, {input()}')",
+                language=LanguageAlias.PYTHON,
+            ),
             [
                 TestCase("Judge0", "Hello, Judge0"),
             ],
             [Status.ACCEPTED],
         ],
         [
-            Submission(source_code="print(f'Hello, {input()}')"),
+            Submission(
+                source_code="print(f'Hello, {input()}')",
+                language=LanguageAlias.PYTHON,
+            ),
             [
                 TestCase("Judge0", "Hello, Judge0"),
                 TestCase("pytest", "Hi, pytest"),
@@ -188,8 +195,14 @@ class TestCreateSubmissionsFromTestCases:
         ],
         [
             [
-                Submission(source_code="print(f'Hello, {input()}')"),
-                Submission(source_code="print(f'Hello,  {input()}')"),
+                Submission(
+                    source_code="print(f'Hello, {input()}')",
+                    language=LanguageAlias.PYTHON,
+                ),
+                Submission(
+                    source_code="print(f'Hello,  {input()}')",
+                    language=LanguageAlias.PYTHON,
+                ),
             ],
             [
                 TestCase("Judge0", "Hello, Judge0"),
@@ -207,13 +220,14 @@ class TestCreateSubmissionsFromTestCases:
 def test_test_cases_from_run(
     source_code_or_submissions, test_cases, expected_status, request
 ):
-    client = request.getfixturevalue("default_ce_client")
+    client = request.getfixturevalue("ce_client")
 
     if isinstance(source_code_or_submissions, str):
         submissions = judge0.run(
             client=client,
             source_code=source_code_or_submissions,
             test_cases=test_cases,
+            language=LanguageAlias.PYTHON,
         )
     else:
         submissions = judge0.run(
@@ -231,6 +245,7 @@ def test_test_cases_from_run(
         [
             Submission(
                 source_code="print(f'Hello, {input()}')",
+                language=LanguageAlias.PYTHON,
                 stdin="Judge0",
                 expected_output="Hello, Judge0",
             ),
@@ -240,11 +255,13 @@ def test_test_cases_from_run(
             [
                 Submission(
                     source_code="print(f'Hello, {input()}')",
+                    language=LanguageAlias.PYTHON,
                     stdin="Judge0",
                     expected_output="Hello, Judge0",
                 ),
                 Submission(
                     source_code="print(f'Hello, {input()}')",
+                    language=LanguageAlias.PYTHON,
                     stdin="pytest",
                     expected_output="Hello, pytest",
                 ),
@@ -254,7 +271,7 @@ def test_test_cases_from_run(
     ],
 )
 def test_no_test_cases(submissions, expected_status, request):
-    client = request.getfixturevalue("default_ce_client")
+    client = request.getfixturevalue("ce_client")
 
     submissions = judge0.run(
         client=client,
@@ -269,9 +286,13 @@ def test_no_test_cases(submissions, expected_status, request):
 
 @pytest.mark.parametrize("n_submissions", [42, 84])
 def test_batched_test_cases(n_submissions, request):
-    client = request.getfixturevalue("default_ce_client")
+    client = request.getfixturevalue("ce_client")
     submissions = [
-        Submission(source_code=f"print({i})", expected_output=f"{i}")
+        Submission(
+            source_code=f"print({i})",
+            language=LanguageAlias.PYTHON,
+            expected_output=f"{i}",
+        )
         for i in range(n_submissions)
     ]
 
