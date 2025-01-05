@@ -10,7 +10,7 @@
 <title>Judge0 Python SDK</title>
 <meta content="Judge0 Python SDK" property="og:title"/>
 <meta content="Judge0 Python SDK" name="twitter:title"/>
-<link href="_static/pygments.css?v=fa44fd50" rel="stylesheet" type="text/css"/>
+<link href="_static/pygments.css?v=03e43079" rel="stylesheet" type="text/css"/>
 <link href="_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="_static/logo.png" rel="icon"/>
 <link href="search.html" rel="search" title="Search"/>
@@ -36,7 +36,10 @@
 <div class="hidden mr-4 md:flex">
 <a class="flex items-center mr-6" href="#">
 <img alt="Logo" class="mr-2 dark:invert" height="24" src="_static/logo.png" width="24"/><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Judge0 Python SDK</span>
-</a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+</a><nav class="flex items-center space-x-6 text-sm font-medium">
+<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://judge0.github.io/judge0-python/" rel="noopener nofollow">Home</a>
+<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://judge0.com/" rel="noopener nofollow">Judge0</a>
+</nav></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
 <svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
 <path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
 </svg>
@@ -74,7 +77,10 @@
 <img alt="Logo" class="mr-2 dark:invert" height="16" src="_static/logo.png" width="16"/><span class="font-bold text-clip whitespace-nowrap">Judge0 Python SDK</span>
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
-<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
+<a href="https://judge0.github.io/judge0-python/" rel="nofollow noopener">Home</a>
+<a href="https://judge0.com/" rel="nofollow noopener">Judge0</a>
+</nav><nav class="table w-full min-w-full my-6 lg:my-8">
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/api.html">API Module</a></li>
@@ -84,6 +90,11 @@
 <li class="toctree-l1"><a class="reference internal" href="api/retry.html">Retry Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/submission.html">Submission Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/types.html">Types Module</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">In Depth</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="in_depth/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="in_depth/client_resolution.html">Client Resolution</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
 <ul>
@@ -122,7 +133,7 @@
 <ol class="arabic simple" start="2">
 <li><p>Create a minimal script:</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">judge0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">judge0</span>
 </span><span id="line-2">
 </span><span id="line-3"><span class="n">submission</span> <span class="o">=</span> <span class="n">judge</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">source_code</span><span class="o">=</span><span class="s2">"print('Hello Judge0!')"</span><span class="p">)</span>
 </span><span id="line-4"><span class="nb">print</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
@@ -136,24 +147,25 @@
 <h2>Want to learn more<a class="headerlink" href="#want-to-learn-more" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#want-to-learn-more'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
 <p>To learn what is happening behind the scenes and how to best use Judge0 Python
 SDK to facilitate the development of your own product see In Depth guide and
-<a class="reference external" href="https://github.com/judge0/judge0-python/tree/master/examples">examples</a>.</p>
+<a class="reference external" href="https://github.com/judge0/judge0-python/tree/master/examples" rel="nofollow noopener">examples<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
 </section>
 <section id="getting-involved">
 <h2>Getting Involved<a class="headerlink" href="#getting-involved" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#getting-involved'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
 <p>Getting involved in any open-source project is simple and rewarding, with
 multiple ways to contribute to its growth and success. You can help by:</p>
 <ol class="arabic simple">
-<li><p><a class="reference external" href="https://github.com/judge0/judge0-python/issues">reporting bugs</a> by
+<li><p><a class="reference external" href="https://github.com/judge0/judge0-python/issues" rel="nofollow noopener">reporting bugs<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> by
 creating a detailed issue describing the problem, along with any relevant code or
 steps to reproduce it, so it can be addressed effectively,</p></li>
-<li><p>creating a <a class="reference external" href="https://github.com/judge0/judge0-python/pulls">pull request</a> for
+<li><p>creating a <a class="reference external" href="https://github.com/judge0/judge0-python/pulls" rel="nofollow noopener">pull request<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> for
 an existing issue; we welcome improvements, fixes, and new features that align
 with the project’s goals, and</p></li>
-<li><p>you can show support by starring the <a class="reference external" href="https://github.com/judge0/judge0-python">repository</a>,
+<li><p>you can show support by starring the <a class="reference external" href="https://github.com/judge0/judge0-python" rel="nofollow noopener">repository<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>,
 letting us know that we’re doing a good job and helping us gain visibility within
 the open-source community.</p></li>
 </ol>
 <p>Every contribution, big or small, is valuable!</p>
+
 
 
 </section>

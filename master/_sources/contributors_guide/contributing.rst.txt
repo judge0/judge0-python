@@ -41,6 +41,10 @@ Documentation is built using Sphinx. To build the documentation, run the
 You should inspect the changes in the documentation by opening the
 ``docs/build/html/index.html`` file in your browser.
 
+.. note::
+    If you are having trouble with the documentation and are seeing unexpected
+    output, delete the ``docs/build`` directory and rerun the ``make html`` command.
+
 You'll see a different output since the documentation is build with
 `sphinx-multiversion <https://github.com/sphinx-contrib/multiversion>`_ extension.
 

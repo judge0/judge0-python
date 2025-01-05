@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 
-<html :class="{'dark': darkMode === 'dark' || (darkMode === 'system' &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth" data-content_root="./" lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }" x-init="$watch('darkMode', val =&gt; localStorage.setItem('darkMode', val))">
+<html :class="{'dark': darkMode === 'dark' || (darkMode === 'system' &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth" data-content_root="../" lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }" x-init="$watch('darkMode', val =&gt; localStorage.setItem('darkMode', val))">
 <head>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta charset="utf-8"/>
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Judge0 Python SDK documentation | Judge0 Python SDK</title>
-<meta content="Judge0 Python SDK documentation | Judge0 Python SDK" property="og:title"/>
-<meta content="Judge0 Python SDK documentation | Judge0 Python SDK" name="twitter:title"/>
-<link href="_static/pygments.css?v=03e43079" rel="stylesheet" type="text/css"/>
-<link href="_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
-<link href="_static/logo.png" rel="icon"/>
-<link href="search.html" rel="search" title="Search"/>
-<link href="genindex.html" rel="index" title="Index"/>
-<link href="api/index.html" rel="next" title="&lt;no title&gt;"/>
+<title>Overview | Judge0 Python SDK</title>
+<meta content="Overview | Judge0 Python SDK" property="og:title"/>
+<meta content="Overview | Judge0 Python SDK" name="twitter:title"/>
+<link href="../_static/pygments.css?v=03e43079" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
+<link href="../_static/logo.png" rel="icon"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="client_resolution.html" rel="next" title="Client Resolution"/>
+<link href="../api/types.html" rel="prev" title="Types Module"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -34,8 +35,8 @@
       Skip to content
     </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
 <div class="hidden mr-4 md:flex">
-<a class="flex items-center mr-6" href="#">
-<img alt="Logo" class="mr-2 dark:invert" height="24" src="_static/logo.png" width="24"/><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Judge0 Python SDK</span>
+<a class="flex items-center mr-6" href="../index.html">
+<img alt="Logo" class="mr-2 dark:invert" height="24" src="../_static/logo.png" width="24"/><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Judge0 Python SDK</span>
 </a><nav class="flex items-center space-x-6 text-sm font-medium">
 <a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://judge0.github.io/judge0-python/" rel="noopener nofollow">Home</a>
 <a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://judge0.com/" rel="noopener nofollow">Judge0</a>
@@ -46,7 +47,7 @@
 <span class="sr-only">Toggle navigation menu</span>
 </button>
 <div class="flex items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
-<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="search.html" class="relative flex items-center group" id="searchbox" method="get">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../search.html" class="relative flex items-center group" id="searchbox" method="get">
 <input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
 <kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
 <span class="text-xs">⌘</span>
@@ -73,8 +74,8 @@
 </div>
 </header>
 <div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
-<a class="!justify-start text-sm md:!hidden bg-background" href="#">
-<img alt="Logo" class="mr-2 dark:invert" height="16" src="_static/logo.png" width="16"/><span class="font-bold text-clip whitespace-nowrap">Judge0 Python SDK</span>
+<a class="!justify-start text-sm md:!hidden bg-background" href="../index.html">
+<img alt="Logo" class="mr-2 dark:invert" height="16" src="../_static/logo.png" width="16"/><span class="font-bold text-clip whitespace-nowrap">Judge0 Python SDK</span>
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
@@ -83,22 +84,30 @@
 </nav><nav class="table w-full min-w-full my-6 lg:my-8">
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/api.html">API Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/submission.html">Submission Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/clients.html">Clients Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/types.html">Types Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/api.html">API Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/clients.html">Clients Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/errors.html">Errors Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/filesystem.html">Filesystem Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/retry.html">Retry Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/submission.html">Submission Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/types.html">Types Module</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">In Depth</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client_resolution.html">Client Resolution</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributors_guide/contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributors_guide/release_notes.html">How to create a release candidate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors_guide/contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors_guide/release_notes.html">How to create a release</a></li>
 </ul>
 </nav>
 <h3>Versions</h3>
 <ul>
-<li><a href="../master/index.html">master</a></li>
-<li><a href="../v0.0.3/index.html">v0.0.3</a></li>
-<li><a href="index.html">v0.0.2</a></li>
+<li><a href="overview.html">master</a></li>
+<li><a href="../../v0.0.3/index.html">v0.0.3</a></li>
+<li><a href="../../v0.0.2/index.html">v0.0.2</a></li>
 </ul>
 </div>
 </div>
@@ -110,57 +119,26 @@
 </aside>
 <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
 <div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../index.html">
+<span class="hidden md:inline">Judge0 Python SDK</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Overview</span>
+</nav>
 <div id="content" role="main">
-<section id="judge0-python-sdk-documentation">
-<h1>Judge0 Python SDK documentation<a class="headerlink" href="#judge0-python-sdk-documentation" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<section id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#getting-started'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
-<p>You can run minimal Hello World example in three easy steps:</p>
-<ol class="arabic simple">
-<li><p>Install Judge0 Python SDK:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">pip<span class="w"> </span>install<span class="w"> </span>judge0
-</span></code></pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Create a minimal script:</p></li>
-</ol>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">judge0</span>
-</span><span id="line-2">
-</span><span id="line-3"><span class="n">submission</span> <span class="o">=</span> <span class="n">judge</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">source_code</span><span class="o">=</span><span class="s2">"print('Hello Judge0!')"</span><span class="p">)</span>
-</span><span id="line-4"><span class="nb">print</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
-</span></code></pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Run the script.</p></li>
-</ol>
-<section id="want-to-learn-more">
-<h3>Want to learn more<a class="headerlink" href="#want-to-learn-more" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#want-to-learn-more'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
-<p>To learn what is happening behind the scenes and how to best use Judge0 Python
-SDK to facilitate the development of your own product see In Depth guide and
-Examples.</p>
-</section>
-<section id="getting-involved">
-<h3>Getting Involved<a class="headerlink" href="#getting-involved" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#getting-involved'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
-<p>TODO</p>
-
-
-</section>
-</section>
-</section>
-</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
-<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
-<ul>
-<li><a :data-current="activeSection === '#getting-started'" class="reference internal" href="#getting-started">Getting Started</a><ul>
-<li><a :data-current="activeSection === '#want-to-learn-more'" class="reference internal" href="#want-to-learn-more">Want to learn more</a></li>
-<li><a :data-current="activeSection === '#getting-involved'" class="reference internal" href="#getting-involved">Getting Involved</a><ul>
+<section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<p>TODO:</p>
+<ul class="simple">
+<li><p>add a brief overview of the most important classes (Client, Submission, etc.)</p></li>
+<li><p>add a brief overview of the most important functions (create_submission, get_submission, etc.)</p></li>
+<li><p>write about the difference between high-level api and low-level api</p></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</aside>
+</section>
+</div></div>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
@@ -176,9 +154,9 @@ Examples.</p>
 </svg>
   Back to top
 </button>
-<script src="_static/documentation_options.js?v=2709fde1"></script>
-<script src="_static/doctools.js?v=9a2dae69"></script>
-<script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-<script defer="defer" src="_static/theme.js?v=073f68d9"></script>
+<script src="../_static/documentation_options.js?v=5929fcd5"></script>
+<script src="../_static/doctools.js?v=9a2dae69"></script>
+<script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+<script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
 </body>
 </html>
