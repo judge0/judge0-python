@@ -70,6 +70,7 @@ Every contribution, big or small, is valuable!
       :titlesonly:
       :hidden:
 
+      in_depth/overview
       in_depth/client_resolution
 
 
