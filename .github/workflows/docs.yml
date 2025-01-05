@@ -17,10 +17,10 @@ jobs:
         persist-credentials: false
         fetch-depth: 0       # Fetch the full history
         ref: ${{ github.ref }} # Check out the current branch or tag
-  
+
     - name: Fetch tags only
       run: git fetch --tags --no-recurse-submodules
-    
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -29,7 +29,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r docs/requirements.txt
+        pip install -e [docs]
 
     - name: Build documentation
       run: sphinx-multiversion docs/source docs/build/html --keep-going --no-color
@@ -41,7 +41,7 @@ jobs:
         # Get the latest tag
         latest_tag=$(git tag --sort=-creatordate | head -n 1)
         echo "LATEST_RELEASE=$latest_tag" >> $GITHUB_ENV
-    
+
     - name: Generate index.html for judge0.github.io/judge0-python.
       run: |
         echo '<!DOCTYPE html>

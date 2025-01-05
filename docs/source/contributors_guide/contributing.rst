@@ -24,8 +24,7 @@ Preparing the development setup
 
 .. code-block:: console
 
-    $ pip install -e .[test]
-    $ pip install -r docs/requirements.txt # needed for building the docs
+    $ pip install -e [dev]
     $ pre-commit install
 
 Building documentation
@@ -73,7 +72,7 @@ without changing the tests.
 You can use the fixtures in your tests like this:
 
 .. code-block:: python
-    
+
     def test_my_test(request):
         client = request.getfixturevalue("ce_client") # or extra_ce_client
 

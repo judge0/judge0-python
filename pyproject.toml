@@ -45,7 +45,16 @@ test = [
     "pytest-cov==6.0.0",
     "flake8-docstrings==1.7.0",
 ]
-docs = ["sphinx==7.4.7"]
+docs = [
+    "sphinx==7.4.7",
+    "sphinxawesome-theme==5.3.2",
+    "sphinx-autodoc-typehints==2.3.0",
+    "sphinx-multiversion==0.2.4",
+]
+dev = [
+    "judge0[test]",
+    "judge0[docs]",
+]
 
 [tool.flake8]
 extend-ignore = [
