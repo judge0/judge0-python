@@ -67,8 +67,11 @@ def _resolve_client(
     if isinstance(client, Flavor):
         return get_client(client)
 
-    if client is None and isinstance(submissions, Iterable) and len(submissions) == 0:
-        raise ValueError("Client cannot be determined from empty submissions.")
+    if client is None:
+        if (
+            isinstance(submissions, Iterable) and len(submissions) == 0
+        ) or submissions is None:
+            raise ValueError("Client cannot be determined from empty submissions.")
 
     # client is None and we have to determine a flavor of the client from the
     # the submission's languages.

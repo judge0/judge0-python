@@ -80,7 +80,7 @@ To run the tests locally, you can use the following command:
 
 .. code-block:: console
 
-    $ pytest -svv tests -k '<test_name>'
+    $ pytest tests -k '<test_name>'
 
 This will enable you to run a single test, without incurring the cost of
 running the full test suite. If you want to run the full test suite, you can
@@ -88,7 +88,7 @@ use the following command:
 
 .. code-block:: console
 
-    $ pytest -svv tests
+    $ pytest tests
 
 or you can create a draft PR and let the CI pipeline run the tests for you.
 The CI pipeline will run the tests on every PR, using a private instance

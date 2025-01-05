@@ -16,6 +16,8 @@ TestCases = Iterable[TestCaseType]
 class TestCase:
     """Test case data model."""
 
+    __test__ = False  # Needed to avoid pytest warning
+
     input: Optional[str] = None
     expected_output: Optional[str] = None
 

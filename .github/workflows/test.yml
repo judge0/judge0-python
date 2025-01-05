@@ -39,4 +39,4 @@ jobs:
           JUDGE0_EXTRA_CE_ENDPOINT: ${{ secrets.JUDGE0_EXTRA_CE_ENDPOINT }}
         run: |
           source venv/bin/activate
-          pytest -vv tests/
+          pytest tests

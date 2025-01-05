@@ -72,3 +72,6 @@ extend-ignore = [
 ]
 docstring-convention = "numpy"
 max-line-length = 88
+
+[tool.pytest.ini_options]
+addopts = "-vv"

@@ -48,7 +48,6 @@ def test_resolve_client_with_flavor(
         None,
     ],
 )
-@pytest.mark.skip
 def test_resolve_client_empty_submissions_argument(submissions):
     with pytest.raises(ValueError):
         _resolve_client(submissions=submissions)
