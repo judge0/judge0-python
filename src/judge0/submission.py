@@ -128,7 +128,7 @@ class Submission(BaseModel):
 
     source_code: Optional[Union[str, bytes]] = Field(default=None, repr=True)
     language: Union[LanguageAlias, int] = Field(
-        default=LanguageAlias.PYTHON,
+        default=LanguageAlias.PYTHON_FOR_ML,
         repr=True,
     )
     additional_files: Optional[Union[str, Filesystem]] = Field(default=None, repr=True)
