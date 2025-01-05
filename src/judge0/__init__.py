@@ -1,5 +1,7 @@
 import os
 
+from typing import Union
+
 from .api import (
     async_execute,
     async_run,
@@ -73,8 +75,6 @@ def _get_implicit_client(flavor: Flavor) -> Client:
     if flavor == Flavor.EXTRA_CE and JUDGE0_IMPLICIT_EXTRA_CE_CLIENT is not None:
         return JUDGE0_IMPLICIT_EXTRA_CE_CLIENT
 
-    from .clients import CE, EXTRA_CE
-
     try:
         from dotenv import load_dotenv
 
@@ -82,32 +82,74 @@ def _get_implicit_client(flavor: Flavor) -> Client:
     except:  # noqa: E722
         pass
 
-    if flavor == Flavor.CE:
-        client_classes = CE
-    else:
-        client_classes = EXTRA_CE
+    # Let's check if we can find a self-hosted client.
+    client = _get_custom_client(flavor)
 
     # Try to find one of the predefined keys JUDGE0_{SULU,RAPID,ATD}_API_KEY
     # in environment variables.
-    client = None
-    for client_class in client_classes:
-        api_key = os.getenv(client_class.API_KEY_ENV)
-        if api_key is not None:
-            client = client_class(api_key)
-            break
+    if client is None:
+        client = _get_predefined_client(flavor)
 
     # If we didn't find any of the possible predefined keys, initialize
     # the preview Sulu client based on the flavor.
     if client is None:
-        if flavor == Flavor.CE:
-            client = SuluJudge0CE(retry_strategy=RegularPeriodRetry(0.5))
-        else:
-            client = SuluJudge0ExtraCE(retry_strategy=RegularPeriodRetry(0.5))
+        client = _get_preview_client(flavor)
 
     if flavor == Flavor.CE:
         JUDGE0_IMPLICIT_CE_CLIENT = client
     else:
         JUDGE0_IMPLICIT_EXTRA_CE_CLIENT = client
+
+    return client
+
+
+def _get_preview_client(flavor: Flavor) -> Union[SuluJudge0CE, SuluJudge0ExtraCE]:
+    if flavor == Flavor.CE:
+        return SuluJudge0CE(retry_strategy=RegularPeriodRetry(0.5))
+    else:
+        return SuluJudge0ExtraCE(retry_strategy=RegularPeriodRetry(0.5))
+
+
+def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
+    ce_endpoint = os.getenv("JUDGE0_CE_ENDPOINT")
+    ce_auth_header = os.getenv("JUDGE0_CE_AUTH_HEADERS")
+    extra_ce_endpoint = os.getenv("JUDGE0_EXTRA_CE_ENDPOINT")
+    extra_ce_auth_header = os.getenv("JUDGE0_EXTRA_CE_AUTH_HEADERS")
+
+    if flavor == Flavor.CE and ce_endpoint is not None and ce_auth_header is not None:
+        return Client(
+            endpoint=ce_endpoint,
+            auth_headers=eval(ce_auth_header),
+        )
+
+    if (
+        flavor == Flavor.EXTRA_CE
+        and extra_ce_endpoint is not None
+        and extra_ce_auth_header is not None
+    ):
+        return Client(
+            endpoint=extra_ce_endpoint,
+            auth_headers=eval(extra_ce_auth_header),
+        )
+
+    return None
+
+
+def _get_predefined_client(flavor: Flavor) -> Union[Client, None]:
+    from .clients import CE, EXTRA_CE
+
+    if flavor == Flavor.CE:
+        client_classes = CE
+    else:
+        client_classes = EXTRA_CE
+
+    for client_class in client_classes:
+        api_key = os.getenv(client_class.API_KEY_ENV)
+        if api_key is not None:
+            client = client_class(api_key)
+            break
+    else:
+        client = None
 
     return client
 
