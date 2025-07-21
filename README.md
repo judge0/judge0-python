@@ -161,3 +161,47 @@ for i, result in enumerate(results):
     print(result.stdout)
     print(result.status)
 ```
+
+### Test Cases And Multiple Languages
+
+```python
+import judge0
+
+submissions = [
+    judge0.Submission(
+        source_code="print(f'Hello, {input()}!')",
+        language=judge0.PYTHON,
+    ),
+    judge0.Submission(
+        source_code="""
+#include <stdio.h>
+
+int main() {
+    char name[10];
+    scanf("%s", name);
+    printf("Hello, %s!\\n", name);
+    return 0;
+}
+""",
+        language=judge0.C,
+    ),
+]
+
+test_cases=[
+    ("Bob", "Hello, Bob!"),
+    ("Alice", "Hello, Alice!"),
+    ("Charlie", "Hello, Charlie!"),
+]
+
+results = judge0.run(submissions=submissions, test_cases=test_cases)
+
+for i in range(len(submissions)):
+    print(f"--- Submission #{i + 1} ---")
+
+    for j in range(len(test_cases)):
+        result = results[i * len(test_cases) + j]
+
+        print(f"--- Test Case #{j + 1} ---")
+        print(result.stdout)
+        print(result.status)
+```
