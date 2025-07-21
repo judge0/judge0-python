@@ -205,3 +205,16 @@ for i in range(len(submissions)):
         print(result.stdout)
         print(result.status)
 ```
+
+### Asynchronous Execution
+
+```python
+import judge0
+
+submission = judge0.async_run(source_code="print('hello, world')")
+print(submission.stdout) # Prints 'None'
+
+judge0.wait(submissions=submission) # Wait for the submission to finish.
+
+print(submission.stdout) # Prints 'hello, world'
+```
