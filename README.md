@@ -218,3 +218,11 @@ judge0.wait(submissions=submission) # Wait for the submission to finish.
 
 print(submission.stdout) # Prints 'hello, world'
 ```
+
+### Get Languages
+
+```python
+import judge0
+client = judge0.get_client()
+print(client.get_languages())
+```
