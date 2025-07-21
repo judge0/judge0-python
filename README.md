@@ -71,3 +71,93 @@ import judge0
 result = judge0.run(source_code="print('hello, world')")
 print(result.stdout)
 ```
+
+## Examples
+
+### Running C Programming Language
+
+```python
+import judge0
+
+source_code = """
+#include <stdio.h>
+
+int main() {
+    printf("hello, world\\n");
+    return 0;
+}
+"""
+
+result = judge0.run(source_code=source_code, language=judge0.C)
+print(result.stdout)
+```
+
+### Running Java Programming Language
+
+```python
+import judge0
+
+source_code = """
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("hello, world");
+    }
+}
+"""
+
+result = judge0.run(source_code=source_code, language=judge0.JAVA)
+print(result.stdout)
+```
+
+### Reading From Standard Input
+
+```python
+import judge0
+
+source_code = """
+#include <stdio.h>
+
+int main() {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    printf("%d\\n", a + b);
+
+    char name[10];
+    scanf("%s", name);
+    printf("Hello, %s!\\n", name);
+
+    return 0;
+}
+"""
+
+stdin = """
+3 5
+Bob
+"""
+
+result = judge0.run(source_code=source_code, stdin=stdin, language=judge0.C)
+print(result.stdout)
+```
+
+### Test Cases
+
+```python
+import judge0
+
+results = judge0.run(
+    source_code="print(f'Hello, {input()}!')",
+    test_cases=[
+        ("Bob", "Hello, Bob!"), # Test Case #1. Tuple with first value as standard input, second value as expected output.
+        { # Test Case #2. Dictionary with "input" and "expected_output" keys.
+            "input": "Alice",
+            "expected_output": "Hello, Alice!"
+        },
+        ["Charlie", "Hello, Charlie!"], # Test Case #3. List with first value as standard input and second value as expected output.
+    ],
+)
+
+for i, result in enumerate(results):
+    print(f"--- Test Case #{i + 1} ---")
+    print(result.stdout)
+    print(result.status)
+```
