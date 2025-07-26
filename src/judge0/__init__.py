@@ -1,3 +1,4 @@
+import logging
 import os
 
 from typing import Union
@@ -65,6 +66,8 @@ __all__ = [
 JUDGE0_IMPLICIT_CE_CLIENT = None
 JUDGE0_IMPLICIT_EXTRA_CE_CLIENT = None
 
+logger = logging.getLogger(__name__)
+
 
 def _get_implicit_client(flavor: Flavor) -> Client:
     global JUDGE0_IMPLICIT_CE_CLIENT, JUDGE0_IMPLICIT_EXTRA_CE_CLIENT
@@ -104,6 +107,12 @@ def _get_implicit_client(flavor: Flavor) -> Client:
 
 
 def _get_preview_client(flavor: Flavor) -> Union[SuluJudge0CE, SuluJudge0ExtraCE]:
+    logger.warning(
+        "You are using a preview version of the client which is not recommended"
+        " for production.\n"
+        "For production, please specify your API key in the environment variable."
+    )
+
     if flavor == Flavor.CE:
         return SuluJudge0CE(retry_strategy=RegularPeriodRetry(0.5))
     else:
