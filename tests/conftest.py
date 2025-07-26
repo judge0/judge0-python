@@ -92,6 +92,26 @@ def sulu_extra_ce_client():
 
 
 @pytest.fixture(scope="session")
+def judge0_cloud_ce_client():
+    auth_headers = os.getenv("JUDGE0_CLOUD_CE_AUTH_HEADERS")
+
+    if auth_headers is None:
+        return None
+    else:
+        return clients.Judge0CloudCE(auth_headers)
+
+
+@pytest.fixture(scope="session")
+def judge0_cloud_extra_ce_client():
+    auth_headers = os.getenv("JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS")
+
+    if auth_headers is None:
+        return None
+    else:
+        return clients.Judge0CloudExtraCE(auth_headers)
+
+
+@pytest.fixture(scope="session")
 def preview_ce_client() -> clients.SuluJudge0CE:
     return clients.SuluJudge0CE(retry_strategy=RegularPeriodRetry(0.5))
 
@@ -104,6 +124,7 @@ def preview_extra_ce_client() -> clients.SuluJudge0ExtraCE:
 @pytest.fixture(scope="session")
 def ce_client(
     custom_ce_client,
+    judge0_cloud_ce_client,
     sulu_ce_client,
     rapid_ce_client,
     atd_ce_client,
@@ -111,6 +132,8 @@ def ce_client(
 ):
     if custom_ce_client is not None:
         return custom_ce_client
+    if judge0_cloud_ce_client is not None:
+        return judge0_cloud_ce_client
     if sulu_ce_client is not None:
         return sulu_ce_client
     if rapid_ce_client is not None:
@@ -126,6 +149,7 @@ def ce_client(
 @pytest.fixture(scope="session")
 def extra_ce_client(
     custom_extra_ce_client,
+    judge0_cloud_extra_ce_client,
     sulu_extra_ce_client,
     rapid_extra_ce_client,
     atd_extra_ce_client,
@@ -133,6 +157,8 @@ def extra_ce_client(
 ):
     if custom_extra_ce_client is not None:
         return custom_extra_ce_client
+    if judge0_cloud_extra_ce_client is not None:
+        return judge0_cloud_extra_ce_client
     if sulu_extra_ce_client is not None:
         return sulu_extra_ce_client
     if rapid_extra_ce_client is not None:

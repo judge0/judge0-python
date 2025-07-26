@@ -19,6 +19,9 @@ from .clients import (
     ATDJudge0CE,
     ATDJudge0ExtraCE,
     Client,
+    Judge0Cloud,
+    Judge0CloudCE,
+    Judge0CloudExtraCE,
     Rapid,
     RapidJudge0CE,
     RapidJudge0ExtraCE,
@@ -39,6 +42,9 @@ __all__ = [
     "Client",
     "File",
     "Filesystem",
+    "Judge0Cloud",
+    "Judge0CloudCE",
+    "Judge0CloudExtraCE",
     "Language",
     "LanguageAlias",
     "MaxRetries",
@@ -54,12 +60,12 @@ __all__ = [
     "SuluJudge0ExtraCE",
     "TestCase",
     "async_execute",
+    "async_run",
     "execute",
     "get_client",
-    "async_run",
-    "sync_run",
     "run",
     "sync_execute",
+    "sync_run",
     "wait",
 ]
 
@@ -122,11 +128,9 @@ def _get_preview_client(flavor: Flavor) -> Union[SuluJudge0CE, SuluJudge0ExtraCE
 def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     from json import loads
 
-    ce_endpoint = os.getenv("JUDGE0_CE_ENDPOINT", "https://ce.judge0.com")
+    ce_endpoint = os.getenv("JUDGE0_CE_ENDPOINT")
     ce_auth_header = os.getenv("JUDGE0_CE_AUTH_HEADERS")
-    extra_ce_endpoint = os.getenv(
-        "JUDGE0_EXTRA_CE_ENDPOINT", "https://extra-ce.judge0.com"
-    )
+    extra_ce_endpoint = os.getenv("JUDGE0_EXTRA_CE_ENDPOINT")
     extra_ce_auth_header = os.getenv("JUDGE0_EXTRA_CE_AUTH_HEADERS")
 
     if flavor == Flavor.CE and ce_endpoint is not None and ce_auth_header is not None:

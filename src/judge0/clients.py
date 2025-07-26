@@ -715,5 +715,77 @@ class SuluJudge0ExtraCE(Sulu):
         super().__init__(self.DEFAULT_ENDPOINT, api_key, **kwargs)
 
 
-CE = (SuluJudge0CE, RapidJudge0CE, ATDJudge0CE)
-EXTRA_CE = (SuluJudge0ExtraCE, RapidJudge0ExtraCE, ATDJudge0ExtraCE)
+class Judge0Cloud(Client):
+    """Base class for all Judge0 Cloud clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    auth_headers : str or dict
+        Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
+
+    def __init__(self, endpoint, auth_headers, **kwargs):
+        if isinstance(auth_headers, str):
+            from json import loads
+
+            auth_headers = loads(auth_headers)
+
+        super().__init__(
+            endpoint,
+            auth_headers,
+            **kwargs,
+        )
+
+
+class Judge0CloudCE(Judge0Cloud):
+    """Judge0 Cloud client for CE flavor.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    auth_headers : str or dict
+        Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
+
+    DEFAULT_ENDPOINT: ClassVar[str] = "https://ce.judge0.com"
+    HOME_URL: ClassVar[str] = "https://ce.judge0.com"
+    API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_CE_AUTH_HEADERS"
+
+    def __init__(self, auth_headers, **kwargs):
+        super().__init__(
+            self.DEFAULT_ENDPOINT,
+            auth_headers,
+            **kwargs,
+        )
+
+
+class Judge0CloudExtraCE(Judge0Cloud):
+    """Judge0 Cloud client for Extra CE flavor.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    auth_headers : str or dict
+        Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
+    **kwargs : dict
+        Additional keyword arguments for the base Client.
+    """
+
+    DEFAULT_ENDPOINT: ClassVar[str] = "https://extra-ce.judge0.com"
+    HOME_URL: ClassVar[str] = "https://extra-ce.judge0.com"
+    API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS"
+
+    def __init__(self, auth_headers, **kwargs):
+        super().__init__(self.DEFAULT_ENDPOINT, auth_headers, **kwargs)
+
+
+CE = (Judge0CloudCE, SuluJudge0CE, RapidJudge0CE, ATDJudge0CE)
+EXTRA_CE = (Judge0CloudExtraCE, SuluJudge0ExtraCE, RapidJudge0ExtraCE, ATDJudge0ExtraCE)
