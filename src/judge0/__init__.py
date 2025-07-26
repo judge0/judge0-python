@@ -29,7 +29,7 @@ from .filesystem import File, Filesystem
 from .retry import MaxRetries, MaxWaitTime, RegularPeriodRetry
 from .submission import Submission
 
-__version__ = "0.0.4"
+__version__ = "0.0.5.dev0"
 
 __all__ = [
     "ATD",

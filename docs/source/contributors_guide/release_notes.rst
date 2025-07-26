@@ -18,6 +18,7 @@ Creating a release is a simple process that involves a few steps:
     #. Release title should be ``Judge0 Python SDK vX.Y.Z``.
     #. Release notes should include a changes from the previous release to the newest release.
     #. Use the `template <https://github.com/judge0/judge0-python/blob/master/RELEASE_NOTES_TEMPLATE.md>`_ from the repo to organize the changes.
+    #. Click the `Generate release notes` button and use only `Full Changelog` section.
     #. Create the release. ("Set as a pre-release" should NOT be checked.)
 #. **Release on PyPI**:
     #. Use the `GitHub Actions workflow <https://github.com/judge0/judge0-python/actions/workflows/publish.yml>`_ to create a release on PyPI.
