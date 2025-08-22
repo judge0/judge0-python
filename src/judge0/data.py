@@ -126,7 +126,7 @@ LANGUAGE_TO_LANGUAGE_ID = {
         LanguageAlias.R: 99,
         LanguageAlias.RUBY: 72,
         LanguageAlias.RUST: 108,
-        LanguageAlias.SCALA: 81,
+        LanguageAlias.SCALA: 112,
         LanguageAlias.SQLITE: 82,
         LanguageAlias.SWIFT: 83,
         LanguageAlias.TYPESCRIPT: 101,
