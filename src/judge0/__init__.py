@@ -94,13 +94,12 @@ def _get_implicit_client(flavor: Flavor) -> Client:
     # Let's check if we can find a self-hosted client.
     client = _get_custom_client(flavor)
 
-    # Try to find one of the API keys JUDGE0_{SULU,RAPID,ATD}_API_KEY
-    # for hub clients.
+    # Try to find one of the API keys for hub clients.
     if client is None:
         client = _get_hub_client(flavor)
 
     # If we didn't find any of the possible keys, initialize
-    # the preview Sulu client based on the flavor.
+    # the preview client based on the flavor.
     if client is None:
         client = _get_preview_client(flavor)
 
@@ -120,9 +119,9 @@ def _get_preview_client(flavor: Flavor) -> Union[SuluJudge0CE, SuluJudge0ExtraCE
     )
 
     if flavor == Flavor.CE:
-        return SuluJudge0CE(retry_strategy=RegularPeriodRetry(0.5))
+        return Judge0CloudCE()
     else:
-        return SuluJudge0ExtraCE(retry_strategy=RegularPeriodRetry(0.5))
+        return Judge0CloudExtraCE()
 
 
 def _get_custom_client(flavor: Flavor) -> Union[Client, None]:

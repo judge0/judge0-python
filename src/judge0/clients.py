@@ -728,7 +728,7 @@ class Judge0Cloud(Client):
         Additional keyword arguments for the base Client.
     """
 
-    def __init__(self, endpoint, auth_headers, **kwargs):
+    def __init__(self, endpoint, auth_headers=None, **kwargs):
         if isinstance(auth_headers, str):
             from json import loads
 
@@ -758,7 +758,7 @@ class Judge0CloudCE(Judge0Cloud):
     HOME_URL: ClassVar[str] = "https://ce.judge0.com"
     API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_CE_AUTH_HEADERS"
 
-    def __init__(self, auth_headers, **kwargs):
+    def __init__(self, auth_headers=None, **kwargs):
         super().__init__(
             self.DEFAULT_ENDPOINT,
             auth_headers,
@@ -783,7 +783,7 @@ class Judge0CloudExtraCE(Judge0Cloud):
     HOME_URL: ClassVar[str] = "https://extra-ce.judge0.com"
     API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS"
 
-    def __init__(self, auth_headers, **kwargs):
+    def __init__(self, auth_headers=None, **kwargs):
         super().__init__(self.DEFAULT_ENDPOINT, auth_headers, **kwargs)
 
 
