@@ -52,8 +52,8 @@ Testing
 
 .. warning::
     If you are implementing features or fixing bugs, you are expected to have
-    all of the three API keys (ATD, Sulu, and RapidAPI) setup and set in you
-    environment variables - ``JUDGE0_SULU_API_KEY``, ``JUDGE0_RAPID_API_KEY``,
+    all API keys (RapidAPI and ATD) setup and set in you
+    environment variables - ``JUDGE0_RAPID_API_KEY``,
     and ``JUDGE0_ATD_API_KEY``.
 
 Every bug fix or new feature should have tests for it. The tests are located in
