@@ -23,11 +23,11 @@ class Client:
     ----------
     API_KEY_ENV : str
         Environment variable where judge0-python should look for API key for
-        the client. Set to default values for ATD, RapidAPI, and Sulu clients.
+        the client. Set to default values for RapidAPI and ATD clients.
     """
 
     # Environment variable where judge0-python should look for API key for
-    # the client. Set to default values for ATD, RapidAPI, and Sulu clients.
+    # the client. Set to default values for RapidAPI and ATD clients.
     API_KEY_ENV: ClassVar[str] = None
 
     def __init__(
@@ -649,72 +649,6 @@ class RapidJudge0ExtraCE(Rapid):
         )
 
 
-class Sulu(Client):
-    """Base class for all Sulu clients.
-
-    Parameters
-    ----------
-    endpoint : str
-        Default request endpoint.
-    api_key : str, optional
-        Sulu API key.
-    **kwargs : dict
-        Additional keyword arguments for the base Client.
-    """
-
-    API_KEY_ENV: ClassVar[str] = "JUDGE0_SULU_API_KEY"
-
-    def __init__(self, endpoint, api_key=None, **kwargs):
-        self.api_key = api_key
-        super().__init__(
-            endpoint,
-            {"Authorization": f"Bearer {api_key}"} if api_key else None,
-            **kwargs,
-        )
-
-
-class SuluJudge0CE(Sulu):
-    """Sulu client for CE flavor.
-
-    Parameters
-    ----------
-    api_key : str, optional
-        Sulu API key.
-    **kwargs : dict
-        Additional keyword arguments for the base Client.
-    """
-
-    DEFAULT_ENDPOINT: ClassVar[str] = "https://judge0-ce.p.sulu.sh"
-    HOME_URL: ClassVar[str] = "https://sparkhub.sulu.sh/apis/judge0/judge0-ce/readme"
-
-    def __init__(self, api_key=None, **kwargs):
-        super().__init__(
-            self.DEFAULT_ENDPOINT,
-            api_key,
-            **kwargs,
-        )
-
-
-class SuluJudge0ExtraCE(Sulu):
-    """Sulu client for Extra CE flavor.
-
-    Parameters
-    ----------
-    api_key : str
-        Sulu API key.
-    **kwargs : dict
-        Additional keyword arguments for the base Client.
-    """
-
-    DEFAULT_ENDPOINT: ClassVar[str] = "https://judge0-extra-ce.p.sulu.sh"
-    HOME_URL: ClassVar[str] = (
-        "https://sparkhub.sulu.sh/apis/judge0/judge0-extra-ce/readme"
-    )
-
-    def __init__(self, api_key=None, **kwargs):
-        super().__init__(self.DEFAULT_ENDPOINT, api_key, **kwargs)
-
-
 class Judge0Cloud(Client):
     """Base class for all Judge0 Cloud clients.
 
@@ -787,5 +721,5 @@ class Judge0CloudExtraCE(Judge0Cloud):
         super().__init__(self.DEFAULT_ENDPOINT, auth_headers, **kwargs)
 
 
-CE = (Judge0CloudCE, SuluJudge0CE, RapidJudge0CE, ATDJudge0CE)
-EXTRA_CE = (Judge0CloudExtraCE, SuluJudge0ExtraCE, RapidJudge0ExtraCE, ATDJudge0ExtraCE)
+CE = (Judge0CloudCE, RapidJudge0CE, ATDJudge0CE)
+EXTRA_CE = (Judge0CloudExtraCE, RapidJudge0ExtraCE, ATDJudge0ExtraCE)

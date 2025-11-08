@@ -23,14 +23,14 @@ def handle_too_many_requests_error_for_preview_client(func):
             return func(*args, **kwargs)
         except HTTPError as err:
             if is_http_too_many_requests_error(exception=err):
-                # If the raised exception is inside the one of the Sulu clients
+                # If the raised exception is inside the one of the Judge0 Cloud clients
                 # let's check if we are dealing with the implicit client.
                 if args:
                     instance = args[0]
                     class_name = instance.__class__.__name__
                     # Check if we are using a preview version of the client.
                     if (
-                        class_name in ("SuluJudge0CE", "SuluJudge0ExtraCE")
+                        class_name in ("Judge0CloudCE", "Judge0CloudExtraCE")
                         and instance.api_key is None
                     ):
                         raise PreviewClientLimitError(

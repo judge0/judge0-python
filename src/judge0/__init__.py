@@ -25,9 +25,6 @@ from .clients import (
     Rapid,
     RapidJudge0CE,
     RapidJudge0ExtraCE,
-    Sulu,
-    SuluJudge0CE,
-    SuluJudge0ExtraCE,
 )
 from .filesystem import File, Filesystem
 from .retry import MaxRetries, MaxWaitTime, RegularPeriodRetry
@@ -55,9 +52,6 @@ __all__ = [
     "RegularPeriodRetry",
     "Status",
     "Submission",
-    "Sulu",
-    "SuluJudge0CE",
-    "SuluJudge0ExtraCE",
     "TestCase",
     "async_execute",
     "async_run",
@@ -111,7 +105,7 @@ def _get_implicit_client(flavor: Flavor) -> Client:
     return client
 
 
-def _get_preview_client(flavor: Flavor) -> Union[SuluJudge0CE, SuluJudge0ExtraCE]:
+def _get_preview_client(flavor: Flavor) -> Union[Judge0CloudCE, Judge0CloudExtraCE]:
     logger.warning(
         "You are using a preview version of the client which is not recommended"
         " for production.\n"

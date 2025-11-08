@@ -32,7 +32,6 @@ jobs:
         env: # Add necessary api keys as env variables.
           JUDGE0_ATD_API_KEY: ${{ secrets.JUDGE0_ATD_API_KEY }}
           JUDGE0_RAPID_API_KEY: ${{ secrets.JUDGE0_RAPID_API_KEY }}
-          JUDGE0_SULU_API_KEY: ${{ secrets.JUDGE0_SULU_API_KEY }}
           JUDGE0_CE_AUTH_HEADERS: ${{ secrets.JUDGE0_CE_AUTH_HEADERS }}
           JUDGE0_EXTRA_CE_AUTH_HEADERS: ${{ secrets.JUDGE0_EXTRA_CE_AUTH_HEADERS }}
           JUDGE0_CE_ENDPOINT: ${{ secrets.JUDGE0_CE_ENDPOINT }}

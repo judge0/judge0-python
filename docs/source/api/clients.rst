@@ -35,12 +35,3 @@ Clients Module
 
 .. autoclass:: judge0.clients.RapidJudge0ExtraCE
     :show-inheritance:
-
-.. autoclass:: judge0.clients.Sulu
-    :show-inheritance:
-
-.. autoclass:: judge0.clients.SuluJudge0CE
-    :show-inheritance:
-
-.. autoclass:: judge0.clients.SuluJudge0ExtraCE
-    :show-inheritance:

@@ -9,8 +9,8 @@ DEFAULT_CLIENTS = (
     "atd_extra_ce_client",
     "rapid_ce_client",
     "rapid_extra_ce_client",
-    "sulu_ce_client",
-    "sulu_extra_ce_client",
+    "judge0_cloud_ce_client",
+    "judge0_cloud_extra_ce_client",
 )
 
 
