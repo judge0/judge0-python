@@ -1,6 +1,6 @@
 [project]
 name = "judge0"
-version = "0.0.5.dev0"
+version = "0.0.5"
 description = "The official Python SDK for Judge0."
 readme = "README.md"
 requires-python = ">=3.10"
