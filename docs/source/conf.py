@@ -13,7 +13,7 @@ import sys
 from sphinxawesome_theme.postprocess import Icons
 
 project = "Judge0 Python SDK"
-copyright = "2024, Judge0"
+copyright = "2025, Judge0"
 author = "Judge0"
 release = ""
 
