@@ -65,6 +65,7 @@ __all__ = [
 
 JUDGE0_IMPLICIT_CE_CLIENT = None
 JUDGE0_IMPLICIT_EXTRA_CE_CLIENT = None
+SUPPRESS_PREVIEW_WARNING = os.getenv("JUDGE0_SUPPRESS_PREVIEW_WARNING")
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +107,7 @@ def _get_implicit_client(flavor: Flavor) -> Client:
 
 
 def _get_preview_client(flavor: Flavor) -> Union[Judge0CloudCE, Judge0CloudExtraCE]:
-    if not suppress_preview_warning:
+    if SUPPRESS_PREVIEW_WARNING is not None:
         logger.warning(
             "You are using a preview version of the client which is not recommended"
             " for production.\n"
@@ -235,5 +236,3 @@ SQLITE = LanguageAlias.SQLITE
 SWIFT = LanguageAlias.SWIFT
 TYPESCRIPT = LanguageAlias.TYPESCRIPT
 VISUAL_BASIC = LanguageAlias.VISUAL_BASIC
-
-suppress_preview_warning = os.getenv("JUDGE0_SUPPRESS_PREVIEW_WARNING") is not None
