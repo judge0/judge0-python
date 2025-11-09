@@ -35,10 +35,9 @@ Homepage = "https://github.com/judge0/judge0-python"
 Repository = "https://github.com/judge0/judge0-python.git"
 Issues = "https://github.com/judge0/judge0-python/issues"
 
-[project.optional-dependencies]
+[dependency-groups]
 test = [
     "ufmt==2.7.3",
-    "pre-commit==3.8.0",
     "pytest==8.3.3",
     "python-dotenv==1.0.1",
     "pytest-cov==6.0.0",
@@ -50,10 +49,7 @@ docs = [
     "sphinx-autodoc-typehints==2.3.0",
     "sphinx-multiversion==0.2.4",
 ]
-dev = [
-    "judge0[test]",
-    "judge0[docs]",
-]
+dev = [{ include-group = "test" }, { include-group = "docs" }]
 
 [tool.flake8]
 extend-ignore = [
