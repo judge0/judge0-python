@@ -92,6 +92,27 @@ class Filesystem(BaseModel):
                 zip_file.writestr(file.name, file.content)
         return zip_buffer.getvalue()
 
+    def find(self, name: str) -> Optional[File]:
+        """Find file by name in Filesystem object.
+
+        Parameters
+        ----------
+        name : str
+            File name to find.
+
+        Returns
+        -------
+        File or None
+            Found File object or None if not found.
+        """
+        if name.startswith("./"):
+            name = name[2:]
+        elif name.startswith("/"):
+            name = name[1:]
+
+        matches = [f for f in self.files if f.name == name]
+        return matches[0] if matches else None
+
     def __str__(self) -> str:
         """Create string representation of Filesystem object."""
         return b64encode(self.encode()).decode()

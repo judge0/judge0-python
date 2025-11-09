@@ -347,8 +347,5 @@ submission = Submission(
 
 result = judge0.run(submissions=submission)
 print(result.stdout)
-
-matches = [f for f in result.post_execution_filesystem if f.name == "my_dir2/my_file2.txt"]
-f = matches[0] if matches else None
-print(f)
+print(result.post_execution_filesystem.find("./my_dir2/my_file2.txt"))
 ```
