@@ -349,3 +349,25 @@ result = judge0.run(submissions=submission)
 print(result.stdout)
 print(result.post_execution_filesystem.find("./my_dir2/my_file2.txt"))
 ```
+
+### Custom Judge0 Client
+
+This example shows how to use Judge0 Python SDK with your own Judge0 instance.
+
+```python
+import judge0
+
+client = judge0.Client(endpoint="http://127.0.0.1:2358", auth_headers=None)
+
+source_code = """
+#include <stdio.h>
+
+int main() {
+    printf("hello, world\\n");
+    return 0;
+}
+"""
+
+result = judge0.run(client=client, source_code=source_code, language=judge0.C)
+print(result.stdout)
+```
