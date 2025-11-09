@@ -106,11 +106,12 @@ def _get_implicit_client(flavor: Flavor) -> Client:
 
 
 def _get_preview_client(flavor: Flavor) -> Union[Judge0CloudCE, Judge0CloudExtraCE]:
-    logger.warning(
-        "You are using a preview version of the client which is not recommended"
-        " for production.\n"
-        "For production, please specify your API key in the environment variable."
-    )
+    if not suppress_preview_warning:
+        logger.warning(
+            "You are using a preview version of the client which is not recommended"
+            " for production.\n"
+            "For production, please specify your API key in the environment variable."
+        )
 
     if flavor == Flavor.CE:
         return Judge0CloudCE()
@@ -234,3 +235,5 @@ SQLITE = LanguageAlias.SQLITE
 SWIFT = LanguageAlias.SWIFT
 TYPESCRIPT = LanguageAlias.TYPESCRIPT
 VISUAL_BASIC = LanguageAlias.VISUAL_BASIC
+
+suppress_preview_warning = os.getenv("JUDGE0_SUPPRESS_PREVIEW_WARNING") is not None
