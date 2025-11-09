@@ -136,26 +136,35 @@
 <section id="preparing-the-development-setup">
 <h2>Preparing the development setup<a class="headerlink" href="#preparing-the-development-setup" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#preparing-the-development-setup'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
 <ol class="arabic simple">
-<li><p>Install Python 3.10</p></li>
+<li><p>Install <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/" rel="nofollow noopener">uv<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p></li>
+<li><p>Fork the repository (in GitHub) and clone the forked repository:</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:deadsnakes/ppa
-</span><span id="line-2"><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>update
-</span><span id="line-3"><span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3.10<span class="w"> </span>python3.10-venv
-</span></code></pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Clone the repo, create and activate a new virtual environment</p></li>
-</ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>judge0-python
-</span><span id="line-2"><span class="gp">$ </span>python3.10<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-</span><span id="line-3"><span class="gp">$ </span>.<span class="w"> </span>venv/bin/activate
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;username&gt;/judge0-python
+</span><span id="line-2"><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>judge0-python
 </span></code></pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li><p>Install the library and development dependencies</p></li>
+<li><p>Prepare the virtual environment and dependencies:</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span>
-</span><span id="line-2"><span class="gp">$ </span>pre-commit<span class="w"> </span>install
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>dev
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Install the necessary development tools:</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>pre-commit
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Make sure all the necessary tools are installed:</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>uv<span class="w"> </span>tool<span class="w"> </span>list
+</span></code></pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Finally, install the pre-commit hooks:</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span>uv<span class="w"> </span>tool<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>install
 </span></code></pre></div>
 </div>
 </section>

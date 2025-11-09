@@ -4,28 +4,37 @@ Contributing
 Preparing the development setup
 -------------------------------
 
-1. Install Python 3.10
+1. Install `uv <https://docs.astral.sh/uv/getting-started/installation/>`_.
+2. Fork the repository (in GitHub) and clone the forked repository:
 
 .. code-block:: console
 
-    $ sudo add-apt-repository ppa:deadsnakes/ppa
-    $ sudo apt update
-    $ sudo apt install python3.10 python3.10-venv
-
-2. Clone the repo, create and activate a new virtual environment
-
-.. code-block:: console
-
+    $ git clone https://github.com/<username>/judge0-python
     $ cd judge0-python
-    $ python3.10 -m venv venv
-    $ . venv/bin/activate
 
-3. Install the library and development dependencies
+3. Prepare the virtual environment and dependencies:
 
 .. code-block:: console
 
-    $ pip install -e .[dev]
-    $ pre-commit install
+    $ uv sync --group dev
+
+4. Install the necessary development tools:
+
+.. code-block:: console
+
+    $ uv tool install pre-commit
+
+5. Make sure all the necessary tools are installed:
+
+.. code-block:: console
+
+    $ uv tool list
+
+6. Finally, install the pre-commit hooks:
+
+.. code-block:: console
+
+    $ uv tool run pre-commit install
 
 Building documentation
 ----------------------
