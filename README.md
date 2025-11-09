@@ -74,7 +74,7 @@ print(result.stdout)
 
 ```python
 import judge0
-result = judge0.run(source_code="print('hello, world')")
+result = judge0.run(source_code="print('hello, world')", language=judge0.PYTHON)
 print(result.stdout)
 ```
 
@@ -233,7 +233,7 @@ print(client.get_languages())
 
 ### Running LLM-Generated Code
 
-#### Simple
+#### Simple Example with Ollama
 
 ```python
 import os
@@ -264,7 +264,7 @@ result = judge0.run(source_code=code, language=judge0.PYTHON)
 print(f"Execution result:\n{result.stdout}")
 ```
 
-#### Tool Calling (a.k.a. Function Calling)
+#### Tool Calling (a.k.a. Function Calling) with Ollama
 
 ```python
 import os
@@ -318,4 +318,39 @@ if response_message.tool_calls:
 
 final_response = client.chat(model=model, messages=messages)
 print(final_response["message"]["content"])
+```
+
+### Filesystem
+
+```python
+import judge0
+from judge0 import Filesystem, File, Submission
+
+fs = Filesystem(
+    content=[
+        File(name="./my_dir1/my_file1.txt", content="hello from my_file.txt"),
+    ]
+)
+
+source_code = """
+cat ./my_dir1/my_file1.txt
+
+mkdir my_dir2
+echo "hello, world" > ./my_dir2/my_file2.txt
+"""
+
+submission = Submission(
+    source_code=source_code,
+    language=judge0.BASH,
+    additional_files=fs,
+)
+
+result = judge0.run(submissions=submission)
+fs = Filesystem(content=result.post_execution_filesystem)
+
+print(result.stdout)
+
+matches = [f for f in fs if f.name == "my_dir2/my_file2.txt"]
+f = matches[0] if matches else None
+print(f)
 ```
