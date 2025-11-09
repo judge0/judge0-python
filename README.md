@@ -70,6 +70,13 @@ print(result.stdout)
 ```
 
 ## Examples
+### hello, world
+
+```python
+import judge0
+result = judge0.run(source_code="print('hello, world')")
+print(result.stdout)
+```
 
 ### Running C Programming Language
 
