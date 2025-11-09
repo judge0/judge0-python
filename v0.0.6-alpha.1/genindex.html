@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en"
+      data-content_root="./"
+      x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }"
+      x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
+      class="scroll-smooth"
+      :class="{'dark': darkMode === 'dark' || (darkMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}"
+>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
+  
+    <title>Index | Judge0 Python SDK</title>
+    <meta property="og:title" content="Index | Judge0 Python SDK" />
+    <meta name="twitter:title" content="Index | Judge0 Python SDK" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/theme.css?v=42baaae4" />
+      <link rel="icon" href="_static/logo.png" />
+        <link rel="search" title="Search" href="search.html" />
+        <link rel="index" title="Index" href="#" />
+
+    <script>
+    <!-- Prevent Flash of wrong theme -->
+      const userPreference = localStorage.getItem('darkMode');
+      let mode;
+      if (userPreference === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        mode = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        mode = 'light';
+      }
+      if (!userPreference) {localStorage.setItem('darkMode', mode)}
+    </script>
+</head>
+  <body x-data="{ showSidebar: false, showScrollTop: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }"@scroll.window="showScrollTop = pageYOffset > 100">
+    <div x-cloak x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false"></div><div id="page" class="relative flex flex-col min-h-screen"><a href="#content" class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100">
+      Skip to content
+    </a><header
+  class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
+    <div class="hidden mr-4 md:flex">
+      <a href="index.html" class="flex items-center mr-6">
+          <img height="24" width="24" class="mr-2 dark:invert" src="_static/logo.png" alt="Logo" /><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Judge0 Python SDK</span>
+      </a><nav class="flex items-center space-x-6 text-sm font-medium">
+        <a href="https://judge0.github.io/judge0-python/" class="transition-colors hover:text-foreground/80 text-foreground/60" rel="noopener nofollow">Home</a>
+        <a href="https://judge0.com/" class="transition-colors hover:text-foreground/80 text-foreground/60" rel="noopener nofollow">Judge0</a>
+      </nav></div><button
+      class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden"
+      type="button" @click="showSidebar = true">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" aria-hidden="true"
+        fill="currentColor">
+        <path
+          d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z" />
+      </svg>
+      <span class="sr-only">Toggle navigation menu</span>
+    </button>
+    <div class="flex items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+      <div class="flex-1 w-full md:w-auto md:flex-none"><form id="searchbox"
+      action="search.html"
+      method="get"
+      class="relative flex items-center group"
+      @keydown.k.window.meta="$refs.search.focus()">
+  <input x-ref="search"
+          name="q"
+          id="search-input"
+          type="search"
+          aria-label="Search the docs"
+          placeholder="Search ..."
+          class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" />
+  <kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+    <span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+      </div>
+      <nav class="flex items-center space-x-1">
+        <a href="https://github.com/judge0/judge0-python" title="Visit repository on GitHub" rel="noopener nofollow">
+          <div
+            class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md disabled:opacity-50 disabled:pointer-events-none hover:bg-accent hover:text-accent-foreground h-9 w-9">
+            <svg height="26px" style="margin-top:-2px;display:inline" viewBox="0 0 45 44" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M22.477.927C10.485.927.76 10.65.76 22.647c0 9.596 6.223 17.736 14.853 20.608 1.087.2 1.483-.47 1.483-1.047 0-.516-.019-1.881-.03-3.693-6.04 1.312-7.315-2.912-7.315-2.912-.988-2.51-2.412-3.178-2.412-3.178-1.972-1.346.149-1.32.149-1.32 2.18.154 3.327 2.24 3.327 2.24 1.937 3.318 5.084 2.36 6.321 1.803.197-1.403.759-2.36 1.379-2.903-4.823-.548-9.894-2.412-9.894-10.734 0-2.37.847-4.31 2.236-5.828-.224-.55-.969-2.759.214-5.748 0 0 1.822-.584 5.972 2.226 1.732-.482 3.59-.722 5.437-.732 1.845.01 3.703.25 5.437.732 4.147-2.81 5.967-2.226 5.967-2.226 1.185 2.99.44 5.198.217 5.748 1.392 1.517 2.232 3.457 2.232 5.828 0 8.344-5.078 10.18-9.916 10.717.779.67 1.474 1.996 1.474 4.021 0 2.904-.027 5.247-.027 5.96 0 .58.392 1.256 1.493 1.044C37.981 40.375 44.2 32.24 44.2 22.647c0-11.996-9.726-21.72-21.722-21.72" fill="currentColor"/></svg>
+          </div>
+        </a>
+        
+        <button @click="darkMode = darkMode === 'light' ? 'dark' : 'light'"
+          class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9"
+          type="button"
+          aria-label="Color theme switcher">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" fill="currentColor"
+            class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0">
+            <path
+              d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" fill="currentColor"
+            class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100">
+            <path
+              d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+    <div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside id="left-sidebar"
+  class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
+  :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }">
+
+    <a href="index.html" class="!justify-start text-sm md:!hidden bg-background">
+        <img height="16" width="16" class="mr-2 dark:invert" src="_static/logo.png" alt="Logo" /><span class="font-bold text-clip whitespace-nowrap">Judge0 Python SDK</span>
+    </a>
+
+    <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
+      <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
+  <a href="https://judge0.github.io/judge0-python/" rel="nofollow noopener">Home</a>
+  <a href="https://judge0.com/" rel="nofollow noopener">Judge0</a>
+</nav><nav class="table w-full min-w-full my-6 lg:my-8">
+  <p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/api.html">API Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/clients.html">Clients Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/errors.html">Errors Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/filesystem.html">Filesystem Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/retry.html">Retry Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/submission.html">Submission Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/types.html">Types Module</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">In Depth</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="in_depth/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="in_depth/client_resolution.html">Client Resolution</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributors_guide/contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributors_guide/release_notes.html">How to create a release</a></li>
+</ul>
+
+</nav>
+
+
+
+<h3>Versions</h3>
+<ul>
+    <li><a href="../master/index.html">master</a></li>
+    <li><a href="genindex.html">v0.0.6-alpha.1</a></li>
+    <li><a href="../v0.0.5/index.html">v0.0.5</a></li>
+    <li><a href="../v0.0.4/index.html">v0.0.4</a></li>
+    <li><a href="../v0.0.3/index.html">v0.0.3</a></li>
+    <li><a href="../v0.0.2/index.html">v0.0.2</a></li>
+</ul>
+
+      </div>
+    </div>
+    <button type="button" @click="showSidebar = false"
+      class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 96 960 960" fill="currentColor"
+        stroke="none" class="h-4 w-4">
+        <path
+          d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z" />
+      </svg>
+    </button>
+  </aside>
+        <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs"
+     class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+  <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground"
+     href="index.html">
+    <span class="hidden md:inline">Judge0 Python SDK</span>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         height="18"
+         width="18"
+         viewBox="0 96 960 960"
+         aria-label="Home"
+         fill="currentColor"
+         stroke="none"
+         class="md:hidden">
+      <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z" />
+    </svg>
+  </a>
+  
+<div class="mr-1">/</div><span aria-current="page"
+        class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Index</span>
+</nav>
+
+<div id="content" role="main">
+
+  <h1 id="index">Index</h1>
+  <h2 id="A">A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Status.ACCEPTED">ACCEPTED (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.allow_enable_network">allow_enable_network (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.allow_enable_per_process_and_thread_memory_limit">allow_enable_per_process_and_thread_memory_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.allow_enable_per_process_and_thread_time_limit">allow_enable_per_process_and_thread_time_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.allowed_languages_for_compile_options">allowed_languages_for_compile_options (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.ATD.API_KEY_ENV">API_KEY_ENV (judge0.clients.ATD attribute)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/clients.html#judge0.clients.Client.API_KEY_ENV">(judge0.clients.Client attribute)</a>
+</li>
+        <li><a href="api/clients.html#judge0.clients.Rapid.API_KEY_ENV">(judge0.clients.Rapid attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/submission.html#judge0.submission.Submission.as_body">as_body() (judge0.submission.Submission method)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.ASSEMBLY">ASSEMBLY (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/api.html#judge0.api.async_execute">async_execute() (in module judge0.api)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.ATD">ATD (class in judge0.clients)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.ATDJudge0CE">ATDJudge0CE (class in judge0.clients)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.ATDJudge0ExtraCE">ATDJudge0ExtraCE (class in judge0.clients)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="B">B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.BASH">BASH (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.BASIC">BASIC (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.BOSQUE">BOSQUE (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="C">C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.C">C (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.C3">C3 (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.C_CLANG">C_CLANG (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.C_GCC">C_GCC (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.callbacks_max_tries">callbacks_max_tries (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.callbacks_timeout">callbacks_timeout (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Flavor.CE">CE (judge0.base_types.Flavor attribute)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.Client">Client (class in judge0.clients)</a>
+</li>
+      <li><a href="api/errors.html#judge0.errors.ClientResolutionError">ClientResolutionError</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CLOJURE">CLOJURE (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.COBOL">COBOL (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.COMMON_LISP">COMMON_LISP (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.COMPILATION_ERROR">COMPILATION_ERROR (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Language.compile_cmd">compile_cmd (judge0.base_types.Language attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config">Config (class in judge0.base_types)</a>
+</li>
+      <li><a href="api/filesystem.html#judge0.filesystem.File.content">content (judge0.filesystem.File attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP">CPP (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP_CLANG">CPP_CLANG (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP_GCC">CPP_GCC (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP_TEST">CPP_TEST (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP_TEST_CLANG">CPP_TEST_CLANG (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CPP_TEST_GCC">CPP_TEST_GCC (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.cpu_extra_time">cpu_extra_time (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.cpu_time_limit">cpu_time_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.Client.create_submission">create_submission() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/api.html#judge0.api.create_submissions">create_submissions() (in module judge0.api)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/clients.html#judge0.clients.Client.create_submissions">(judge0.clients.Client method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/api.html#judge0.api.create_submissions_from_test_cases">create_submissions_from_test_cases() (in module judge0.api)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CSHARP">CSHARP (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CSHARP_DOTNET">CSHARP_DOTNET (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CSHARP_MONO">CSHARP_MONO (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.CSHARP_TEST">CSHARP_TEST (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="D">D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.D">D (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.DART">DART (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.RapidJudge0CE.DEFAULT_ENDPOINT">DEFAULT_ENDPOINT (judge0.clients.RapidJudge0CE attribute)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/clients.html#judge0.clients.RapidJudge0ExtraCE.DEFAULT_ENDPOINT">(judge0.clients.RapidJudge0ExtraCE attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/clients.html#judge0.clients.RapidJudge0CE.DEFAULT_HOST">DEFAULT_HOST (judge0.clients.RapidJudge0CE attribute)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/clients.html#judge0.clients.RapidJudge0ExtraCE.DEFAULT_HOST">(judge0.clients.RapidJudge0ExtraCE attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="E">E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.ELIXIR">ELIXIR (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_additional_files">enable_additional_files (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_batched_submissions">enable_batched_submissions (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_callbacks">enable_callbacks (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_command_line_arguments">enable_command_line_arguments (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_compiler_options">enable_compiler_options (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_network">enable_network (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_per_process_and_thread_memory_limit">enable_per_process_and_thread_memory_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_per_process_and_thread_time_limit">enable_per_process_and_thread_time_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.enable_submission_delete">enable_submission_delete (judge0.base_types.Config attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Config.enable_wait_result">enable_wait_result (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Encodable">Encodable (class in judge0.base_types)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Encodable.encode">encode() (judge0.base_types.Encodable method)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/filesystem.html#judge0.filesystem.Filesystem.encode">(judge0.filesystem.Filesystem method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.ERLANG">ERLANG (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.EXEC_FORMAT_ERROR">EXEC_FORMAT_ERROR (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.EXECUTABLE">EXECUTABLE (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/api.html#judge0.api.execute">execute() (in module judge0.api)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.TestCase.expected_output">expected_output (judge0.base_types.TestCase attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Flavor.EXTRA_CE">EXTRA_CE (judge0.base_types.Flavor attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="F">F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/filesystem.html#judge0.filesystem.File">File (class in judge0.filesystem)</a>
+</li>
+      <li><a href="api/filesystem.html#judge0.filesystem.Filesystem.files">files (judge0.filesystem.Filesystem attribute)</a>
+</li>
+      <li><a href="api/filesystem.html#judge0.filesystem.Filesystem">Filesystem (class in judge0.filesystem)</a>
+</li>
+      <li><a href="api/filesystem.html#judge0.filesystem.Filesystem.find">find() (judge0.filesystem.Filesystem method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Flavor">Flavor (class in judge0.base_types)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.FORTRAN">FORTRAN (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.TestCase.from_record">from_record() (judge0.base_types.TestCase class method)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.FSHARP">FSHARP (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="G">G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/clients.html#judge0.clients.Client.get_about">get_about() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/api.html#judge0.api.get_client">get_client() (in module judge0.api)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.Client.get_config_info">get_config_info() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.Client.get_language">get_language() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.Client.get_language_id">get_language_id() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.Client.get_languages">get_languages() (judge0.clients.Client method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/clients.html#judge0.clients.Client.get_statuses">get_statuses() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.Client.get_submission">get_submission() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/api.html#judge0.api.get_submissions">get_submissions() (in module judge0.api)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/clients.html#judge0.clients.Client.get_submissions">(judge0.clients.Client method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.GO">GO (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.GROOVY">GROOVY (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="H">H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.HASKELL">HASKELL (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/clients.html#judge0.clients.RapidJudge0CE.HOME_URL">HOME_URL (judge0.clients.RapidJudge0CE attribute)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/clients.html#judge0.clients.RapidJudge0ExtraCE.HOME_URL">(judge0.clients.RapidJudge0ExtraCE attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="I">I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Language.id">id (judge0.base_types.Language attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.IN_QUEUE">IN_QUEUE (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.TestCase.input">input (judge0.base_types.TestCase attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.INTERNAL_ERROR">INTERNAL_ERROR (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Language.is_archived">is_archived (judge0.base_types.Language attribute)</a>
+</li>
+      <li><a href="api/retry.html#judge0.retry.MaxRetries.is_done">is_done() (judge0.retry.MaxRetries method)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/retry.html#judge0.retry.MaxWaitTime.is_done">(judge0.retry.MaxWaitTime method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RegularPeriodRetry.is_done">(judge0.retry.RegularPeriodRetry method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RetryStrategy.is_done">(judge0.retry.RetryStrategy method)</a>
+</li>
+        <li><a href="api/submission.html#judge0.submission.Submission.is_done">(judge0.submission.Submission method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/clients.html#judge0.clients.Client.is_language_supported">is_language_supported() (judge0.clients.Client method)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Iterable">Iterable (in module judge0.base_types)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="J">J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.JAVA">JAVA (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.JAVA_JDK">JAVA_JDK (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.JAVA_OPENJDK">JAVA_OPENJDK (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.JAVA_TEST">JAVA_TEST (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.JAVAFX">JAVAFX (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.JAVASCRIPT">JAVASCRIPT (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li>
+    judge0.api
+
+      <ul style="list-style-type:none">
+        <li><a href="api/api.html#module-judge0.api">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li>
+    judge0.errors
+
+      <ul style="list-style-type:none">
+        <li><a href="api/errors.html#module-judge0.errors">module</a>
+</li>
+      </ul></li>
+      <li>
+    judge0.filesystem
+
+      <ul style="list-style-type:none">
+        <li><a href="api/filesystem.html#module-judge0.filesystem">module</a>
+</li>
+      </ul></li>
+      <li>
+    judge0.retry
+
+      <ul style="list-style-type:none">
+        <li><a href="api/retry.html#module-judge0.retry">module</a>
+</li>
+      </ul></li>
+      <li>
+    judge0.submission
+
+      <ul style="list-style-type:none">
+        <li><a href="api/submission.html#module-judge0.submission">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="K">K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.KOTLIN">KOTLIN (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="L">L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Language">Language (class in judge0.base_types)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias">LanguageAlias (class in judge0.base_types)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.LUA">LUA (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="M">M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Config.maintenance_mode">maintenance_mode (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_cpu_extra_time">max_cpu_extra_time (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_cpu_time_limit">max_cpu_time_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_extract_size">max_extract_size (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_file_size">max_file_size (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_max_file_size">max_max_file_size (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_max_processes_and_or_threads">max_max_processes_and_or_threads (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_memory_limit">max_memory_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_number_of_runs">max_number_of_runs (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_processes_and_or_threads">max_processes_and_or_threads (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_queue_size">max_queue_size (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_stack_limit">max_stack_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.max_submission_batch_size">max_submission_batch_size (judge0.base_types.Config attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Config.max_wall_time_limit">max_wall_time_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/retry.html#judge0.retry.MaxRetries">MaxRetries (class in judge0.retry)</a>
+</li>
+      <li><a href="api/retry.html#judge0.retry.MaxWaitTime">MaxWaitTime (class in judge0.retry)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.memory_limit">memory_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li>
+    module
+
+      <ul style="list-style-type:none">
+        <li><a href="api/api.html#module-judge0.api">judge0.api</a>
+</li>
+        <li><a href="api/errors.html#module-judge0.errors">judge0.errors</a>
+</li>
+        <li><a href="api/filesystem.html#module-judge0.filesystem">judge0.filesystem</a>
+</li>
+        <li><a href="api/retry.html#module-judge0.retry">judge0.retry</a>
+</li>
+        <li><a href="api/submission.html#module-judge0.submission">judge0.submission</a>
+</li>
+      </ul></li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.MPI_C">MPI_C (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.MPI_CPP">MPI_CPP (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.MPI_PYTHON">MPI_PYTHON (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.MULTI_FILE">MULTI_FILE (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="N">N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Language.name">name (judge0.base_types.Language attribute)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/filesystem.html#judge0.filesystem.File.name">(judge0.filesystem.File attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.NIM">NIM (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.number_of_runs">number_of_runs (judge0.base_types.Config attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="O">O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.OBJECTIVE_C">OBJECTIVE_C (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.OCAML">OCAML (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.OCTAVE">OCTAVE (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="P">P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PASCAL">PASCAL (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PERL">PERL (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PHP">PHP (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PLAIN_TEXT">PLAIN_TEXT (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/submission.html#judge0.submission.Submission.pre_execution_copy">pre_execution_copy() (judge0.submission.Submission method)</a>
+</li>
+      <li><a href="api/errors.html#judge0.errors.PreviewClientLimitError">PreviewClientLimitError</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.PROCESSING">PROCESSING (judge0.base_types.Status attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PROLOG">PROLOG (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON">PYTHON (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON2">PYTHON2 (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON2_PYPY">PYTHON2_PYPY (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON3">PYTHON3 (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON3_PYPY">PYTHON3_PYPY (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON_FOR_ML">PYTHON_FOR_ML (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.PYTHON_PYPY">PYTHON_PYPY (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="R">R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.R">R (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.Rapid">Rapid (class in judge0.clients)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.RapidJudge0CE">RapidJudge0CE (class in judge0.clients)</a>
+</li>
+      <li><a href="api/clients.html#judge0.clients.RapidJudge0ExtraCE">RapidJudge0ExtraCE (class in judge0.clients)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.redirect_stderr_to_stdout">redirect_stderr_to_stdout (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/retry.html#judge0.retry.RegularPeriodRetry">RegularPeriodRetry (class in judge0.retry)</a>
+</li>
+      <li><a href="api/retry.html#judge0.retry.RetryStrategy">RetryStrategy (class in judge0.retry)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.RUBY">RUBY (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/api.html#judge0.api.run">run() (in module judge0.api)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Language.run_cmd">run_cmd (judge0.base_types.Language attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.RUNTIME_ERROR_NZEC">RUNTIME_ERROR_NZEC (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.RUNTIME_ERROR_OTHER">RUNTIME_ERROR_OTHER (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.RUNTIME_ERROR_SIGABRT">RUNTIME_ERROR_SIGABRT (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.RUNTIME_ERROR_SIGFPE">RUNTIME_ERROR_SIGFPE (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.RUNTIME_ERROR_SIGSEGV">RUNTIME_ERROR_SIGSEGV (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.RUNTIME_ERROR_SIGXFSZ">RUNTIME_ERROR_SIGXFSZ (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.RUST">RUST (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="S">S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.SCALA">SCALA (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/submission.html#judge0.submission.Submission.set_attributes">set_attributes() (judge0.submission.Submission method)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Language.source_file">source_file (judge0.base_types.Language attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.SQLITE">SQLITE (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.stack_limit">stack_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status">Status (class in judge0.base_types)</a>
+</li>
+      <li><a href="api/retry.html#judge0.retry.MaxRetries.step">step() (judge0.retry.MaxRetries method)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/retry.html#judge0.retry.MaxWaitTime.step">(judge0.retry.MaxWaitTime method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RegularPeriodRetry.step">(judge0.retry.RegularPeriodRetry method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RetryStrategy.step">(judge0.retry.RetryStrategy method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/submission.html#judge0.submission.Submission">Submission (class in judge0.submission)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Config.submission_cache_duration">submission_cache_duration (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.SWIFT">SWIFT (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+      <li><a href="api/api.html#judge0.api.sync_execute">sync_execute() (in module judge0.api)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="T">T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.TestCase">TestCase (class in judge0.base_types)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.TestCases">TestCases (in module judge0.base_types)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.TestCaseType">TestCaseType (in module judge0.base_types)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.TIME_LIMIT_EXCEEDED">TIME_LIMIT_EXCEEDED (judge0.base_types.Status attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.TYPESCRIPT">TYPESCRIPT (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="U">U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Config.use_docs_as_homepage">use_docs_as_homepage (judge0.base_types.Config attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="V">V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/clients.html#judge0.clients.Client.version">version (judge0.clients.Client property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.LanguageAlias.VISUAL_BASIC">VISUAL_BASIC (judge0.base_types.LanguageAlias attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+  <h2 id="W">W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/api.html#judge0.api.wait">wait() (in module judge0.api)</a>
+
+      <ul style="list-style-type:none">
+        <li><a href="api/retry.html#judge0.retry.MaxRetries.wait">(judge0.retry.MaxRetries method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.MaxWaitTime.wait">(judge0.retry.MaxWaitTime method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RegularPeriodRetry.wait">(judge0.retry.RegularPeriodRetry method)</a>
+</li>
+        <li><a href="api/retry.html#judge0.retry.RetryStrategy.wait">(judge0.retry.RetryStrategy method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="api/types.html#judge0.base_types.Config.wall_time_limit">wall_time_limit (judge0.base_types.Config attribute)</a>
+</li>
+      <li><a href="api/types.html#judge0.base_types.Status.WRONG_ANSWER">WRONG_ANSWER (judge0.base_types.Status attribute)</a>
+</li>
+  </ul></td>
+  </tr>
+      </table>
+  
+
+</div></div>
+<aside id="right-sidebar" class="hidden text-sm xl:block">
+<div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2">
+<a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#A">A</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#B">B</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#C">C</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#D">D</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#E">E</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#F">F</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#G">G</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#H">H</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#I">I</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#J">J</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#K">K</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#L">L</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#M">M</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#N">N</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#O">O</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#P">P</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#R">R</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#S">S</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#T">T</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#U">U</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#V">V</a><a class="pt-2 block text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-offset-[-1px]" href="#W">W</a>
+</div>
+</aside>
+        </main>
+      </div>
+    </div><footer class="py-6 border-t border-border md:py-0">
+    <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+      <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+        <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2025, Judge0&nbsp;</p>
+</div>
+</div>
+</footer>
+  </div><button id="scrolltop"
+        x-cloak
+        @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-8 right-8 p-2 z-10 rounded-sm bg-gray-700 text-xs text-white transition-all duration-1000 hover:bg-gray-950 focus:bg-gray-950"
+        :class="{'opacity-0 invisible' : !showScrollTop}"
+>
+  <svg xmlns="http://www.w3.org/2000/svg"
+       height="14"
+       viewBox="0 96 960 960"
+       width="14"
+       class="inline fill-current mb-[2px]"
+       aria-hidden="true">
+    <path d="M450 896V370L202 618l-42-42 320-320 320 320-42 42-248-248v526h-60Z" />
+  </svg>
+  Back to top
+</button>
+  
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script defer="defer" src="_static/theme.js?v=073f68d9"></script>
+  
+</body>
+</html>
