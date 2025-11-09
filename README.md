@@ -223,3 +223,34 @@ import judge0
 client = judge0.get_client()
 print(client.get_languages())
 ```
+
+### Running LLM-Generated Code
+
+```python
+import os
+from ollama import Client
+import judge0
+
+# Get your Ollama Cloud API key from https://ollama.com.
+client = Client(
+    host="https://ollama.com",
+    headers={"Authorization": "Bearer " + os.environ.get("OLLAMA_API_KEY")},
+)
+
+system = "You are a helpful assistant that can execute Python code. Only respond with the code to be executed and nothing else. Strip backticks in code blocks."
+prompt = "Calculate how many r's are in the word 'strawberry'."
+
+response = client.chat(
+    model="gpt-oss:120b-cloud",
+    messages=[
+        {"role": "system", "content": system},
+        {"role": "user", "content": prompt},
+    ],
+)
+
+code = response["message"]["content"]
+print(f"Generated code:\n{code}")
+
+result = judge0.run(source_code=code, language=judge0.PYTHON)
+print(f"Execution result:\n{result.stdout}")
+```
