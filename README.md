@@ -233,6 +233,8 @@ print(client.get_languages())
 
 ### Running LLM-Generated Code
 
+#### Simple
+
 ```python
 import os
 from ollama import Client
@@ -260,4 +262,60 @@ print(f"Generated code:\n{code}")
 
 result = judge0.run(source_code=code, language=judge0.PYTHON)
 print(f"Execution result:\n{result.stdout}")
+```
+
+#### Tool Calling (a.k.a. Function Calling)
+
+```python
+import os
+from ollama import Client
+import judge0
+
+# Get your Ollama Cloud API key from https://ollama.com.
+client = Client(
+    host="https://ollama.com",
+    headers={"Authorization": "Bearer " + os.environ.get("OLLAMA_API_KEY")},
+)
+
+model="qwen3-coder:480b-cloud"
+
+messages=[
+    {"role": "user", "content": "Calculate how many r's are in the word 'strawberry'."},
+]
+
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "execute_python",
+        "description": "Execute Python code and return result",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "The Python code to execute"
+                }
+            },
+            "required": ["code"]
+        }
+    }
+}]
+
+response = client.chat(model=model, messages=messages, tools=tools)
+
+response_message = response["message"]
+messages.append(response_message)
+
+if response_message.tool_calls:
+    for tool_call in response_message.tool_calls:
+        if tool_call.function.name == "execute_python":
+            result = judge0.run(source_code=tool_call.function.arguments["code"], language=judge0.PYTHON)
+            messages.append({
+                "role": "tool",
+                "tool_name": "execute_python",
+                "content": result.stdout,
+            })
+
+final_response = client.chat(model=model, messages=messages)
+print(final_response["message"]["content"])
 ```
