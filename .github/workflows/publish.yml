@@ -30,7 +30,7 @@ jobs:
         if: github.event.inputs.repository == 'test'
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
-        run: uv publish --token $UV_PUBLISH_TOKEN --index-url https://test.pypi.org/legacy/
+        run: uv publish --token $UV_PUBLISH_TOKEN --publish-url https://test.pypi.org/legacy/
 
       - name: Publish to Regular PyPI
         if: github.event.inputs.repository == 'pypi'
