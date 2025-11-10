@@ -331,6 +331,10 @@ print(f'FINAL RESPONSE BY THE MODEL:\n{final_response["message"]["content"]}')
 
 ### Filesystem
 
+This example shows how to use Judge0 Python SDK to:
+1. Create a submission with additional files in the filesystem which will be available during the execution.
+2. Read the files after the execution which were created during the execution.
+
 ```python
 import judge0
 from judge0 import Filesystem, File, Submission
@@ -355,6 +359,7 @@ submission = Submission(
 )
 
 result = judge0.run(submissions=submission)
+
 print(result.stdout)
 print(result.post_execution_filesystem.find("./my_dir2/my_file2.txt"))
 ```
