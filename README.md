@@ -357,7 +357,7 @@ This example shows how to use Judge0 Python SDK with your own Judge0 instance.
 ```python
 import judge0
 
-client = judge0.Client("http://127.0.0.1:2358", None)
+client = judge0.Client("http://127.0.0.1:2358")
 
 source_code = """
 #include <stdio.h>

@@ -33,7 +33,7 @@ class Client:
     def __init__(
         self,
         endpoint,
-        auth_headers,
+        auth_headers=None,
         *,
         retry_strategy: Optional[RetryStrategy] = None,
     ) -> None:
