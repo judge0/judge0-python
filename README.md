@@ -236,6 +236,7 @@ print(client.get_languages())
 #### Simple Example with Ollama
 
 ```python
+# pip install judge0 ollama
 import os
 from ollama import Client
 import judge0
@@ -271,6 +272,7 @@ print(f"CODE EXECUTION RESULT:\n{result.stdout}")
 #### Tool Calling (a.k.a. Function Calling) with Ollama
 
 ```python
+# pip install judge0 ollama
 import os
 from ollama import Client
 import judge0
@@ -327,6 +329,87 @@ if response_message.tool_calls:
 
 final_response = client.chat(model=model, messages=messages)
 print(f'FINAL RESPONSE BY THE MODEL:\n{final_response["message"]["content"]}')
+```
+
+#### Multi-Agent System For Iterative Code Generation, Execution, And Debugging
+
+```python
+# pip install judge0 ag2[openai]
+from typing import Annotated, Optional
+
+from autogen import ConversableAgent, LLMConfig, register_function
+from autogen.tools import Tool
+from pydantic import BaseModel, Field
+import judge0
+
+
+class PythonCodeExecutionTool(Tool):
+    def __init__(self) -> None:
+        class CodeExecutionRequest(BaseModel):
+            code: Annotated[str, Field(description="Python code to execute")]
+
+        async def execute_python_code(
+            code_execution_request: CodeExecutionRequest,
+        ) -> Optional[str]:
+            result = judge0.run(
+                source_code=code_execution_request.code,
+                language=judge0.PYTHON,
+                redirect_stderr_to_stdout=True,
+            )
+            return result.stdout
+
+        super().__init__(
+            name="python_execute_code",
+            description="Executes Python code and returns the result.",
+            func_or_tool=execute_python_code,
+        )
+
+
+python_executor = PythonCodeExecutionTool()
+
+llm_config = LLMConfig(
+    {
+        "api_type": "openai",
+        "base_url": "http://localhost:11434/v1",
+        "api_key": "ollama",
+        "model": "qwen3-coder:30b",
+    }
+)
+
+code_runner = ConversableAgent(
+    name="code_runner",
+    system_message="You are a code executor agent, when you don't execute code write the message 'TERMINATE' by itself.",
+    human_input_mode="NEVER",
+    llm_config=llm_config,
+)
+
+question_agent = ConversableAgent(
+    name="question_agent",
+    system_message=(
+        "You are a developer AI agent. "
+        "Send all your code suggestions to the python_executor tool where it will be executed and result returned to you. "
+        "Keep refining the code until it works."
+    ),
+    llm_config=llm_config,
+)
+
+register_function(
+    python_executor,
+    caller=question_agent,
+    executor=code_runner,
+    description="Run Python code",
+)
+
+result = code_runner.initiate_chat(
+    recipient=question_agent,
+    message=(
+        "Write Python code to print the current Python version followed by the numbers 1 to 11. "
+        "Make a syntax error in the first version and fix it in the second version."
+    ),
+    max_turns=5,
+)
+
+print(f"Result: {result.summary}")
 ```
 
 ### Filesystem
