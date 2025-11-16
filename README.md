@@ -238,10 +238,11 @@ print(client.get_languages())
 ```python
 # pip install judge0 ollama
 import os
+
 from ollama import Client
 import judge0
 
-# Get your Ollama Cloud API key from https://ollama.com.
+# Get your free tier Ollama Cloud API key at https://ollama.com.
 client = Client(
     host="https://ollama.com",
     headers={"Authorization": "Bearer " + os.environ.get("OLLAMA_API_KEY")},
@@ -274,10 +275,11 @@ print(f"CODE EXECUTION RESULT:\n{result.stdout}")
 ```python
 # pip install judge0 ollama
 import os
+
 from ollama import Client
 import judge0
 
-# Get your Ollama Cloud API key from https://ollama.com.
+# Get your free tier Ollama Cloud API key at https://ollama.com.
 client = Client(
     host="https://ollama.com",
     headers={"Authorization": "Bearer " + os.environ.get("OLLAMA_API_KEY")},
@@ -335,6 +337,7 @@ print(f'FINAL RESPONSE BY THE MODEL:\n{final_response["message"]["content"]}')
 
 ```python
 # pip install judge0 ag2[openai]
+import os
 from typing import Annotated, Optional
 
 from autogen import ConversableAgent, LLMConfig, register_function
@@ -367,12 +370,13 @@ class PythonCodeExecutionTool(Tool):
 
 python_executor = PythonCodeExecutionTool()
 
+# Get your free tier Ollama Cloud API key at https://ollama.com.
 llm_config = LLMConfig(
     {
         "api_type": "openai",
-        "base_url": "http://localhost:11434/v1",
-        "api_key": "ollama",
-        "model": "qwen3-coder:30b",
+        "base_url": "https://ollama.com/v1",
+        "api_key": os.environ.get("OLLAMA_API_KEY"),
+        "model": "qwen3-coder:480b-cloud",
     }
 )
 
