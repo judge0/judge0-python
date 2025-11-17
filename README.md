@@ -568,6 +568,7 @@ This example shows how to use Judge0 Python SDK to:
 2. Read the files after the execution which were created during the execution.
 
 ```python
+# pip install judge0
 import judge0
 from judge0 import Filesystem, File, Submission
 
@@ -601,6 +602,7 @@ print(result.post_execution_filesystem.find("./my_dir2/my_file2.txt"))
 This example shows how to use Judge0 Python SDK with your own Judge0 instance.
 
 ```python
+# pip install judge0
 import judge0
 
 client = judge0.Client("http://127.0.0.1:2358")
@@ -616,4 +618,25 @@ int main() {
 
 result = judge0.run(client=client, source_code=source_code, language=judge0.C)
 print(result.stdout)
+```
+
+### Generating And Saving An Image File
+
+```python
+# pip install judge0
+import judge0
+
+source_code = """
+import matplotlib.pyplot as plt
+
+plt.plot([x for x in range(10)], [x**2 for x in range(10)])
+plt.savefig("chart.png")
+"""
+
+result = judge0.run(source_code=source_code, language=judge0.PYTHON_FOR_ML)
+
+image = result.post_execution_filesystem.find("chart.png")
+with open(image.name, "wb") as f:
+    f.write(image.content)
+print(f"Generated image saved as: {image.name}\n")
 ```
