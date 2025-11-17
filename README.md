@@ -518,6 +518,49 @@ if response_message.tool_calls:
                     print(f"Generated image saved as: {f.name}\n")
 ```
 
+#### Minimal Example Using `smolagents` With Ollama And Judge0
+
+```python
+# pip install judge0 smolagents[openai]
+import os
+from typing import Any
+
+import judge0
+from smolagents import CodeAgent, OpenAIServerModel, Tool
+from smolagents.local_python_executor import CodeOutput, PythonExecutor
+
+
+class Judge0PythonExecutor(PythonExecutor):
+    def send_tools(self, tools: dict[str, Tool]) -> None:
+        pass
+
+    def send_variables(self, variables: dict[str, Any]) -> None:
+        pass
+
+    def __call__(self, code_action: str) -> CodeOutput:
+        source_code = f"final_answer = lambda x : print(x)\n{code_action}"
+        result = judge0.run(source_code=source_code, language=judge0.PYTHON_FOR_ML)
+        return CodeOutput(
+            output=result.stdout,
+            logs=result.stderr or "",
+            is_final_answer=result.exit_code == 0,
+        )
+
+
+# Get your free tier Ollama Cloud API key at https://ollama.com.
+model = OpenAIServerModel(
+    model_id="gpt-oss:120b-cloud",
+    api_base="https://ollama.com/v1",
+    api_key=os.environ["OLLAMA_API_KEY"],
+)
+
+agent = CodeAgent(tools=[], model=model)
+agent.python_executor = Judge0PythonExecutor()
+
+result = agent.run("How many r's are in the word 'strawberry'?")
+print(result)
+```
+
 ### Filesystem
 
 This example shows how to use Judge0 Python SDK to:
