@@ -102,7 +102,7 @@ autodoc_mock_imports = ["requests", "pydantic"]
 napoleon_google_docstring = False
 
 # Whitelist pattern for tags (set to None to ignore all tags)
-smv_tag_whitelist = r"^.*$"
+smv_tag_whitelist = r"^v[0-9]+\.[0-9]+\.[0-9]+$"
 # Whitelist pattern for branches (set to None to ignore all branches)
 smv_branch_whitelist = r"^master$"
 # Whitelist pattern for remotes (set to None to use local branches only)
