@@ -17,8 +17,12 @@ jobs:
           fetch-depth: 0 # Fetch the full history
           ref: ${{ github.ref }} # Check out the current branch or tag
 
-      - name: Fetch tags only
-        run: git fetch --tags --no-recurse-submodules
+      - name: Fetch version tags only (vx.y.z)
+        run: |
+          TAGS=$(git ls-remote --tags origin 'v*[0-9].[0-9].[0-9]' | sed 's/.*refs\/tags\///' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$')
+          for tag in $TAGS; do
+            git fetch origin "refs/tags/$tag:refs/tags/$tag" --no-recurse-submodules
+          done
 
       - name: Set up Python
         uses: actions/setup-python@v4
