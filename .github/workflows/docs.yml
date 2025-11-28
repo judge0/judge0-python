@@ -37,12 +37,12 @@ jobs:
       - name: Build documentation
         run: uv run sphinx-multiversion docs/source docs/build/html --keep-going --no-color
 
-      - name: Get the latest tag
+      - name: Get the latest stable tag
         run: |
           # Fetch all tags
           git fetch --tags
-          # Get the latest tag
-          latest_tag=$(git tag --sort=-creatordate | head -n 1)
+          # Get the latest stable tag
+          latest_tag=$(git tag --sort=-creatordate | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
           echo "LATEST_RELEASE=$latest_tag" >> $GITHUB_ENV
 
       - name: Generate index.html for judge0.github.io/judge0-python.
