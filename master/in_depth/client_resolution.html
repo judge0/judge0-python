@@ -135,9 +135,86 @@
 <div id="content" role="main">
 <section id="client-resolution">
 <h1>Client Resolution<a class="headerlink" href="#client-resolution" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<p>TODO: Describe the approach to client resolution. See <cite>_get_implicit_client</cite>.</p>
+<p>The Judge0 Python SDK supports two main client flavors: Community Edition (CE) and Extra Community Edition (Extra CE), which correspond to the Judge0 Cloud editions. When you use functions like <code class="docutils literal notranslate"><span class="pre">judge0.run</span></code> or <code class="docutils literal notranslate"><span class="pre">judge0.execute</span></code> without explicitly providing a client instance, the SDK automatically resolves and initializes a client for you. This process, handled by the internal <code class="docutils literal notranslate"><span class="pre">_get_implicit_client</span></code> function, follows a specific order of priority.</p>
+<p>The SDK determines which client to use based on environment variables. Here’s the resolution order:</p>
+<ol class="arabic simple">
+<li><p><strong>Custom Client (Self-Hosted)</strong></p></li>
+</ol>
+<p>The SDK first checks for a self-hosted Judge0 instance. If you have your own deployment of Judge0, you can configure the SDK to use it by setting the following environment variables:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>For CE flavor:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">JUDGE0_CE_ENDPOINT</span></code>: The URL of your self-hosted Judge0 CE instance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JUDGE0_CE_AUTH_HEADERS</span></code>: A JSON string representing the authentication headers.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>For Extra CE flavor:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">JUDGE0_EXTRA_CE_ENDPOINT</span></code>: The URL of your self-hosted Judge0 Extra CE instance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JUDGE0_EXTRA_CE_AUTH_HEADERS</span></code>: A JSON string representing the authentication headers.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>If these variables are set, the SDK will initialize a <code class="docutils literal notranslate"><span class="pre">Client</span></code> instance with your custom endpoint and headers.</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Hub Clients</strong></p></li>
+</ol>
+<p>If a custom client is not configured, the SDK will try to find API keys for one of the supported hub clients. The SDK checks for the following environment variables in order:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Judge0 Cloud</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">JUDGE0_CLOUD_CE_AUTH_HEADERS</span></code> for <code class="docutils literal notranslate"><span class="pre">Judge0CloudCE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS`</span> <span class="pre">for</span> <span class="pre">``Judge0CloudExtraCE</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>RapidAPI</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">JUDGE0_RAPID_API_KEY</span></code> for both <code class="docutils literal notranslate"><span class="pre">RapidJudge0CE</span></code> and <code class="docutils literal notranslate"><span class="pre">RapidJudge0ExtraCE</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>AllThingsDev</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">JUDGE0_ATD_API_KEY</span></code> for both <code class="docutils literal notranslate"><span class="pre">ATDJudge0CE</span></code> and <code class="docutils literal notranslate"><span class="pre">ATDJudge0ExtraCE</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The first API key found determines the client that will be used.</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Preview Client</strong></p></li>
+</ol>
+<p>If none of the above environment variables are set, the SDK falls back to using a <strong>preview client</strong>. This is an unauthenticated client that connects to the official Judge0 Cloud service. It initializes <code class="docutils literal notranslate"><span class="pre">Judge0CloudCE()</span></code> and <code class="docutils literal notranslate"><span class="pre">Judge0CloudExtraCE()</span></code> for the CE and Extra CE flavors, respectively.</p>
+<p>When the preview client is used, a warning message is logged to the console, as this option is not recommended for production use. To suppress this warning, you can set the <code class="docutils literal notranslate"><span class="pre">JUDGE0_SUPPRESS_PREVIEW_WARNING</span></code> environment variable.</p>
+<section id="example-resolution-flow">
+<h2>Example Resolution Flow<a class="headerlink" href="#example-resolution-flow" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#example-resolution-flow'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>When you call a function like <code class="docutils literal notranslate"><span class="pre">judge0.run(...,</span> <span class="pre">flavor=judge0.CE)</span></code>, the SDK will:</p>
+<ol class="arabic simple">
+<li><p>Check if <code class="docutils literal notranslate"><span class="pre">JUDGE0_IMPLICIT_CE_CLIENT</span></code> is already initialized. If so, use it.</p></li>
+<li><p>Check for <code class="docutils literal notranslate"><span class="pre">JUDGE0_CE_ENDPOINT</span></code> and <code class="docutils literal notranslate"><span class="pre">JUDGE0_CE_AUTH_HEADERS</span></code> to configure a <code class="docutils literal notranslate"><span class="pre">Client</span></code>.</p></li>
+<li><p>Check for <code class="docutils literal notranslate"><span class="pre">JUDGE0_CLOUD_CE_AUTH_HEADERS</span></code> to configure a <code class="docutils literal notranslate"><span class="pre">Judge0CloudCE</span></code> client.</p></li>
+<li><p>Check for <code class="docutils literal notranslate"><span class="pre">JUDGE0_RAPID_API_KEY</span></code> to configure a <code class="docutils literal notranslate"><span class="pre">RapidJudge0CE</span></code> client.</p></li>
+<li><p>Check for <code class="docutils literal notranslate"><span class="pre">JUDGE0_ATD_API_KEY</span></code> to configure an <code class="docutils literal notranslate"><span class="pre">ATDJudge0CE</span></code> client.</p></li>
+<li><p>If none of the above are found, initialize a preview <code class="docutils literal notranslate"><span class="pre">Judge0CloudCE</span></code> client and log a warning.</p></li>
+</ol>
+<p>This implicit client resolution makes it easy to get started with the Judge0 Python SDK while providing the flexibility to configure it for different environments and services.</p>
 </section>
-</div></div>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#example-resolution-flow'" class="reference internal" href="#example-resolution-flow">Example Resolution Flow</a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
