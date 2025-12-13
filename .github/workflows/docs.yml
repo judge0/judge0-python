@@ -56,6 +56,9 @@ jobs:
         env:
           latest_release: ${{ env.LATEST_RELEASE }}
 
+      - name: Generate CNAME file
+        run: echo "python.docs.judge0.com" > docs/build/html/CNAME
+        
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
