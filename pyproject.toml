@@ -48,6 +48,7 @@ docs = [
     "sphinxawesome-theme==5.3.2",
     "sphinx-autodoc-typehints==2.3.0",
     "sphinx-multiversion==0.2.4",
+    "sphinx-autobuild>=2024.10.3",
 ]
 dev = [{ include-group = "test" }, { include-group = "docs" }]
 

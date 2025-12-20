@@ -39,22 +39,21 @@ Preparing the development setup
 Building documentation
 ----------------------
 
-Documentation is built using Sphinx. To build the documentation, run the
+Documentation is built using Sphinx. While working on a documentation, you can run
 
 .. code-block:: console
 
     $ cd docs
-    $ make html
+    $ make livehtml
 
-You should inspect the changes in the documentation by opening the
-``docs/build/html/index.html`` file in your browser.
+The ``make livehtml`` command will start a live HTTP server, watch the `docs` directory for changes,
+and rebuild the documentation on every change, enabling you to continuously work on the documentation,
+without having to manually rebuild it after every change.
 
-.. note::
-    If you are having trouble with the documentation and are seeing unexpected
-    output, delete the ``docs/build`` directory and rerun the ``make html`` command.
+You can inspect the changes by opening the ``http://localhost:8000`` in your browser.
 
-You'll see a different output since the documentation is build with
-`sphinx-multiversion <https://github.com/sphinx-contrib/multiversion>`_ extension.
+.. You'll see a different output since the documentation is build with
+.. `sphinx-multiversion <https://github.com/sphinx-contrib/multiversion>`_ extension.
 
 Testing
 -------
