@@ -38,7 +38,7 @@
 <a class="flex items-center mr-6" href="../index.html">
 <img alt="Logo" class="mr-2 dark:invert" height="24" src="../_static/logo.png" width="24"/><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">Judge0 Python SDK</span>
 </a><nav class="flex items-center space-x-6 text-sm font-medium">
-<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://judge0.github.io/judge0-python/" rel="noopener nofollow">Home</a>
+<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="../index.html">Home</a>
 <a class="transition-colors hover:text-foreground/80 text-foreground/60" href="https://judge0.com/" rel="noopener nofollow">Judge0</a>
 </nav></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
 <svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +79,7 @@
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
-<a href="https://judge0.github.io/judge0-python/" rel="nofollow noopener">Home</a>
+<a href="../index.html">Home</a>
 <a href="https://judge0.com/" rel="nofollow noopener">Judge0</a>
 </nav><nav class="table w-full min-w-full my-6 lg:my-8">
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -172,20 +172,15 @@
 </section>
 <section id="building-documentation">
 <h2>Building documentation<a class="headerlink" href="#building-documentation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#building-documentation'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
-<p>Documentation is built using Sphinx. To build the documentation, run the</p>
+<p>Documentation is built using Sphinx. While working on a documentation, you can run</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>docs
-</span><span id="line-2"><span class="gp">$ </span>make<span class="w"> </span>html
+</span><span id="line-2"><span class="gp">$ </span>make<span class="w"> </span>livehtml
 </span></code></pre></div>
 </div>
-<p>You should inspect the changes in the documentation by opening the
-<code class="docutils literal notranslate"><span class="pre">docs/build/html/index.html</span></code> file in your browser.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you are having trouble with the documentation and are seeing unexpected
-output, delete the <code class="docutils literal notranslate"><span class="pre">docs/build</span></code> directory and rerun the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> command.</p>
-</div>
-<p>You’ll see a different output since the documentation is build with
-<a class="reference external" href="https://github.com/sphinx-contrib/multiversion" rel="nofollow noopener">sphinx-multiversion<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> extension.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">livehtml</span></code> command will start a live HTTP server, watch the <cite>docs</cite> directory for changes,
+and rebuild the documentation on every change, enabling you to continuously work on the documentation,
+without having to manually rebuild it after every change.</p>
+<p>You can inspect the changes by opening the <code class="docutils literal notranslate"><span class="pre">http://localhost:8000</span></code> in your browser.</p>
 </section>
 <section id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#testing'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
