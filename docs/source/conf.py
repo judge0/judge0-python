@@ -69,7 +69,7 @@ html_theme_options = {
     },
     "awesome_external_links": True,
     "main_nav_links": {
-        "Home": "https://judge0.github.io/judge0-python/",
+        "Home": "index",
         "Judge0": "https://judge0.com/",
     },
 }
