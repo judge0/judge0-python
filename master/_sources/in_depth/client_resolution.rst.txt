@@ -24,7 +24,7 @@ If a custom client is not configured, the SDK will try to find API keys for one 
 
 * **Judge0 Cloud**:
     * ``JUDGE0_CLOUD_CE_AUTH_HEADERS`` for ``Judge0CloudCE``
-    * ``JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS` for ``Judge0CloudExtraCE``
+    * ``JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS`` for ``Judge0CloudExtraCE``
 
 * **RapidAPI**:
     *   ``JUDGE0_RAPID_API_KEY`` for both ``RapidJudge0CE`` and ``RapidJudge0ExtraCE``
