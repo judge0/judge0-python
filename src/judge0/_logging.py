@@ -1,6 +1,16 @@
 import logging.handlers
+import os
 import sys
+
 from pathlib import Path
+
+LOG_LEVEL = {
+    "debug": logging.DEBUG,
+    "info": logging.INFO,
+    "warning": logging.WARNING,
+    "error": logging.ERROR,
+    "critical": logging.CRITICAL,
+}
 
 
 def setup_logging(
@@ -27,12 +37,12 @@ def setup_logging(
 
     # Determine log levels: parameter > env var > default
     if file_level is None:
-        file_level = getattr(
-            logging, os.getenv("JUDGE0_FILE_LOG_LEVEL", "DEBUG").upper(), logging.DEBUG
+        file_level = LOG_LEVEL.get(
+            os.getenv("JUDGE0_FILE_LOG_LEVEL", "DEBUG").lower(), logging.DEBUG
         )
     if console_level is None:
-        console_level = getattr(
-            logging, os.getenv("JUDGE0_CONSOLE_LOG_LEVEL", "INFO").upper(), logging.INFO
+        console_level = LOG_LEVEL.get(
+            os.getenv("JUDGE0_CONSOLE_LOG_LEVEL", "INFO").lower(), logging.INFO
         )
 
     formatter = logging.Formatter(
