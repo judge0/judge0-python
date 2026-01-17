@@ -3,15 +3,14 @@
 from functools import wraps
 from http import HTTPStatus
 
-from requests import HTTPError
+from httpx import HTTPError, HTTPStatusError
 
 from .errors import PreviewClientLimitError
 
 
 def is_http_too_many_requests_error(exception: Exception) -> bool:
     return (
-        isinstance(exception, HTTPError)
-        and exception.response is not None
+        isinstance(exception, HTTPStatusError)
         and exception.response.status_code == HTTPStatus.TOO_MANY_REQUESTS
     )
 

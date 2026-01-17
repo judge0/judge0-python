@@ -97,7 +97,7 @@ autodoc_default_options = {
     "special-members": False,
     "inherited-members": False,
 }
-autodoc_mock_imports = ["requests", "pydantic"]
+autodoc_mock_imports = ["httpx", "pydantic"]
 
 napoleon_google_docstring = False
 

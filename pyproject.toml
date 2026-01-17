@@ -24,7 +24,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-dependencies = ["requests>=2.28.0,<3.0.0", "pydantic>=2.0.0,<3.0.0"]
+dependencies = ["httpx>=0.28.1,<1.0.0", "pydantic>=2.0.0,<3.0.0"]
 
 [build-system]
 requires = ["setuptools>=70.0"]
