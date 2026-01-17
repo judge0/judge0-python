@@ -1,3 +1,4 @@
+import logging
 from typing import Optional, Union
 
 from .base_types import Flavor, Iterable, TestCase, TestCases, TestCaseType
@@ -6,6 +7,8 @@ from .common import batched
 from .errors import ClientResolutionError
 from .retry import RegularPeriodRetry, RetryStrategy
 from .submission import Submission, Submissions
+
+logger = logging.getLogger(__name__)
 
 
 def get_client(flavor: Flavor = Flavor.CE) -> Client:
@@ -24,7 +27,9 @@ def get_client(flavor: Flavor = Flavor.CE) -> Client:
     from . import _get_implicit_client
 
     if isinstance(flavor, Flavor):
-        return _get_implicit_client(flavor=flavor)
+        client = _get_implicit_client(flavor=flavor)
+        logger.debug(f"Resolved implicit client for flavor {flavor}: {client}")
+        return client
     else:
         raise ValueError(
             "Expected argument flavor to be of of type enum Flavor, "
@@ -58,6 +63,7 @@ def _resolve_client(
     """
     # User explicitly passed a client.
     if isinstance(client, Client):
+        logger.debug(f"Using explicitly provided client: {client}")
         return client
 
     # NOTE: At the moment, we do not support the option to check if explicit
@@ -65,6 +71,7 @@ def _resolve_client(
     # ignored if flavor argument is provided.
 
     if isinstance(client, Flavor):
+        logger.debug(f"Resolving client from flavor: {client}")
         return get_client(client)
 
     if client is None:
@@ -80,12 +87,14 @@ def _resolve_client(
 
     # Check which client supports all languages from the provided submissions.
     languages = [submission.language for submission in submissions]
+    logger.debug(f"Attempting to resolve client for languages: {languages}")
 
     for flavor in Flavor:
         client = get_client(flavor)
         if client is not None and all(
             (client.is_language_supported(lang) for lang in languages)
         ):
+            logger.debug(f"Resolved client {client} for languages {languages}")
             return client
 
     raise ClientResolutionError(
@@ -117,8 +126,10 @@ def create_submissions(
     client = _resolve_client(client=client, submissions=submissions)
 
     if isinstance(submissions, Submission):
+        logger.info("Creating a single submission.")
         return client.create_submission(submissions)
 
+    logger.info(f"Creating {len(submissions)} submissions.")
     result_submissions = []
     for submission_batch in batched(
         submissions, client.config.max_submission_batch_size
@@ -156,8 +167,10 @@ def get_submissions(
     client = _resolve_client(client=client, submissions=submissions)
 
     if isinstance(submissions, Submission):
+        logger.debug("Getting status for a single submission.")
         return client.get_submission(submissions, fields=fields)
 
+    logger.debug(f"Getting status for {len(submissions)} submissions.")
     result_submissions = []
     for submission_batch in batched(
         submissions, client.config.max_submission_batch_size
@@ -218,13 +231,16 @@ def wait(
         submission.token: submission for submission in submissions_list
     }
 
+    logger.info(f"Waiting for {len(submissions_to_check)} submissions to finish.")
     while len(submissions_to_check) > 0 and not retry_strategy.is_done():
+        logger.debug(f"Checking {len(submissions_to_check)} submissions...")
         get_submissions(client=client, submissions=list(submissions_to_check.values()))
         finished_submissions = [
             token
             for token, submission in submissions_to_check.items()
             if submission.is_done()
         ]
+        logger.debug(f"{len(finished_submissions)} submissions finished in this step.")
         for token in finished_submissions:
             submissions_to_check.pop(token)
 
@@ -314,7 +330,6 @@ def _execute(
     wait_for_result: bool = False,
     **kwargs,
 ) -> Union[Submission, Submissions]:
-
     if submissions is not None and source_code is not None:
         raise ValueError(
             "Both submissions and source_code arguments are provided. "
@@ -327,6 +342,7 @@ def _execute(
     if source_code is not None:
         submissions = Submission(source_code=source_code, **kwargs)
 
+    logger.info("Starting execution process.")
     client = _resolve_client(client=client, submissions=submissions)
     all_submissions = create_submissions_from_test_cases(submissions, test_cases)
     all_submissions = create_submissions(client=client, submissions=all_submissions)

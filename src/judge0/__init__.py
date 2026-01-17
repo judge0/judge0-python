@@ -3,6 +3,8 @@ import os
 
 from typing import Union
 
+from ._logging import setup_logging
+
 from .api import (
     async_execute,
     async_run,
@@ -66,10 +68,22 @@ __all__ = [
 JUDGE0_IMPLICIT_CE_CLIENT = None
 JUDGE0_IMPLICIT_EXTRA_CE_CLIENT = None
 
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except:  # noqa: E722
+    pass
+
+if os.getenv("JUDGE0_ENABLE_LOGGING"):
+    setup_logging()
+
 logger = logging.getLogger(__name__)
 suppress_preview_warning = os.getenv("JUDGE0_SUPPRESS_PREVIEW_WARNING") is not None
 
 
+# TODO: I belive that the whole logic for importing implicit client can be moved
+# to a separate module.
 def _get_implicit_client(flavor: Flavor) -> Client:
     global JUDGE0_IMPLICIT_CE_CLIENT, JUDGE0_IMPLICIT_EXTRA_CE_CLIENT
 
