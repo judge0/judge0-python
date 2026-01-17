@@ -1,6 +1,6 @@
 from typing import ClassVar, Optional, Union
 
-import requests
+import httpx
 
 from .base_types import Config, Iterable, Language, LanguageAlias
 from .data import LANGUAGE_TO_LANGUAGE_ID
@@ -40,7 +40,7 @@ class Client:
         self.endpoint = endpoint
         self.auth_headers = auth_headers
         self.retry_strategy = retry_strategy
-        self.session = requests.Session()
+        self.client = httpx.Client()
 
         try:
             self.languages = self.get_languages()
@@ -53,7 +53,7 @@ class Client:
             ) from e
 
     def __del__(self):
-        self.session.close()
+        self.client.close()
 
     @handle_too_many_requests_error_for_preview_client
     def get_about(self) -> dict:
@@ -64,7 +64,7 @@ class Client:
         dict
             General information about judge0.
         """
-        response = self.session.get(
+        response = self.client.get(
             f"{self.endpoint}/about",
             headers=self.auth_headers,
         )
@@ -80,7 +80,7 @@ class Client:
         Config
             Client's configuration.
         """
-        response = self.session.get(
+        response = self.client.get(
             f"{self.endpoint}/config_info",
             headers=self.auth_headers,
         )
@@ -102,7 +102,7 @@ class Client:
             Language corresponding to the passed id.
         """
         request_url = f"{self.endpoint}/languages/{language_id}"
-        response = self.session.get(request_url, headers=self.auth_headers)
+        response = self.client.get(request_url, headers=self.auth_headers)
         response.raise_for_status()
         return Language(**response.json())
 
@@ -116,7 +116,7 @@ class Client:
             A list of supported languages.
         """
         request_url = f"{self.endpoint}/languages"
-        response = self.session.get(request_url, headers=self.auth_headers)
+        response = self.client.get(request_url, headers=self.auth_headers)
         response.raise_for_status()
         return [Language(**lang_dict) for lang_dict in response.json()]
 
@@ -129,7 +129,7 @@ class Client:
         list of dict
             A list of possible submission statues.
         """
-        response = self.session.get(
+        response = self.client.get(
             f"{self.endpoint}/statuses",
             headers=self.auth_headers,
         )
@@ -208,7 +208,7 @@ class Client:
 
         body = submission.as_body(self)
 
-        response = self.session.post(
+        response = self.client.post(
             f"{self.endpoint}/submissions",
             json=body,
             params=params,
@@ -254,7 +254,7 @@ class Client:
         else:
             params["fields"] = "*"
 
-        response = self.session.get(
+        response = self.client.get(
             f"{self.endpoint}/submissions/{submission.token}",
             params=params,
             headers=self.auth_headers,
@@ -291,7 +291,7 @@ class Client:
 
         submissions_body = [submission.as_body(self) for submission in submissions]
 
-        response = self.session.post(
+        response = self.client.post(
             f"{self.endpoint}/submissions/batch",
             headers=self.auth_headers,
             params={"base64_encoded": "true"},
@@ -342,7 +342,7 @@ class Client:
         tokens = ",".join([submission.token for submission in submissions])
         params["tokens"] = tokens
 
-        response = self.session.get(
+        response = self.client.get(
             f"{self.endpoint}/submissions/batch",
             params=params,
             headers=self.auth_headers,
