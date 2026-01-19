@@ -31,8 +31,7 @@ from .clients import (
 from .filesystem import File, Filesystem
 from .retry import MaxRetries, MaxWaitTime, RegularPeriodRetry
 from .submission import Submission
-
-__version__ = "0.1.0.dev0"
+from .version import __version__
 
 __all__ = [
     "ATD",

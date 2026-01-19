@@ -7,6 +7,7 @@ from .data import LANGUAGE_TO_LANGUAGE_ID
 from .retry import RetryStrategy
 from .submission import Submission, Submissions
 from .utils import handle_too_many_requests_error_for_preview_client
+from .version import __version__
 
 
 class Client:
@@ -33,12 +34,20 @@ class Client:
     def __init__(
         self,
         endpoint,
-        auth_headers=None,
+        headers=None,
         *,
         retry_strategy: Optional[RetryStrategy] = None,
     ) -> None:
         self.endpoint = endpoint
-        self.auth_headers = auth_headers
+        self.headers = headers
+        if self.headers is None:
+            self.headers = {}
+        self.headers.update(
+            {
+                "X-Judge0-App": "Judge0 Python SDK",
+                "X-Judge0-App-Version": __version__,
+            }
+        )
         self.retry_strategy = retry_strategy
         self.client = httpx.Client()
 
@@ -66,7 +75,7 @@ class Client:
         """
         response = self.client.get(
             f"{self.endpoint}/about",
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
         return response.json()
@@ -82,7 +91,7 @@ class Client:
         """
         response = self.client.get(
             f"{self.endpoint}/config_info",
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
         return Config(**response.json())
@@ -102,7 +111,7 @@ class Client:
             Language corresponding to the passed id.
         """
         request_url = f"{self.endpoint}/languages/{language_id}"
-        response = self.client.get(request_url, headers=self.auth_headers)
+        response = self.client.get(request_url, headers=self.headers)
         response.raise_for_status()
         return Language(**response.json())
 
@@ -116,7 +125,7 @@ class Client:
             A list of supported languages.
         """
         request_url = f"{self.endpoint}/languages"
-        response = self.client.get(request_url, headers=self.auth_headers)
+        response = self.client.get(request_url, headers=self.headers)
         response.raise_for_status()
         return [Language(**lang_dict) for lang_dict in response.json()]
 
@@ -131,7 +140,7 @@ class Client:
         """
         response = self.client.get(
             f"{self.endpoint}/statuses",
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
         return response.json()
@@ -212,7 +221,7 @@ class Client:
             f"{self.endpoint}/submissions",
             json=body,
             params=params,
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
 
@@ -257,7 +266,7 @@ class Client:
         response = self.client.get(
             f"{self.endpoint}/submissions/{submission.token}",
             params=params,
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
 
@@ -293,7 +302,7 @@ class Client:
 
         response = self.client.post(
             f"{self.endpoint}/submissions/batch",
-            headers=self.auth_headers,
+            headers=self.headers,
             params={"base64_encoded": "true"},
             json={"submissions": submissions_body},
         )
@@ -345,7 +354,7 @@ class Client:
         response = self.client.get(
             f"{self.endpoint}/submissions/batch",
             params=params,
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
 
@@ -384,7 +393,7 @@ class ATD(Client):
         )
 
     def _update_endpoint_header(self, header_value):
-        self.auth_headers["x-apihub-endpoint"] = header_value
+        self.headers["x-apihub-endpoint"] = header_value
 
 
 class ATDJudge0CE(ATD):
