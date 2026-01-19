@@ -17,7 +17,7 @@ class Client:
     ----------
     endpoint : str
         Client's default endpoint.
-    auth_headers : dict
+    headers : dict
         Request authentication headers.
 
     Attributes
@@ -665,21 +665,21 @@ class Judge0Cloud(Client):
     ----------
     endpoint : str
         Default request endpoint.
-    auth_headers : str or dict
+    headers : str or dict
         Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
     **kwargs : dict
         Additional keyword arguments for the base Client.
     """
 
-    def __init__(self, endpoint, auth_headers=None, **kwargs):
-        if isinstance(auth_headers, str):
+    def __init__(self, endpoint, headers=None, **kwargs):
+        if isinstance(headers, str):
             from json import loads
 
-            auth_headers = loads(auth_headers)
+            headers = loads(headers)
 
         super().__init__(
             endpoint,
-            auth_headers,
+            headers,
             **kwargs,
         )
 
@@ -691,7 +691,7 @@ class Judge0CloudCE(Judge0Cloud):
     ----------
     endpoint : str
         Default request endpoint.
-    auth_headers : str or dict
+    headers : str or dict
         Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
     **kwargs : dict
         Additional keyword arguments for the base Client.
@@ -701,10 +701,10 @@ class Judge0CloudCE(Judge0Cloud):
     HOME_URL: ClassVar[str] = "https://ce.judge0.com"
     API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_CE_AUTH_HEADERS"
 
-    def __init__(self, auth_headers=None, **kwargs):
+    def __init__(self, headers=None, **kwargs):
         super().__init__(
             self.DEFAULT_ENDPOINT,
-            auth_headers,
+            headers,
             **kwargs,
         )
 
@@ -716,7 +716,7 @@ class Judge0CloudExtraCE(Judge0Cloud):
     ----------
     endpoint : str
         Default request endpoint.
-    auth_headers : str or dict
+    headers : str or dict
         Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
     **kwargs : dict
         Additional keyword arguments for the base Client.
@@ -726,8 +726,8 @@ class Judge0CloudExtraCE(Judge0Cloud):
     HOME_URL: ClassVar[str] = "https://extra-ce.judge0.com"
     API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS"
 
-    def __init__(self, auth_headers=None, **kwargs):
-        super().__init__(self.DEFAULT_ENDPOINT, auth_headers, **kwargs)
+    def __init__(self, headers=None, **kwargs):
+        super().__init__(self.DEFAULT_ENDPOINT, headers, **kwargs)
 
 
 CE = (Judge0CloudCE, RapidJudge0CE, ATDJudge0CE)

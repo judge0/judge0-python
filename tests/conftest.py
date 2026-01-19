@@ -17,7 +17,7 @@ def custom_ce_client():
     if endpoint is None or auth_headers is None:
         return None
     else:
-        return clients.Client(endpoint=endpoint, auth_headers=json.loads(auth_headers))
+        return clients.Client(endpoint=endpoint, headers=json.loads(auth_headers))
 
 
 @pytest.fixture(scope="session")
@@ -28,7 +28,7 @@ def custom_extra_ce_client():
     if endpoint is None or auth_headers is None:
         return None
     else:
-        return clients.Client(endpoint=endpoint, auth_headers=json.loads(auth_headers))
+        return clients.Client(endpoint=endpoint, headers=json.loads(auth_headers))
 
 
 @pytest.fixture(scope="session")

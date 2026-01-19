@@ -144,7 +144,7 @@ def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     if flavor == Flavor.CE and ce_endpoint is not None and ce_auth_header is not None:
         return Client(
             endpoint=ce_endpoint,
-            auth_headers=loads(ce_auth_header),
+            headers=loads(ce_auth_header),
         )
 
     if (
@@ -154,7 +154,7 @@ def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     ):
         return Client(
             endpoint=extra_ce_endpoint,
-            auth_headers=loads(extra_ce_auth_header),
+            headers=loads(extra_ce_auth_header),
         )
 
     return None
