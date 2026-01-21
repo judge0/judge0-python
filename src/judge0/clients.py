@@ -49,7 +49,7 @@ class Client:
             }
         )
         self.retry_strategy = retry_strategy
-        self.client = httpx.Client()
+        self.client = httpx.Client(base_url=self.endpoint)
 
         try:
             self.languages = self.get_languages()
@@ -74,7 +74,7 @@ class Client:
             General information about judge0.
         """
         response = self.client.get(
-            f"{self.endpoint}/about",
+            "/about",
             headers=self.headers,
         )
         response.raise_for_status()
@@ -90,7 +90,7 @@ class Client:
             Client's configuration.
         """
         response = self.client.get(
-            f"{self.endpoint}/config_info",
+            "/config_info",
             headers=self.headers,
         )
         response.raise_for_status()
@@ -110,7 +110,7 @@ class Client:
         Language
             Language corresponding to the passed id.
         """
-        request_url = f"{self.endpoint}/languages/{language_id}"
+        request_url = f"/languages/{language_id}"
         response = self.client.get(request_url, headers=self.headers)
         response.raise_for_status()
         return Language(**response.json())
@@ -124,8 +124,7 @@ class Client:
         list of language
             A list of supported languages.
         """
-        request_url = f"{self.endpoint}/languages"
-        response = self.client.get(request_url, headers=self.headers)
+        response = self.client.get("/languages", headers=self.headers)
         response.raise_for_status()
         return [Language(**lang_dict) for lang_dict in response.json()]
 
@@ -139,7 +138,7 @@ class Client:
             A list of possible submission statues.
         """
         response = self.client.get(
-            f"{self.endpoint}/statuses",
+            "/statuses",
             headers=self.headers,
         )
         response.raise_for_status()
@@ -218,7 +217,7 @@ class Client:
         body = submission.as_body(self)
 
         response = self.client.post(
-            f"{self.endpoint}/submissions",
+            "/submissions",
             json=body,
             params=params,
             headers=self.headers,
@@ -264,7 +263,7 @@ class Client:
             params["fields"] = "*"
 
         response = self.client.get(
-            f"{self.endpoint}/submissions/{submission.token}",
+            f"/submissions/{submission.token}",
             params=params,
             headers=self.headers,
         )
@@ -301,7 +300,7 @@ class Client:
         submissions_body = [submission.as_body(self) for submission in submissions]
 
         response = self.client.post(
-            f"{self.endpoint}/submissions/batch",
+            "/submissions/batch",
             headers=self.headers,
             params={"base64_encoded": "true"},
             json={"submissions": submissions_body},
@@ -352,7 +351,7 @@ class Client:
         params["tokens"] = tokens
 
         response = self.client.get(
-            f"{self.endpoint}/submissions/batch",
+            "/submissions/batch",
             params=params,
             headers=self.headers,
         )
