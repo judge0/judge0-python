@@ -66,6 +66,9 @@ extend-ignore = [
     'D400',
     'F821',
 ]
+per-file-ignores = [
+    "__init__.py:F401", # Ignore unused imports in __init__.py
+]
 docstring-convention = "numpy"
 max-line-length = 88
 

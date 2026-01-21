@@ -31,8 +31,7 @@ from .clients import (
 from .filesystem import File, Filesystem
 from .retry import MaxRetries, MaxWaitTime, RegularPeriodRetry
 from .submission import Submission
-
-__version__ = "0.1.0.dev0"
+from .version import __version__
 
 __all__ = [
     "ATD",
@@ -145,7 +144,7 @@ def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     if flavor == Flavor.CE and ce_endpoint is not None and ce_auth_header is not None:
         return Client(
             endpoint=ce_endpoint,
-            auth_headers=loads(ce_auth_header),
+            headers=loads(ce_auth_header),
         )
 
     if (
@@ -155,7 +154,7 @@ def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     ):
         return Client(
             endpoint=extra_ce_endpoint,
-            auth_headers=loads(extra_ce_auth_header),
+            headers=loads(extra_ce_auth_header),
         )
 
     return None

@@ -7,6 +7,7 @@ from .data import LANGUAGE_TO_LANGUAGE_ID
 from .retry import RetryStrategy
 from .submission import Submission, Submissions
 from .utils import handle_too_many_requests_error_for_preview_client
+from .version import __version__
 
 
 class Client:
@@ -16,7 +17,7 @@ class Client:
     ----------
     endpoint : str
         Client's default endpoint.
-    auth_headers : dict
+    headers : dict
         Request authentication headers.
 
     Attributes
@@ -33,12 +34,20 @@ class Client:
     def __init__(
         self,
         endpoint,
-        auth_headers=None,
+        headers=None,
         *,
         retry_strategy: Optional[RetryStrategy] = None,
     ) -> None:
         self.endpoint = endpoint
-        self.auth_headers = auth_headers
+        self.headers = headers
+        if self.headers is None:
+            self.headers = {}
+        self.headers.update(
+            {
+                "X-Judge0-App": "Judge0 Python SDK",
+                "X-Judge0-App-Version": __version__,
+            }
+        )
         self.retry_strategy = retry_strategy
         self.client = httpx.Client(base_url=self.endpoint)
 
@@ -66,7 +75,7 @@ class Client:
         """
         response = self.client.get(
             "/about",
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
         return response.json()
@@ -82,7 +91,7 @@ class Client:
         """
         response = self.client.get(
             "/config_info",
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
         return Config(**response.json())
@@ -102,7 +111,7 @@ class Client:
             Language corresponding to the passed id.
         """
         request_url = f"/languages/{language_id}"
-        response = self.client.get(request_url, headers=self.auth_headers)
+        response = self.client.get(request_url, headers=self.headers)
         response.raise_for_status()
         return Language(**response.json())
 
@@ -115,7 +124,7 @@ class Client:
         list of language
             A list of supported languages.
         """
-        response = self.client.get("/languages", headers=self.auth_headers)
+        response = self.client.get("/languages", headers=self.headers)
         response.raise_for_status()
         return [Language(**lang_dict) for lang_dict in response.json()]
 
@@ -130,7 +139,7 @@ class Client:
         """
         response = self.client.get(
             "/statuses",
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
         return response.json()
@@ -211,7 +220,7 @@ class Client:
             "/submissions",
             json=body,
             params=params,
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
 
@@ -256,7 +265,7 @@ class Client:
         response = self.client.get(
             f"/submissions/{submission.token}",
             params=params,
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
 
@@ -292,7 +301,7 @@ class Client:
 
         response = self.client.post(
             "/submissions/batch",
-            headers=self.auth_headers,
+            headers=self.headers,
             params={"base64_encoded": "true"},
             json={"submissions": submissions_body},
         )
@@ -344,7 +353,7 @@ class Client:
         response = self.client.get(
             "/submissions/batch",
             params=params,
-            headers=self.auth_headers,
+            headers=self.headers,
         )
         response.raise_for_status()
 
@@ -383,7 +392,7 @@ class ATD(Client):
         )
 
     def _update_endpoint_header(self, header_value):
-        self.auth_headers["x-apihub-endpoint"] = header_value
+        self.headers["x-apihub-endpoint"] = header_value
 
 
 class ATDJudge0CE(ATD):
@@ -655,21 +664,21 @@ class Judge0Cloud(Client):
     ----------
     endpoint : str
         Default request endpoint.
-    auth_headers : str or dict
+    headers : str or dict
         Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
     **kwargs : dict
         Additional keyword arguments for the base Client.
     """
 
-    def __init__(self, endpoint, auth_headers=None, **kwargs):
-        if isinstance(auth_headers, str):
+    def __init__(self, endpoint, headers=None, **kwargs):
+        if isinstance(headers, str):
             from json import loads
 
-            auth_headers = loads(auth_headers)
+            headers = loads(headers)
 
         super().__init__(
             endpoint,
-            auth_headers,
+            headers,
             **kwargs,
         )
 
@@ -681,7 +690,7 @@ class Judge0CloudCE(Judge0Cloud):
     ----------
     endpoint : str
         Default request endpoint.
-    auth_headers : str or dict
+    headers : str or dict
         Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
     **kwargs : dict
         Additional keyword arguments for the base Client.
@@ -691,10 +700,10 @@ class Judge0CloudCE(Judge0Cloud):
     HOME_URL: ClassVar[str] = "https://ce.judge0.com"
     API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_CE_AUTH_HEADERS"
 
-    def __init__(self, auth_headers=None, **kwargs):
+    def __init__(self, headers=None, **kwargs):
         super().__init__(
             self.DEFAULT_ENDPOINT,
-            auth_headers,
+            headers,
             **kwargs,
         )
 
@@ -706,7 +715,7 @@ class Judge0CloudExtraCE(Judge0Cloud):
     ----------
     endpoint : str
         Default request endpoint.
-    auth_headers : str or dict
+    headers : str or dict
         Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
     **kwargs : dict
         Additional keyword arguments for the base Client.
@@ -716,8 +725,8 @@ class Judge0CloudExtraCE(Judge0Cloud):
     HOME_URL: ClassVar[str] = "https://extra-ce.judge0.com"
     API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS"
 
-    def __init__(self, auth_headers=None, **kwargs):
-        super().__init__(self.DEFAULT_ENDPOINT, auth_headers, **kwargs)
+    def __init__(self, headers=None, **kwargs):
+        super().__init__(self.DEFAULT_ENDPOINT, headers, **kwargs)
 
 
 CE = (Judge0CloudCE, RapidJudge0CE, ATDJudge0CE)
