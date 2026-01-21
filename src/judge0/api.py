@@ -1,5 +1,4 @@
 import logging
-from typing import Optional, Union
 
 from .base_types import Flavor, Iterable, TestCase, TestCases, TestCaseType
 from .clients import Client
@@ -38,8 +37,8 @@ def get_client(flavor: Flavor = Flavor.CE) -> Client:
 
 
 def _resolve_client(
-    client: Optional[Union[Client, Flavor]] = None,
-    submissions: Optional[Union[Submission, Submissions]] = None,
+    client: Client | Flavor | None = None,
+    submissions: Submission | Submissions | None = None,
 ) -> Client:
     """Resolve a client from flavor or submission(s) arguments.
 
@@ -106,9 +105,9 @@ def _resolve_client(
 
 def create_submissions(
     *,
-    client: Optional[Union[Client, Flavor]] = None,
-    submissions: Optional[Union[Submission, Submissions]] = None,
-) -> Union[Submission, Submissions]:
+    client: Client | Flavor | None = None,
+    submissions: Submission | Submissions | None = None,
+) -> Submission | Submissions:
     """Universal function for creating submissions to the client.
 
     Parameters
@@ -144,10 +143,10 @@ def create_submissions(
 
 def get_submissions(
     *,
-    client: Optional[Union[Client, Flavor]] = None,
-    submissions: Optional[Union[Submission, Submissions]] = None,
-    fields: Optional[Union[str, Iterable[str]]] = None,
-) -> Union[Submission, Submissions]:
+    client: Client | Flavor | None = None,
+    submissions: Submission | Submissions | None = None,
+    fields: str | Iterable[str] | None = None,
+) -> Submission | Submissions:
     """Get submission (status) from a client.
 
     Parameters
@@ -189,10 +188,10 @@ def get_submissions(
 
 def wait(
     *,
-    client: Optional[Union[Client, Flavor]] = None,
-    submissions: Optional[Union[Submission, Submissions]] = None,
-    retry_strategy: Optional[RetryStrategy] = None,
-) -> Union[Submission, Submissions]:
+    client: Client | Flavor | None = None,
+    submissions: Submission | Submissions | None = None,
+    retry_strategy: RetryStrategy | None = None,
+) -> Submission | Submissions:
     """Wait for all the submissions to finish.
 
     Parameters
@@ -255,9 +254,9 @@ def wait(
 
 
 def create_submissions_from_test_cases(
-    submissions: Union[Submission, Submissions],
-    test_cases: Optional[Union[TestCaseType, TestCases]] = None,
-) -> Union[Submission, list[Submission]]:
+    submissions: Submission | Submissions,
+    test_cases: TestCaseType | TestCases | None = None,
+) -> Submission | list[Submission]:
     """Create submissions from the submission and test case pairs.
 
     Function always returns a deep copy so make sure you are using the
@@ -323,13 +322,13 @@ def create_submissions_from_test_cases(
 
 def _execute(
     *,
-    client: Optional[Union[Client, Flavor]] = None,
-    submissions: Optional[Union[Submission, Submissions]] = None,
-    source_code: Optional[str] = None,
-    test_cases: Optional[Union[TestCaseType, TestCases]] = None,
+    client: Client | Flavor | None = None,
+    submissions: Submission | Submissions | None = None,
+    source_code: str | None = None,
+    test_cases: TestCaseType | TestCases | None = None,
     wait_for_result: bool = False,
     **kwargs,
-) -> Union[Submission, Submissions]:
+) -> Submission | Submissions:
     if submissions is not None and source_code is not None:
         raise ValueError(
             "Both submissions and source_code arguments are provided. "
@@ -355,12 +354,12 @@ def _execute(
 
 def async_execute(
     *,
-    client: Optional[Union[Client, Flavor]] = None,
-    submissions: Optional[Union[Submission, Submissions]] = None,
-    source_code: Optional[str] = None,
-    test_cases: Optional[Union[TestCaseType, TestCases]] = None,
+    client: Client | Flavor | None = None,
+    submissions: Submission | Submissions | None = None,
+    source_code: str | None = None,
+    test_cases: TestCaseType | TestCases | None = None,
     **kwargs,
-) -> Union[Submission, Submissions]:
+) -> Submission | Submissions:
     """Create submission(s).
 
     Aliases: `async_run`.
@@ -405,12 +404,12 @@ def async_execute(
 
 def sync_execute(
     *,
-    client: Optional[Union[Client, Flavor]] = None,
-    submissions: Optional[Union[Submission, Submissions]] = None,
-    source_code: Optional[str] = None,
-    test_cases: Optional[Union[TestCaseType, TestCases]] = None,
+    client: Client | Flavor | None = None,
+    submissions: Submission | Submissions | None = None,
+    source_code: str | None = None,
+    test_cases: TestCaseType | TestCases | None = None,
     **kwargs,
-) -> Union[Submission, Submissions]:
+) -> Submission | Submissions:
     """Create submission(s) and wait for their finish.
 
     Aliases: `execute`, `run`, `sync_run`.

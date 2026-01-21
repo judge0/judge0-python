@@ -1,8 +1,6 @@
 import logging
 import os
 
-from typing import Union
-
 from ._logging import setup_logging
 
 from .api import (
@@ -119,7 +117,7 @@ def _get_implicit_client(flavor: Flavor) -> Client:
     return client
 
 
-def _get_preview_client(flavor: Flavor) -> Union[Judge0CloudCE, Judge0CloudExtraCE]:
+def _get_preview_client(flavor: Flavor) -> Judge0CloudCE | Judge0CloudExtraCE:
     if not suppress_preview_warning:
         logger.warning(
             "You are using a preview version of the client which is not recommended"
@@ -133,7 +131,7 @@ def _get_preview_client(flavor: Flavor) -> Union[Judge0CloudCE, Judge0CloudExtra
         return Judge0CloudExtraCE()
 
 
-def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
+def _get_custom_client(flavor: Flavor) -> Client | None:
     from json import loads
 
     ce_endpoint = os.getenv("JUDGE0_CE_ENDPOINT")
@@ -160,7 +158,7 @@ def _get_custom_client(flavor: Flavor) -> Union[Client, None]:
     return None
 
 
-def _get_hub_client(flavor: Flavor) -> Union[Client, None]:
+def _get_hub_client(flavor: Flavor) -> Client | None:
     from .clients import CE, EXTRA_CE
 
     if flavor == Flavor.CE:

@@ -1,11 +1,10 @@
 from base64 import b64decode, b64encode
 from itertools import islice
-from typing import Union
 
 from judge0.base_types import Encodable
 
 
-def encode(content: Union[bytes, str, Encodable]) -> str:
+def encode(content: bytes | str | Encodable) -> str:
     """Encode content to base64 string."""
     if isinstance(content, bytes):
         return b64encode(content).decode()
@@ -16,7 +15,7 @@ def encode(content: Union[bytes, str, Encodable]) -> str:
     raise ValueError(f"Unsupported type. Expected bytes or str, got {type(content)}!")
 
 
-def decode(content: Union[bytes, str]) -> str:
+def decode(content: bytes | str) -> str:
     """Decode base64 encoded content."""
     if isinstance(content, bytes):
         return b64decode(

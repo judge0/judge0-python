@@ -1,9 +1,7 @@
 import copy
 import io
 import zipfile
-
 from base64 import b64decode, b64encode
-from typing import Optional, Union
 
 from pydantic import BaseModel
 
@@ -22,7 +20,7 @@ class File(BaseModel):
     """
 
     name: str
-    content: Optional[Union[str, bytes]] = None
+    content: str | bytes | None = None
 
     def __init__(self, **data):
         super().__init__(**data)
@@ -92,7 +90,7 @@ class Filesystem(BaseModel):
                 zip_file.writestr(file.name, file.content)
         return zip_buffer.getvalue()
 
-    def find(self, name: str) -> Optional[File]:
+    def find(self, name: str) -> File | None:
         """Find file by name in Filesystem object.
 
         Parameters

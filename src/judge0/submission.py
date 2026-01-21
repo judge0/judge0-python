@@ -1,6 +1,6 @@
 import copy
 from datetime import datetime
-from typing import Any, Optional, Union
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, UUID4
 
@@ -126,55 +126,55 @@ class Submission(BaseModel):
         URL for a callback to report execution results or status.
     """
 
-    source_code: Optional[Union[str, bytes]] = Field(default=None, repr=True)
-    language: Union[LanguageAlias, int] = Field(
+    source_code: str | bytes | None = Field(default=None, repr=True)
+    language: LanguageAlias | int = Field(
         default=LanguageAlias.PYTHON_FOR_ML,
         repr=True,
     )
-    additional_files: Optional[Union[str, Filesystem]] = Field(default=None, repr=True)
-    compiler_options: Optional[str] = Field(default=None, repr=True)
-    command_line_arguments: Optional[str] = Field(default=None, repr=True)
-    stdin: Optional[str] = Field(default=None, repr=True)
-    expected_output: Optional[str] = Field(default=None, repr=True)
-    cpu_time_limit: Optional[float] = Field(default=None, repr=True)
-    cpu_extra_time: Optional[float] = Field(default=None, repr=True)
-    wall_time_limit: Optional[float] = Field(default=None, repr=True)
-    memory_limit: Optional[float] = Field(default=None, repr=True)
-    stack_limit: Optional[int] = Field(default=None, repr=True)
-    max_processes_and_or_threads: Optional[int] = Field(default=None, repr=True)
-    enable_per_process_and_thread_time_limit: Optional[bool] = Field(
+    additional_files: str | Filesystem | None = Field(default=None, repr=True)
+    compiler_options: str | None = Field(default=None, repr=True)
+    command_line_arguments: str | None = Field(default=None, repr=True)
+    stdin: str | None = Field(default=None, repr=True)
+    expected_output: str | None = Field(default=None, repr=True)
+    cpu_time_limit: float | None = Field(default=None, repr=True)
+    cpu_extra_time: float | None = Field(default=None, repr=True)
+    wall_time_limit: float | None = Field(default=None, repr=True)
+    memory_limit: float | None = Field(default=None, repr=True)
+    stack_limit: int | None = Field(default=None, repr=True)
+    max_processes_and_or_threads: int | None = Field(default=None, repr=True)
+    enable_per_process_and_thread_time_limit: bool | None = Field(
         default=None, repr=True
     )
-    enable_per_process_and_thread_memory_limit: Optional[bool] = Field(
+    enable_per_process_and_thread_memory_limit: bool | None = Field(
         default=None, repr=True
     )
-    max_file_size: Optional[int] = Field(default=None, repr=True)
-    redirect_stderr_to_stdout: Optional[bool] = Field(default=None, repr=True)
-    enable_network: Optional[bool] = Field(default=None, repr=True)
-    number_of_runs: Optional[int] = Field(default=None, repr=True)
-    callback_url: Optional[str] = Field(default=None, repr=True)
+    max_file_size: int | None = Field(default=None, repr=True)
+    redirect_stderr_to_stdout: bool | None = Field(default=None, repr=True)
+    enable_network: bool | None = Field(default=None, repr=True)
+    number_of_runs: int | None = Field(default=None, repr=True)
+    callback_url: str | None = Field(default=None, repr=True)
 
     # Post-execution submission attributes.
-    stdout: Optional[str] = Field(default=None, repr=True)
-    stderr: Optional[str] = Field(default=None, repr=True)
-    compile_output: Optional[str] = Field(default=None, repr=True)
-    message: Optional[str] = Field(default=None, repr=True)
-    exit_code: Optional[int] = Field(default=None, repr=True)
-    exit_signal: Optional[int] = Field(default=None, repr=True)
-    status: Optional[Status] = Field(default=None, repr=True)
-    created_at: Optional[datetime] = Field(default=None, repr=True)
-    finished_at: Optional[datetime] = Field(default=None, repr=True)
-    token: Optional[UUID4] = Field(default=None, repr=True)
-    time: Optional[float] = Field(default=None, repr=True)
-    wall_time: Optional[float] = Field(default=None, repr=True)
-    memory: Optional[float] = Field(default=None, repr=True)
-    post_execution_filesystem: Optional[Filesystem] = Field(default=None, repr=True)
+    stdout: str | None = Field(default=None, repr=True)
+    stderr: str | None = Field(default=None, repr=True)
+    compile_output: str | None = Field(default=None, repr=True)
+    message: str | None = Field(default=None, repr=True)
+    exit_code: int | None = Field(default=None, repr=True)
+    exit_signal: int | None = Field(default=None, repr=True)
+    status: Status | None = Field(default=None, repr=True)
+    created_at: datetime | None = Field(default=None, repr=True)
+    finished_at: datetime | None = Field(default=None, repr=True)
+    token: UUID4 | None = Field(default=None, repr=True)
+    time: float | None = Field(default=None, repr=True)
+    wall_time: float | None = Field(default=None, repr=True)
+    memory: float | None = Field(default=None, repr=True)
+    post_execution_filesystem: Filesystem | None = Field(default=None, repr=True)
 
     model_config = ConfigDict(extra="ignore")
 
     @field_validator(*ENCODED_FIELDS, mode="before")
     @classmethod
-    def process_encoded_fields(cls, value: str) -> Optional[str]:
+    def process_encoded_fields(cls, value: str) -> str | None:
         """Validate all encoded attributes."""
         if value is None:
             return None
@@ -198,9 +198,7 @@ class Submission(BaseModel):
 
     @field_validator("language", mode="before")
     @classmethod
-    def process_language(
-        cls, value: Union[LanguageAlias, dict]
-    ) -> Union[LanguageAlias, int]:
+    def process_language(cls, value: LanguageAlias | dict) -> LanguageAlias | int:
         """Validate status attribute."""
         if isinstance(value, dict):
             return value["id"]

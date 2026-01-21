@@ -1,8 +1,8 @@
 import copy
-
+from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import auto, IntEnum
-from typing import Optional, Protocol, runtime_checkable, Sequence, Union
+from typing import Protocol, runtime_checkable, Union
 
 from pydantic import BaseModel
 
@@ -18,13 +18,11 @@ class TestCase:
 
     __test__ = False  # Needed to avoid pytest warning
 
-    input: Optional[str] = None
-    expected_output: Optional[str] = None
+    input: str | None = None
+    expected_output: str | None = None
 
     @classmethod
-    def from_record(
-        cls, test_case: Union[TestCaseType, None]
-    ) -> Union["TestCase", None]:
+    def from_record(cls, test_case: TestCaseType | None) -> Union["TestCase", None]:
         """Create a TestCase from built-in types.
 
         Parameters
@@ -71,10 +69,10 @@ class Language(BaseModel):
 
     id: int
     name: str
-    is_archived: Optional[bool] = None
-    source_file: Optional[str] = None
-    compile_cmd: Optional[str] = None
-    run_cmd: Optional[str] = None
+    is_archived: bool | None = None
+    source_file: str | None = None
+    compile_cmd: str | None = None
+    run_cmd: str | None = None
 
 
 class LanguageAlias(IntEnum):

@@ -1,4 +1,4 @@
-from typing import ClassVar, Optional, Union
+from typing import ClassVar
 
 import httpx
 
@@ -36,7 +36,7 @@ class Client:
         endpoint,
         headers=None,
         *,
-        retry_strategy: Optional[RetryStrategy] = None,
+        retry_strategy: RetryStrategy | None = None,
     ) -> None:
         self.endpoint = endpoint
         self.headers = headers
@@ -152,7 +152,7 @@ class Client:
             setattr(self, "_version", _version)
         return self._version
 
-    def get_language_id(self, language: Union[LanguageAlias, int]) -> int:
+    def get_language_id(self, language: LanguageAlias | int) -> int:
         """Get language id corresponding to the language alias for the client.
 
         Parameters
@@ -169,7 +169,7 @@ class Client:
             language = supported_language_ids.get(language, -1)
         return language
 
-    def is_language_supported(self, language: Union[LanguageAlias, int]) -> bool:
+    def is_language_supported(self, language: LanguageAlias | int) -> bool:
         """Check if language is supported by the client.
 
         Parameters
@@ -233,7 +233,7 @@ class Client:
         self,
         submission: Submission,
         *,
-        fields: Optional[Union[str, Iterable[str]]] = None,
+        fields: str | Iterable[str] | None = None,
     ) -> Submission:
         """Get submissions status.
 
@@ -317,7 +317,7 @@ class Client:
         self,
         submissions: Submissions,
         *,
-        fields: Optional[Union[str, Iterable[str]]] = None,
+        fields: str | Iterable[str] | None = None,
     ) -> Submissions:
         """Get submissions status.
 
@@ -468,7 +468,7 @@ class ATDJudge0CE(ATD):
         self,
         submission: Submission,
         *,
-        fields: Optional[Union[str, Iterable[str]]] = None,
+        fields: str | Iterable[str] | None = None,
     ) -> Submission:
         self._update_endpoint_header(self.DEFAULT_GET_SUBMISSION_ENDPOINT)
         return super().get_submission(submission, fields=fields)
@@ -481,7 +481,7 @@ class ATDJudge0CE(ATD):
         self,
         submissions: Submissions,
         *,
-        fields: Optional[Union[str, Iterable[str]]] = None,
+        fields: str | Iterable[str] | None = None,
     ) -> Submissions:
         self._update_endpoint_header(self.DEFAULT_GET_SUBMISSIONS_ENDPOINT)
         return super().get_submissions(submissions, fields=fields)
@@ -561,7 +561,7 @@ class ATDJudge0ExtraCE(ATD):
         self,
         submission: Submission,
         *,
-        fields: Optional[Union[str, Iterable[str]]] = None,
+        fields: str | Iterable[str] | None = None,
     ) -> Submission:
         self._update_endpoint_header(self.DEFAULT_GET_SUBMISSION_ENDPOINT)
         return super().get_submission(submission, fields=fields)
@@ -574,7 +574,7 @@ class ATDJudge0ExtraCE(ATD):
         self,
         submissions: Submissions,
         *,
-        fields: Optional[Union[str, Iterable[str]]] = None,
+        fields: str | Iterable[str] | None = None,
     ) -> Submissions:
         self._update_endpoint_header(self.DEFAULT_GET_SUBMISSIONS_ENDPOINT)
         return super().get_submissions(submissions, fields=fields)
