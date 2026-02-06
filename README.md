@@ -648,3 +648,9 @@ with open(image.name, "wb") as f:
     f.write(image.content)
 print(f"Generated image saved as: {image.name}\n")
 ```
+
+## Contributors
+
+Thanks to all [contributors](https://github.com/judge0/judge0-python/graphs/contributors) for contributing to this project.
+
+[![](https://contributors-img.web.app/image?repo=judge0/judge0-python)](https://github.com/judge0/judge0-python/graphs/contributors)
