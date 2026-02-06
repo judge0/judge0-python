@@ -1,6 +1,6 @@
 import copy
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, UUID4
 
@@ -164,7 +164,7 @@ class Submission(BaseModel):
     status: Status | None = Field(default=None, repr=True)
     created_at: datetime | None = Field(default=None, repr=True)
     finished_at: datetime | None = Field(default=None, repr=True)
-    token: UUID4 | None = Field(default=None, repr=True)
+    token: Optional[UUID4] = Field(default=None, repr=True)
     time: float | None = Field(default=None, repr=True)
     wall_time: float | None = Field(default=None, repr=True)
     memory: float | None = Field(default=None, repr=True)
