@@ -18,10 +18,12 @@ def encode(content: bytes | str | Encodable) -> str:
 def decode(content: bytes | str) -> str:
     """Decode base64 encoded content."""
     if isinstance(content, bytes):
+        content = content.replace(b"\n", b"").replace(b"\r", b"")
         return b64decode(
             content.decode(errors="backslashreplace"), validate=True
         ).decode(errors="backslashreplace")
     if isinstance(content, str):
+        content = content.replace("\n", "").replace("\r", "")
         return b64decode(content.encode(), validate=True).decode(
             errors="backslashreplace"
         )
