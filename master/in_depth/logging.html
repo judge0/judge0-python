@@ -7,15 +7,16 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>How to create a release | Judge0 Python SDK</title>
-<meta content="How to create a release | Judge0 Python SDK" property="og:title"/>
-<meta content="How to create a release | Judge0 Python SDK" name="twitter:title"/>
+<title>Logging | Judge0 Python SDK</title>
+<meta content="Logging | Judge0 Python SDK" property="og:title"/>
+<meta content="Logging | Judge0 Python SDK" name="twitter:title"/>
 <link href="../_static/pygments.css?v=03e43079" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../_static/logo.png" rel="icon"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="contributing.html" rel="prev" title="Contributing"/>
+<link href="client_resolution.html" rel="next" title="Client Resolution"/>
+<link href="overview.html" rel="prev" title="Overview"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -92,26 +93,26 @@
 <li class="toctree-l1"><a class="reference internal" href="../api/types.html">Types Module</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">In Depth</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../in_depth/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../in_depth/logging.html">Logging</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../in_depth/client_resolution.html">Client Resolution</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="client_resolution.html">Client Resolution</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">How to create a release</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributors_guide/contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributors_guide/release_notes.html">How to create a release</a></li>
 </ul>
 </nav>
 <h3>Versions</h3>
 <ul>
-<li><a href="release_notes.html">master</a></li>
-<li><a href="../../v0.0.7/contributors_guide/release_notes.html">v0.0.7</a></li>
-<li><a href="../../v0.0.6/contributors_guide/release_notes.html">v0.0.6</a></li>
-<li><a href="../../v0.0.5/contributors_guide/release_notes.html">v0.0.5</a></li>
-<li><a href="../../v0.0.4/contributors_guide/release_notes.html">v0.0.4</a></li>
-<li><a href="../../v0.0.3/contributors_guide/release_notes.html">v0.0.3</a></li>
-<li><a href="../../v0.0.2/contributors_guide/release_notes.html">v0.0.2</a></li>
+<li><a href="logging.html">master</a></li>
+<li><a href="../../v0.0.7/index.html">v0.0.7</a></li>
+<li><a href="../../v0.0.6/index.html">v0.0.6</a></li>
+<li><a href="../../v0.0.5/index.html">v0.0.5</a></li>
+<li><a href="../../v0.0.4/index.html">v0.0.4</a></li>
+<li><a href="../../v0.0.3/index.html">v0.0.3</a></li>
+<li><a href="../../v0.0.2/index.html">v0.0.2</a></li>
 </ul>
 </div>
 </div>
@@ -130,55 +131,25 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">How to create a release</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Logging</span>
 </nav>
 <div id="content" role="main">
-<section id="how-to-create-a-release">
-<h1>How to create a release<a class="headerlink" href="#how-to-create-a-release" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<p>Creating a release is a simple process that involves a few steps:</p>
-<ol class="arabic simple">
-<li><dl class="simple">
-<dt><strong>Prepare the release</strong>:</dt><dd><ol class="arabic simple">
-<li><p>Create a separate branch for the release. Name the branch <code class="docutils literal notranslate"><span class="pre">release-x.y.z</span></code>
-where <code class="docutils literal notranslate"><span class="pre">x.y.z</span></code> is the version number.</p></li>
-<li><p>Update the version number in <code class="docutils literal notranslate"><span class="pre">judge0/__init__.py</span></code>.</p></li>
-<li><p>Update the version number in <code class="docutils literal notranslate"><span class="pre">judge0/pyproject.toml</span></code>.</p></li>
-<li><p>Sync the branch with any changes from the master branch.</p></li>
-<li><p>Create a pull request for the release branch. Make sure that all tests pass.</p></li>
-<li><p>Merge the pull request.</p></li>
-<li><p>Pull the changes to your local repository and tag the commit (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">tag</span> <span class="pre">vX.Y.Z</span></code>) with the version number.</p></li>
-<li><p>Push the tags to the remote repository (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">master</span> <span class="pre">--tags</span></code>).</p></li>
-</ol>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><strong>Create release (notes) on GitHub</strong>.</dt><dd><ol class="arabic simple">
-<li><p>Go to the <a class="reference external" href="https://github.com/judge0/judge0-python/releases/new" rel="nofollow noopener">releases page<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> on GitHub.</p></li>
-<li><p>Release title should be <code class="docutils literal notranslate"><span class="pre">Judge0</span> <span class="pre">Python</span> <span class="pre">SDK</span> <span class="pre">vX.Y.Z</span></code>.</p></li>
-<li><p>Release notes should include a changes from the previous release to the newest release.</p></li>
-<li><p>Use the <a class="reference external" href="https://github.com/judge0/judge0-python/blob/master/RELEASE_NOTES_TEMPLATE.md" rel="nofollow noopener">template<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> from the repo to organize the changes.</p></li>
-<li><p>Click the <cite>Generate release notes</cite> button and use only <cite>Full Changelog</cite> section.</p></li>
-<li><p>Create the release. (“Set as a pre-release” should NOT be checked.)</p></li>
-</ol>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><strong>Release on PyPI</strong>:</dt><dd><ol class="arabic simple">
-<li><p>Use the <a class="reference external" href="https://github.com/judge0/judge0-python/actions/workflows/publish.yml" rel="nofollow noopener">GitHub Actions workflow<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> to create a release on PyPI.</p></li>
-<li><p>Select <cite>Run workflow</cite> and as <cite>Target repository</cite> select <cite>pypi</cite>.</p></li>
-<li><p>Click the <cite>Run workflow</cite> button.</p></li>
-</ol>
-</dd>
-</dl>
-</li>
-</ol>
-<p>After the release is successfully published on PyPI, create a new pull request
-that updates the working version in  <code class="docutils literal notranslate"><span class="pre">judge0/__init__.py</span></code> and <code class="docutils literal notranslate"><span class="pre">judge0/pyproject.toml</span></code>
-to the minor version. Merge the pull request and you’re done! For example, if the
-new release was <code class="docutils literal notranslate"><span class="pre">1.2.2</span></code>, the working version should be updated to <code class="docutils literal notranslate"><span class="pre">1.3.0.dev0</span></code>.</p>
-<p>You’ve successfully created a release! Congratulations! 🎉</p>
+<section id="logging">
+<h1>Logging<a class="headerlink" href="#logging" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<p>By default, judge0 Python SDK does not emit logs. To turn on logging, using
+default settings, add the <cite>JUDGE0_ENABLE_LOGGING=1</cite> to your environment variables.</p>
+<p>For instance, to run one of the examples with logging enabled:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span><span class="nv">JUDGE0_ENABLE_LOGGING</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>python<span class="w"> </span>examples/0001_hello_world.py
+</span></code></pre></div>
+</div>
+<p>You should see basic info logs and where the file logs are stored.</p>
+<p>To modify default log levels for console and file logs, <cite>INFO</cite> and <cite>WARNING</cite> respectively,
+you can set the corresponding environment variables: <cite>JUDGE0_CONSOLE_LOG_LEVEL</cite> and <cite>JUDGE0_FILE_LOG_LEVEL</cite>
+to one of the appropriate log levels: <cite>DEBUG</cite>, <cite>INFO</cite>, <cite>WARNING</cite>, <cite>ERROR</cite>, or <cite>CRITICAL</cite>.</p>
+<p>For instance, setting the console level to debug should show additional debug logs:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp">$ </span><span class="nv">JUDGE0_ENABLE_LOGGING</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">JUDGE0_CONSOLE_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>python<span class="w"> </span>examples/0001_hello_world.py
+</span></code></pre></div>
+</div>
 </section>
 </div></div>
 </main>

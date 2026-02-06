@@ -95,6 +95,7 @@
 <p class="caption" role="heading"><span class="caption-text">In Depth</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../in_depth/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../in_depth/logging.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../in_depth/client_resolution.html">Client Resolution</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Getting Involved</span></p>
@@ -133,10 +134,113 @@
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Submission Module</span>
 </nav>
 <div id="content" role="main">
-<section id="submission-module">
-<h1>Submission Module<a class="headerlink" href="#submission-module" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<section id="module-judge0.submission">
+<span id="submission-module"></span><h1>Submission Module<a class="headerlink" href="#module-judge0.submission" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="judge0.submission.Submission">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">judge0.submission.</span></span><span class="sig-name descname"><span class="pre">Submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.submission.Submission" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Stores a representation of a Submission to/from Judge0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_code</strong> (<em>str</em><em>, </em><em>optional</em>) – The source code to be executed.</p></li>
+<li><p><strong>language</strong> (<a class="reference internal" href="types.html#judge0.base_types.LanguageAlias" title="judge0.base_types.LanguageAlias"><em>LanguageAlias</em></a><em> or </em><em>int</em><em>, </em><em>optional</em>) – The programming language of the source code. Defaults to <cite>LanguageAlias.PYTHON</cite>.</p></li>
+<li><p><strong>additional_files</strong> (<em>base64 encoded string</em><em>, </em><em>optional</em>) – Additional files that should be available alongside the source code.
+Value of this string should represent the content of a .zip that
+contains additional files. This attribute is required for multi-file
+programs.</p></li>
+<li><p><strong>compiler_options</strong> (<em>str</em><em>, </em><em>optional</em>) – Options for the compiler (i.e. compiler flags).</p></li>
+<li><p><strong>command_line_arguments</strong> (<em>str</em><em>, </em><em>optional</em>) – Command line arguments for the program.</p></li>
+<li><p><strong>stdin</strong> (<em>str</em><em>, </em><em>optional</em>) – Input to be fed via standard input during execution.</p></li>
+<li><p><strong>expected_output</strong> (<em>str</em><em>, </em><em>optional</em>) – The expected output of the program.</p></li>
+<li><p><strong>cpu_time_limit</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum CPU time allowed for execution, in seconds. Time in which the
+OS assigns the processor to different tasks is not counted. Depends on
+configuration.</p></li>
+<li><p><strong>cpu_extra_time</strong> (<em>float</em><em>, </em><em>optional</em>) – Additional CPU time allowance in case of time extension. Depends on
+configuration.</p></li>
+<li><p><strong>wall_time_limit</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum wall clock time allowed for execution, in seconds. Depends on
+configuration.</p></li>
+<li><p><strong>memory_limit</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum memory allocation allowed for the process, in kilobytes.
+Depends on configuration.</p></li>
+<li><p><strong>stack_limit</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum stack size allowed, in kilobytes. Depends on configuration.</p></li>
+<li><p><strong>max_processes_and_or_threads</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of processes and/or threads program can create. Depends
+on configuration.</p></li>
+<li><p><strong>enable_per_process_and_thread_time_limit</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enforces time limits per process/thread. Depends on
+configuration.</p></li>
+<li><p><strong>enable_per_process_and_thread_memory_limit</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enforces memory limits per process/thread. Depends on
+configuration.</p></li>
+<li><p><strong>max_file_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum file size allowed for output files, in kilobytes. Depends on
+configuration.</p></li>
+<li><p><strong>redirect_stderr_to_stdout</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, redirects standard error output to standard output.</p></li>
+<li><p><strong>enable_network</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enables network access during execution.</p></li>
+<li><p><strong>number_of_runs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of times the code should be executed.</p></li>
+<li><p><strong>callback_url</strong> (<em>str</em><em>, </em><em>optional</em>) – URL for a callback to report execution results or status.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="judge0.submission.Submission.as_body">
+<span class="sig-name descname"><span class="pre">as_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.submission.Submission.as_body" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.as_body'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Prepare Submission as a dictionary while taking into account
+the client’s restrictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="judge0.submission.Submission.is_done">
+<span class="sig-name descname"><span class="pre">is_done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.submission.Submission.is_done" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.is_done'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Check if submission is finished processing.</p>
+<p>Submission is considered finished if the submission status is not
+IN_QUEUE and not PROCESSING.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="judge0.submission.Submission.pre_execution_copy">
+<span class="sig-name descname"><span class="pre">pre_execution_copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#judge0.submission.Submission.pre_execution_copy" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.pre_execution_copy'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Create a deep copy of a submission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#judge0.submission.Submission" title="judge0.submission.Submission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Submission</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="judge0.submission.Submission.set_attributes">
+<span class="sig-name descname"><span class="pre">set_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#judge0.submission.Submission.set_attributes" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#judge0.submission.Submission.set_attributes'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></dt>
+<dd><p>Set submissions attributes while taking into account different
+attribute’s types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attributes</strong> (<em>dict</em>) – Key-value pairs of Submission attributes and the corresponding
+value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
 </section>
-</div></div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#judge0.submission.Submission'" class="reference internal" href="#judge0.submission.Submission"><code class="docutils literal notranslate"><span class="pre">Submission</span></code></a><ul>
+<li><a :data-current="activeSection === '#judge0.submission.Submission.as_body'" class="reference internal" href="#judge0.submission.Submission.as_body"><code class="docutils literal notranslate"><span class="pre">Submission.as_body()</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.submission.Submission.is_done'" class="reference internal" href="#judge0.submission.Submission.is_done"><code class="docutils literal notranslate"><span class="pre">Submission.is_done()</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.submission.Submission.pre_execution_copy'" class="reference internal" href="#judge0.submission.Submission.pre_execution_copy"><code class="docutils literal notranslate"><span class="pre">Submission.pre_execution_copy()</span></code></a></li>
+<li><a :data-current="activeSection === '#judge0.submission.Submission.set_attributes'" class="reference internal" href="#judge0.submission.Submission.set_attributes"><code class="docutils literal notranslate"><span class="pre">Submission.set_attributes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
