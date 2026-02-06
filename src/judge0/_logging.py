@@ -38,7 +38,7 @@ def setup_logging(
     # Determine log levels: parameter > env var > default
     if file_level is None:
         file_level = LOG_LEVEL.get(
-            os.getenv("JUDGE0_FILE_LOG_LEVEL", "DEBUG").lower(), logging.DEBUG
+            os.getenv("JUDGE0_FILE_LOG_LEVEL", "WARNING").lower(), logging.WARNING
         )
     if console_level is None:
         console_level = LOG_LEVEL.get(
@@ -67,3 +67,9 @@ def setup_logging(
     # Add handlers
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
+
+    logger.info(
+        "logging to %s with log level %s",
+        str(log_file),
+        logging.getLevelName(file_level),
+    )
