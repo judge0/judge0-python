@@ -1,5 +1,13 @@
 # Judge0 Python SDK
 
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/Judge0HQ)](https://x.com/Judge0HQ)
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/hermanzvonimir)](https://x.com/hermanzvonimir)
+
+[![License](https://img.shields.io/github/license/judge0/judge0-python)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/judge0/judge0-python)](https://github.com/judge0/judge0/releases)
+[![Stars](https://img.shields.io/github/stars/judge0/judge0-python)](https://github.com/judge0/judge0-python/stargazers)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/judge0)
+
 The official Python SDK for Judge0.
 ```python
 >>> import judge0
