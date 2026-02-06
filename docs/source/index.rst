@@ -71,6 +71,7 @@ Every contribution, big or small, is valuable!
       :hidden:
 
       in_depth/overview
+      in_depth/logging
       in_depth/client_resolution
 
 
