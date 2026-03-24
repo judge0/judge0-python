@@ -649,6 +649,33 @@ with open(image.name, "wb") as f:
 print(f"Generated image saved as: {image.name}\n")
 ```
 
+### Running SQL Code On SQLite Database
+
+```python
+# pip install judge0 requests
+import os
+
+import judge0
+import requests
+from judge0 import File, Filesystem
+
+database_url = "https://github.com/lerocha/chinook-database/raw/refs/heads/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"
+
+with requests.get(database_url) as response:
+    submission = judge0.Submission(
+        language=judge0.SQLITE,
+        additional_files=Filesystem(
+            content=[
+                File(name="db.sqlite", content=response.content),
+            ]
+        ),
+    )
+
+submission.source_code = "SELECT * FROM Genre"
+result = judge0.run(submissions=submission)
+print(result.stdout)
+```
+
 ## Contributors
 
 Thanks to all [contributors](https://github.com/judge0/judge0-python/graphs/contributors) for contributing to this project.
