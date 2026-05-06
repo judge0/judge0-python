@@ -5,11 +5,10 @@ description = "The official Python SDK for Judge0."
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "Judge0", email = "contact@judge0.com" }]
+license = "MIT"
 license-files = ["LICENSE"]
 classifiers = [
     "Intended Audience :: Developers",
-
-    "License :: OSI Approved :: MIT License",
 
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
