@@ -75,3 +75,6 @@ max-line-length = 88
 
 [tool.pytest.ini_options]
 addopts = "-vv"
+
+[tool.uv]
+exclude-newer = "28 days"
