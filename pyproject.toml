@@ -39,8 +39,8 @@ Issues = "https://github.com/judge0/judge0-python/issues"
 [dependency-groups]
 test = [
     "ufmt==2.7.3",
-    "pytest==8.3.3",
-    "python-dotenv==1.0.1",
+    "pytest==9.0.3",
+    "python-dotenv==1.2.2",
     "pytest-cov==6.0.0",
     "flake8-docstrings==1.7.0",
 ]
