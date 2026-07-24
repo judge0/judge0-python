@@ -13,8 +13,8 @@ import sys
 from sphinxawesome_theme.postprocess import Icons
 
 project = "Judge0 Python SDK"
-copyright = "2026, Judge0"
-author = "Judge0"
+copyright = "2016-%Y, Judge0 d.o.o."
+author = "Judge0 d.o.o."
 release = ""
 
 # -- General configuration ---------------------------------------------------
@@ -37,6 +37,8 @@ exclude_patterns = []
 html_title = project
 html_theme = "sphinxawesome_theme"
 html_theme_options = {
+    "logo_light": "../assets/logo.png",
+    "logo_dark": "../assets/logo.png",
     "show_scrolltop": True,
     "extra_header_link_icons": {
         "repository on GitHub": {
@@ -81,8 +83,7 @@ html_sidebars = {
         "versioning.html",
     ],
 }
-html_logo = "../assets/logo.png"
-html_favicon = html_logo
+html_favicon = "../assets/logo.png"
 pygments_style = "sphinx"
 
 sys.path.insert(0, os.path.abspath("../../src/"))  # Adjust as needed

@@ -1,4 +1,4 @@
-How to create a release
+How To Create a Release
 =======================
 
 Creating a release is a simple process that involves a few steps:
