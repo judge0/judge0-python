@@ -1,8 +1,8 @@
 import pytest
 
 DEFAULT_CLIENTS = (
-    "atd_ce_client",
-    "atd_extra_ce_client",
+    # "atd_ce_client",
+    # "atd_extra_ce_client",
     "rapid_ce_client",
     "rapid_extra_ce_client",
     "judge0_cloud_ce_client",

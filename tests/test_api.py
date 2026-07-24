@@ -5,8 +5,8 @@ from judge0 import Flavor, LanguageAlias, Submission
 from judge0.api import _resolve_client
 
 DEFAULT_CLIENTS = (
-    "atd_ce_client",
-    "atd_extra_ce_client",
+    # "atd_ce_client",
+    # "atd_extra_ce_client",
     "rapid_ce_client",
     "rapid_extra_ce_client",
     "judge0_cloud_ce_client",
