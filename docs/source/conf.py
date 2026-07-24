@@ -72,7 +72,9 @@ html_theme_options = {
     "awesome_external_links": True,
     "main_nav_links": {
         "Home": "index",
-        "Judge0": "https://judge0.com/",
+        "Judge0 Web": "https://judge0.com/",
+        "Judge0 Docs": "https://docs.judge0.com/",
+        "Judge0 IDE": "https://ide.judge0.com/",
     },
 }
 html_show_sphinx = False
