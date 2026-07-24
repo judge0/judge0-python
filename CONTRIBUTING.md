@@ -1,3 +1,3 @@
-# How to contribute
+# How To Contribute
 
-See [docs](https://judge0.github.io/judge0-python/contributing.html).
+See [docs](https://python.docs.judge0.com/master/contributors_guide/contributing.html).
