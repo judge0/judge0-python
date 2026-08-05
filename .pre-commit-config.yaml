@@ -1,16 +1,21 @@
 repos:
-  - repo: https://github.com/omnilib/ufmt
-    rev: v2.7.3
+  - repo: local
     hooks:
-      - id: ufmt
-        additional_dependencies:
-          - black == 24.8.0
-          - usort == 1.0.8.post1
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.1.1
-    hooks:
-      - id: flake8
-        additional_dependencies:
-          - "flake8-pyproject"
-          - flake8-docstrings
-          - pydocstyle
+      - id: ruff-check
+        name: ruff check
+        entry: uv tool run ruff check --fix
+        language: unsupported
+        types: [python]
+
+      - id: ruff-format
+        name: ruff format
+        entry: uv tool run ruff format
+        language: unsupported
+        types: [python]
+
+      - id: pyright
+        name: pyright
+        entry: uv tool run pyright src tests
+        language: unsupported
+        types: [python]
+        pass_filenames: false
