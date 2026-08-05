@@ -1,6 +1,14 @@
 import logging
+from typing import Any, cast, overload
 
-from .base_types import Flavor, Iterable, TestCase, TestCases, TestCaseType
+from .base_types import (
+    Flavor,
+    Iterable,
+    TestCase,
+    TestCaseRecord,
+    TestCases,
+    TestCaseType,
+)
 from .clients import Client
 from .common import batched
 from .errors import ClientResolutionError
@@ -22,18 +30,22 @@ def get_client(flavor: Flavor = Flavor.CE) -> Client:
     -------
     Client
         An object of base type Client and the specified flavor.
+
+    Raises
+    ------
+    TypeError
+        If ``flavor`` is not a :class:`Flavor` value.
     """
     from . import _get_implicit_client
 
-    if isinstance(flavor, Flavor):
-        client = _get_implicit_client(flavor=flavor)
-        logger.debug(f"Resolved implicit client for flavor {flavor}: {client}")
-        return client
-    else:
-        raise ValueError(
-            "Expected argument flavor to be of of type enum Flavor, "
-            f"got {type(flavor)}."
+    if not isinstance(flavor, Flavor):
+        raise TypeError(
+            f"Expected argument flavor to be of type enum Flavor, got {type(flavor)}."
         )
+
+    client = _get_implicit_client(flavor=flavor)
+    logger.debug(f"Resolved implicit client for flavor {flavor}: {client}")
+    return client
 
 
 def _resolve_client(
@@ -59,6 +71,8 @@ def _resolve_client(
     ClientResolutionError
         If there is no implemented client that supports all the languages specified
         in the submissions.
+    ValueError
+        If submissions are empty and no explicit client is provided.
     """
     # User explicitly passed a client.
     if isinstance(client, Client):
@@ -73,11 +87,10 @@ def _resolve_client(
         logger.debug(f"Resolving client from flavor: {client}")
         return get_client(client)
 
-    if client is None:
-        if (
-            isinstance(submissions, Iterable) and len(submissions) == 0
-        ) or submissions is None:
-            raise ValueError("Client cannot be determined from empty submissions.")
+    if submissions is None or (
+        isinstance(submissions, Iterable) and len(submissions) == 0
+    ):
+        raise ValueError("Client cannot be determined from empty submissions.")
 
     # client is None and we have to determine a flavor of the client from the
     # the submission's languages.
@@ -91,7 +104,7 @@ def _resolve_client(
     for flavor in Flavor:
         client = get_client(flavor)
         if client is not None and all(
-            (client.is_language_supported(lang) for lang in languages)
+            client.is_language_supported(lang) for lang in languages
         ):
             logger.debug(f"Resolved client {client} for languages {languages}")
             return client
@@ -101,6 +114,30 @@ def _resolve_client(
         "None of the implicit clients supports all languages from the submissions. "
         "Please explicitly provide the client argument."
     )
+
+
+@overload
+def create_submissions(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submission,
+) -> Submission: ...
+
+
+@overload
+def create_submissions(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submissions,
+) -> Submissions: ...
+
+
+@overload
+def create_submissions(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: None = None,
+) -> Submission | Submissions: ...
 
 
 def create_submissions(
@@ -128,17 +165,51 @@ def create_submissions(
         logger.info("Creating a single submission.")
         return client.create_submission(submissions)
 
+    if submissions is None:
+        raise ValueError("Submissions must be provided.")
+
     logger.info(f"Creating {len(submissions)} submissions.")
     result_submissions = []
     for submission_batch in batched(
         submissions, client.config.max_submission_batch_size
     ):
+        if not submission_batch:
+            continue
         if len(submission_batch) > 1:
             result_submissions.extend(client.create_submissions(submission_batch))
         else:
-            result_submissions.append(client.create_submission(submission_batch[0]))
+            result_submissions.append(
+                client.create_submission(next(iter(submission_batch)))
+            )
 
     return result_submissions
+
+
+@overload
+def get_submissions(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submission,
+    fields: str | Iterable[str] | None = None,
+) -> Submission: ...
+
+
+@overload
+def get_submissions(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submissions,
+    fields: str | Iterable[str] | None = None,
+) -> Submissions: ...
+
+
+@overload
+def get_submissions(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: None = None,
+    fields: str | Iterable[str] | None = None,
+) -> Submission | Submissions: ...
 
 
 def get_submissions(
@@ -169,21 +240,53 @@ def get_submissions(
         logger.debug("Getting status for a single submission.")
         return client.get_submission(submissions, fields=fields)
 
+    if submissions is None:
+        raise ValueError("Submissions must be provided.")
+
     logger.debug(f"Getting status for {len(submissions)} submissions.")
     result_submissions = []
     for submission_batch in batched(
         submissions, client.config.max_submission_batch_size
     ):
+        if not submission_batch:
+            continue
         if len(submission_batch) > 1:
             result_submissions.extend(
                 client.get_submissions(submission_batch, fields=fields)
             )
         else:
             result_submissions.append(
-                client.get_submission(submission_batch[0], fields=fields)
+                client.get_submission(next(iter(submission_batch)), fields=fields)
             )
 
     return result_submissions
+
+
+@overload
+def wait(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submission,
+    retry_strategy: RetryStrategy | None = None,
+) -> Submission: ...
+
+
+@overload
+def wait(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submissions,
+    retry_strategy: RetryStrategy | None = None,
+) -> Submissions: ...
+
+
+@overload
+def wait(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: None = None,
+    retry_strategy: RetryStrategy | None = None,
+) -> Submission | Submissions: ...
 
 
 def wait(
@@ -223,6 +326,8 @@ def wait(
 
     if isinstance(submissions, Submission):
         submissions_list = [submissions]
+    elif submissions is None:
+        raise ValueError("Submissions must be provided.")
     else:
         submissions_list = submissions
 
@@ -251,6 +356,27 @@ def wait(
         retry_strategy.step()
 
     return submissions
+
+
+@overload
+def create_submissions_from_test_cases(
+    submissions: Submission,
+    test_cases: TestCase | TestCaseRecord | None = None,
+) -> Submission: ...
+
+
+@overload
+def create_submissions_from_test_cases(
+    submissions: Submission,
+    test_cases: TestCases,
+) -> list[Submission]: ...
+
+
+@overload
+def create_submissions_from_test_cases(
+    submissions: Submissions,
+    test_cases: TestCaseType | TestCases | None = None,
+) -> list[Submission]: ...
 
 
 def create_submissions_from_test_cases(
@@ -290,7 +416,9 @@ def create_submissions_from_test_cases(
             # can be created from test_cases argument. If this fails, i.e.
             # raises a ValueError, we know we are dealing with a test_cases=dict,
             # or test_cases=["in", "out"], or test_cases=tuple("in", "out").
-            test_cases_list = [TestCase.from_record(tc) for tc in test_cases]
+            test_cases_list = [
+                TestCase.from_record(cast(TestCaseType, tc)) for tc in test_cases
+            ]
 
             # It is possible to send test_cases={}, or test_cases=[], or
             # test_cases=tuple([]). In this case, we are treating that as None.
@@ -299,35 +427,36 @@ def create_submissions_from_test_cases(
             else:
                 multiple_test_cases = False
                 test_cases_list = [None]
-        except ValueError:
-            test_cases_list = [test_cases]
+        except (TypeError, ValueError):
+            test_cases_list = [TestCase.from_record(cast(TestCaseType, test_cases))]
             multiple_test_cases = False
 
-    test_cases_list = [TestCase.from_record(test_case=tc) for tc in test_cases_list]
+    normalized_test_cases = [
+        TestCase.from_record(test_case=tc) for tc in test_cases_list
+    ]
 
     all_submissions = []
     for submission in submissions_list:
-        for test_case in test_cases_list:
+        for test_case in normalized_test_cases:
             submission_copy = submission.pre_execution_copy()
             if test_case is not None:
                 submission_copy.stdin = test_case.input
                 submission_copy.expected_output = test_case.expected_output
             all_submissions.append(submission_copy)
 
-    if isinstance(submissions, Submission) and (not multiple_test_cases):
+    if isinstance(submissions, Submission) and not multiple_test_cases:
         return all_submissions[0]
-    else:
-        return all_submissions
+    return all_submissions
 
 
 def _execute(
     *,
     client: Client | Flavor | None = None,
     submissions: Submission | Submissions | None = None,
-    source_code: str | None = None,
+    source_code: str | bytes | None = None,
     test_cases: TestCaseType | TestCases | None = None,
     wait_for_result: bool = False,
-    **kwargs,
+    **kwargs: Any,
 ) -> Submission | Submissions:
     if submissions is not None and source_code is not None:
         raise ValueError(
@@ -341,6 +470,9 @@ def _execute(
     if source_code is not None:
         submissions = Submission(source_code=source_code, **kwargs)
 
+    if submissions is None:
+        raise ValueError("Submissions must be provided.")
+
     logger.info("Starting execution process.")
     client = _resolve_client(client=client, submissions=submissions)
     all_submissions = create_submissions_from_test_cases(submissions, test_cases)
@@ -348,17 +480,71 @@ def _execute(
 
     if wait_for_result:
         return wait(client=client, submissions=all_submissions)
-    else:
-        return all_submissions
+    return all_submissions
+
+
+@overload
+def async_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: None = None,
+    source_code: str | bytes,
+    test_cases: TestCase | TestCaseRecord | None = None,
+    **kwargs: Any,
+) -> Submission: ...
+
+
+@overload
+def async_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: None = None,
+    source_code: str | bytes,
+    test_cases: TestCases,
+    **kwargs: Any,
+) -> list[Submission]: ...
+
+
+@overload
+def async_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submission,
+    source_code: None = None,
+    test_cases: TestCase | TestCaseRecord | None = None,
+    **kwargs: Any,
+) -> Submission: ...
+
+
+@overload
+def async_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submission,
+    source_code: None = None,
+    test_cases: TestCases,
+    **kwargs: Any,
+) -> list[Submission]: ...
+
+
+@overload
+def async_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submissions,
+    source_code: None = None,
+    test_cases: TestCaseType | TestCases | None = None,
+    **kwargs: Any,
+) -> Submissions: ...
 
 
 def async_execute(
     *,
     client: Client | Flavor | None = None,
     submissions: Submission | Submissions | None = None,
-    source_code: str | None = None,
+    source_code: str | bytes | None = None,
     test_cases: TestCaseType | TestCases | None = None,
-    **kwargs,
+    **kwargs: Any,
 ) -> Submission | Submissions:
     """Create submission(s).
 
@@ -402,13 +588,68 @@ def async_execute(
     )
 
 
+@overload
+def sync_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: None = None,
+    source_code: str | bytes,
+    test_cases: TestCase | TestCaseRecord | None = None,
+    **kwargs: Any,
+) -> Submission: ...
+
+
+@overload
+def sync_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: None = None,
+    source_code: str | bytes,
+    test_cases: TestCases,
+    **kwargs: Any,
+) -> list[Submission]: ...
+
+
+@overload
+def sync_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submission,
+    source_code: None = None,
+    test_cases: TestCase | TestCaseRecord | None = None,
+    **kwargs: Any,
+) -> Submission: ...
+
+
+@overload
+def sync_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submission,
+    source_code: None = None,
+    test_cases: TestCases,
+    **kwargs: Any,
+) -> list[Submission]: ...
+
+
+@overload
+def sync_execute(
+    *,
+    client: Client | Flavor | None = None,
+    submissions: Submissions,
+    source_code: None = None,
+    test_cases: TestCaseType | TestCases | None = None,
+    **kwargs: Any,
+) -> Submissions: ...
+
+
 def sync_execute(
     *,
     client: Client | Flavor | None = None,
     submissions: Submission | Submissions | None = None,
-    source_code: str | None = None,
+    source_code: str | bytes | None = None,
     test_cases: TestCaseType | TestCases | None = None,
-    **kwargs,
+    **kwargs: Any,
 ) -> Submission | Submissions:
     """Create submission(s) and wait for their finish.
 

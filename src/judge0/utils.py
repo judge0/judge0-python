@@ -1,11 +1,16 @@
 """Module containing different utility functions for Judge0 Python SDK."""
 
+from collections.abc import Callable
 from functools import wraps
 from http import HTTPStatus
+from typing import ParamSpec, TypeVar
 
 from httpx import HTTPError, HTTPStatusError
 
 from .errors import PreviewClientLimitError
+
+P = ParamSpec("P")
+R = TypeVar("R")
 
 
 def is_http_too_many_requests_error(exception: Exception) -> bool:
@@ -15,33 +20,30 @@ def is_http_too_many_requests_error(exception: Exception) -> bool:
     )
 
 
-def handle_too_many_requests_error_for_preview_client(func):
+def handle_too_many_requests_error_for_preview_client(
+    func: Callable[P, R],
+) -> Callable[P, R]:
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
         try:
             return func(*args, **kwargs)
         except HTTPError as err:
-            if is_http_too_many_requests_error(exception=err):
+            if is_http_too_many_requests_error(exception=err) and args:
                 # If the raised exception is inside the one of the Judge0 Cloud clients
                 # let's check if we are dealing with the implicit client.
-                if args:
-                    instance = args[0]
-                    class_name = instance.__class__.__name__
-                    # Check if we are using a preview version of the client.
-                    if (
-                        class_name in ("Judge0CloudCE", "Judge0CloudExtraCE")
-                        and instance.api_key is None
-                    ):
-                        raise PreviewClientLimitError(
-                            "You are using a preview version of a client and "
-                            f"you've hit a rate limit on it. Visit {instance.HOME_URL} "
-                            "to get your authentication credentials."
-                        ) from err
-                else:
-                    raise err from None
-            else:
-                raise err from None
-        except Exception as err:
+                instance = args[0]
+                class_name = instance.__class__.__name__
+                # Check if we are using a preview version of the client.
+                if (
+                    class_name in ("Judge0CloudCE", "Judge0CloudExtraCE")
+                    and getattr(instance, "api_key", None) is None
+                ):
+                    raise PreviewClientLimitError(
+                        "You are using a preview version of a client and "
+                        "you've hit a rate limit on it. Visit "
+                        f"{getattr(instance, 'HOME_URL', None)} "
+                        "to get your authentication credentials."
+                    ) from err
             raise err from None
 
     return wrapper

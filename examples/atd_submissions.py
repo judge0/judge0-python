@@ -1,8 +1,8 @@
 import os
 
-import judge0
-
 from dotenv import load_dotenv
+
+import judge0
 
 load_dotenv()
 

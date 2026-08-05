@@ -1,6 +1,5 @@
 import judge0
 
-
 submissions = judge0.run(
     source_code="print(f'hello {input()}')",
     test_cases=[

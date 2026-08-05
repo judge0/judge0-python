@@ -1,7 +1,11 @@
 from base64 import b64decode, b64encode
+from collections.abc import Iterable, Iterator
 from itertools import islice
+from typing import TypeVar
 
 from judge0.base_types import Encodable
+
+T = TypeVar("T")
 
 
 def encode(content: bytes | str | Encodable) -> str:
@@ -30,7 +34,7 @@ def decode(content: bytes | str) -> str:
     raise ValueError(f"Unsupported type. Expected bytes or str, got {type(content)}!")
 
 
-def batched(iterable, n):
+def batched(iterable: Iterable[T], n: int) -> Iterator[tuple[T, ...]]:
     """Iterate over an iterable in batches of a specified size.
 
     Adapted from https://docs.python.org/3/library/itertools.html#itertools.batched.

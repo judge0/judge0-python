@@ -1,8 +1,15 @@
-from typing import ClassVar
+from typing import Any, ClassVar, cast
 
 import httpx
 
-from .base_types import Config, Iterable, Language, LanguageAlias
+from .base_types import (
+    Config,
+    Headers,
+    Iterable,
+    JsonObject,
+    Language,
+    LanguageAlias,
+)
 from .data import LANGUAGE_TO_LANGUAGE_ID
 from .retry import RetryStrategy
 from .submission import Submission, Submissions
@@ -29,19 +36,17 @@ class Client:
 
     # Environment variable where judge0-python should look for API key for
     # the client. Set to default values for RapidAPI and ATD clients.
-    API_KEY_ENV: ClassVar[str] = None
+    API_KEY_ENV: ClassVar[str | None] = None
 
     def __init__(
         self,
-        endpoint,
-        headers=None,
+        endpoint: str,
+        headers: Headers | None = None,
         *,
         retry_strategy: RetryStrategy | None = None,
     ) -> None:
-        self.endpoint = endpoint
-        self.headers = headers
-        if self.headers is None:
-            self.headers = {}
+        self.endpoint: str = endpoint
+        self.headers: Headers = headers if headers is not None else {}
         self.headers.update(
             {
                 "X-Judge0-App": "Judge0 Python SDK",
@@ -50,6 +55,7 @@ class Client:
         )
         self.retry_strategy = retry_strategy
         self.client = httpx.Client(base_url=self.endpoint)
+        self._version: str | None = None
 
         try:
             self.languages = self.get_languages()
@@ -61,11 +67,11 @@ class Client:
                 "review your authentication credentials."
             ) from e
 
-    def __del__(self):
+    def __del__(self) -> None:
         self.client.close()
 
     @handle_too_many_requests_error_for_preview_client
-    def get_about(self) -> dict:
+    def get_about(self) -> JsonObject:
         """Get general information about judge0.
 
         Returns
@@ -78,7 +84,7 @@ class Client:
             headers=self.headers,
         )
         response.raise_for_status()
-        return response.json()
+        return cast(JsonObject, response.json())
 
     @handle_too_many_requests_error_for_preview_client
     def get_config_info(self) -> Config:
@@ -94,7 +100,7 @@ class Client:
             headers=self.headers,
         )
         response.raise_for_status()
-        return Config(**response.json())
+        return Config.model_validate(response.json())
 
     @handle_too_many_requests_error_for_preview_client
     def get_language(self, language_id: int) -> Language:
@@ -113,7 +119,7 @@ class Client:
         request_url = f"/languages/{language_id}"
         response = self.client.get(request_url, headers=self.headers)
         response.raise_for_status()
-        return Language(**response.json())
+        return Language.model_validate(response.json())
 
     @handle_too_many_requests_error_for_preview_client
     def get_languages(self) -> list[Language]:
@@ -126,10 +132,11 @@ class Client:
         """
         response = self.client.get("/languages", headers=self.headers)
         response.raise_for_status()
-        return [Language(**lang_dict) for lang_dict in response.json()]
+        languages = cast(list[JsonObject], response.json())
+        return [Language.model_validate(language) for language in languages]
 
     @handle_too_many_requests_error_for_preview_client
-    def get_statuses(self) -> list[dict]:
+    def get_statuses(self) -> list[JsonObject]:
         """Get a list of possible submission statuses.
 
         Returns
@@ -142,14 +149,13 @@ class Client:
             headers=self.headers,
         )
         response.raise_for_status()
-        return response.json()
+        return cast(list[JsonObject], response.json())
 
     @property
-    def version(self):
+    def version(self) -> str:
         """Property corresponding to the current client's version."""
-        if not hasattr(self, "_version"):
-            _version = self.get_about()["version"]
-            setattr(self, "_version", _version)
+        if self._version is None:
+            self._version = cast(str, self.get_about()["version"])
         return self._version
 
     def get_language_id(self, language: LanguageAlias | int) -> int:
@@ -307,7 +313,8 @@ class Client:
         )
         response.raise_for_status()
 
-        for submission, attrs in zip(submissions, response.json()):
+        attributes = cast(list[dict[str, Any]], response.json())
+        for submission, attrs in zip(submissions, attributes):
             submission.set_attributes(attrs)
 
         return submissions
@@ -334,6 +341,11 @@ class Client:
         -------
         Submissions
             A sequence of submissions with updated attributes.
+
+        Raises
+        ------
+        ValueError
+            If any submission does not have a token.
         """
         params = {
             "base64_encoded": "true",
@@ -347,8 +359,12 @@ class Client:
         else:
             params["fields"] = "*"
 
-        tokens = ",".join([submission.token for submission in submissions])
-        params["tokens"] = tokens
+        tokens: list[str] = []
+        for submission in submissions:
+            if submission.token is None:
+                raise ValueError("Every submission must have a token before retrieval.")
+            tokens.append(str(submission.token))
+        params["tokens"] = ",".join(tokens)
 
         response = self.client.get(
             "/submissions/batch",
@@ -357,7 +373,8 @@ class Client:
         )
         response.raise_for_status()
 
-        for submission, attrs in zip(submissions, response.json()["submissions"]):
+        response_body = cast(dict[str, list[dict[str, Any]]], response.json())
+        for submission, attrs in zip(submissions, response_body["submissions"]):
             submission.set_attributes(attrs)
 
         return submissions
@@ -378,9 +395,15 @@ class ATD(Client):
         Additional keyword arguments for the base Client.
     """
 
-    API_KEY_ENV: ClassVar[str] = "JUDGE0_ATD_API_KEY"
+    API_KEY_ENV: ClassVar[str | None] = "JUDGE0_ATD_API_KEY"
 
-    def __init__(self, endpoint, host_header_value, api_key, **kwargs):
+    def __init__(
+        self,
+        endpoint: str,
+        host_header_value: str,
+        api_key: str,
+        **kwargs: Any,
+    ) -> None:
         self.api_key = api_key
         super().__init__(
             endpoint,
@@ -391,7 +414,7 @@ class ATD(Client):
             **kwargs,
         )
 
-    def _update_endpoint_header(self, header_value):
+    def _update_endpoint_header(self, header_value: str) -> None:
         self.headers["x-apihub-endpoint"] = header_value
 
 
@@ -432,7 +455,7 @@ class ATDJudge0CE(ATD):
         "e42f2a26-5b02-472a-80c9-61c4bdae32ec"
     )
 
-    def __init__(self, api_key, **kwargs):
+    def __init__(self, api_key: str, **kwargs: Any) -> None:
         super().__init__(
             self.DEFAULT_ENDPOINT,
             self.DEFAULT_HOST,
@@ -440,7 +463,7 @@ class ATDJudge0CE(ATD):
             **kwargs,
         )
 
-    def get_about(self) -> dict:
+    def get_about(self) -> JsonObject:
         self._update_endpoint_header(self.DEFAULT_ABOUT_ENDPOINT)
         return super().get_about()
 
@@ -448,7 +471,7 @@ class ATDJudge0CE(ATD):
         self._update_endpoint_header(self.DEFAULT_CONFIG_INFO_ENDPOINT)
         return super().get_config_info()
 
-    def get_language(self, language_id) -> Language:
+    def get_language(self, language_id: int) -> Language:
         self._update_endpoint_header(self.DEFAULT_LANGUAGE_ENDPOINT)
         return super().get_language(language_id)
 
@@ -456,7 +479,7 @@ class ATDJudge0CE(ATD):
         self._update_endpoint_header(self.DEFAULT_LANGUAGES_ENDPOINT)
         return super().get_languages()
 
-    def get_statuses(self) -> list[dict]:
+    def get_statuses(self) -> list[JsonObject]:
         self._update_endpoint_header(self.DEFAULT_STATUSES_ENDPOINT)
         return super().get_statuses()
 
@@ -525,7 +548,7 @@ class ATDJudge0ExtraCE(ATD):
         "5d173718-8e6a-4cf5-9d8c-db5e6386d037"
     )
 
-    def __init__(self, api_key, **kwargs):
+    def __init__(self, api_key: str, **kwargs: Any) -> None:
         super().__init__(
             self.DEFAULT_ENDPOINT,
             self.DEFAULT_HOST,
@@ -533,7 +556,7 @@ class ATDJudge0ExtraCE(ATD):
             **kwargs,
         )
 
-    def get_about(self) -> dict:
+    def get_about(self) -> JsonObject:
         self._update_endpoint_header(self.DEFAULT_ABOUT_ENDPOINT)
         return super().get_about()
 
@@ -541,7 +564,7 @@ class ATDJudge0ExtraCE(ATD):
         self._update_endpoint_header(self.DEFAULT_CONFIG_INFO_ENDPOINT)
         return super().get_config_info()
 
-    def get_language(self, language_id) -> Language:
+    def get_language(self, language_id: int) -> Language:
         self._update_endpoint_header(self.DEFAULT_LANGUAGE_ENDPOINT)
         return super().get_language(language_id)
 
@@ -549,7 +572,7 @@ class ATDJudge0ExtraCE(ATD):
         self._update_endpoint_header(self.DEFAULT_LANGUAGES_ENDPOINT)
         return super().get_languages()
 
-    def get_statuses(self) -> list[dict]:
+    def get_statuses(self) -> list[JsonObject]:
         self._update_endpoint_header(self.DEFAULT_STATUSES_ENDPOINT)
         return super().get_statuses()
 
@@ -595,9 +618,15 @@ class Rapid(Client):
         Additional keyword arguments for the base Client.
     """
 
-    API_KEY_ENV: ClassVar[str] = "JUDGE0_RAPID_API_KEY"
+    API_KEY_ENV: ClassVar[str | None] = "JUDGE0_RAPID_API_KEY"
 
-    def __init__(self, endpoint, host_header_value, api_key, **kwargs):
+    def __init__(
+        self,
+        endpoint: str,
+        host_header_value: str,
+        api_key: str,
+        **kwargs: Any,
+    ) -> None:
         self.api_key = api_key
         super().__init__(
             endpoint,
@@ -624,7 +653,7 @@ class RapidJudge0CE(Rapid):
     DEFAULT_HOST: ClassVar[str] = "judge0-ce.p.rapidapi.com"
     HOME_URL: ClassVar[str] = "https://rapidapi.com/judge0-official/api/judge0-ce"
 
-    def __init__(self, api_key, **kwargs):
+    def __init__(self, api_key: str, **kwargs: Any) -> None:
         super().__init__(
             self.DEFAULT_ENDPOINT,
             self.DEFAULT_HOST,
@@ -648,7 +677,7 @@ class RapidJudge0ExtraCE(Rapid):
     DEFAULT_HOST: ClassVar[str] = "judge0-extra-ce.p.rapidapi.com"
     HOME_URL: ClassVar[str] = "https://rapidapi.com/judge0-official/api/judge0-extra-ce"
 
-    def __init__(self, api_key, **kwargs):
+    def __init__(self, api_key: str, **kwargs: Any) -> None:
         super().__init__(
             self.DEFAULT_ENDPOINT,
             self.DEFAULT_HOST,
@@ -670,11 +699,17 @@ class Judge0Cloud(Client):
         Additional keyword arguments for the base Client.
     """
 
-    def __init__(self, endpoint, headers=None, **kwargs):
+    def __init__(
+        self,
+        endpoint: str,
+        headers: str | Headers | None = None,
+        **kwargs: Any,
+    ) -> None:
+        self.api_key = headers
         if isinstance(headers, str):
             from json import loads
 
-            headers = loads(headers)
+            headers = cast(Headers, loads(headers))
 
         super().__init__(
             endpoint,
@@ -698,9 +733,9 @@ class Judge0CloudCE(Judge0Cloud):
 
     DEFAULT_ENDPOINT: ClassVar[str] = "https://ce.judge0.com"
     HOME_URL: ClassVar[str] = "https://ce.judge0.com"
-    API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_CE_AUTH_HEADERS"
+    API_KEY_ENV: ClassVar[str | None] = "JUDGE0_CLOUD_CE_AUTH_HEADERS"
 
-    def __init__(self, headers=None, **kwargs):
+    def __init__(self, headers: str | Headers | None = None, **kwargs: Any) -> None:
         super().__init__(
             self.DEFAULT_ENDPOINT,
             headers,
@@ -723,9 +758,9 @@ class Judge0CloudExtraCE(Judge0Cloud):
 
     DEFAULT_ENDPOINT: ClassVar[str] = "https://extra-ce.judge0.com"
     HOME_URL: ClassVar[str] = "https://extra-ce.judge0.com"
-    API_KEY_ENV: ClassVar[str] = "JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS"
+    API_KEY_ENV: ClassVar[str | None] = "JUDGE0_CLOUD_EXTRA_CE_AUTH_HEADERS"
 
-    def __init__(self, headers=None, **kwargs):
+    def __init__(self, headers: str | Headers | None = None, **kwargs: Any) -> None:
         super().__init__(self.DEFAULT_ENDPOINT, headers, **kwargs)
 
 

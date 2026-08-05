@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import asyncio
-
-import judge0
+from typing import Annotated
 
 import uvicorn
 from fastapi import Depends, FastAPI
+
+import judge0
 
 
 class AppContext:
@@ -23,7 +24,7 @@ def get_app_context():
 
 
 @app.get("/")
-async def root(app_context=Depends(get_app_context)):
+async def root(app_context: Annotated[AppContext, Depends(get_app_context)]):
     if not app_context.public_url:
         return {
             "message": "Public URL is not available yet. Try again after a few seconds."

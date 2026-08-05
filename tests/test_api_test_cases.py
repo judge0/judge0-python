@@ -1,9 +1,12 @@
 """Separate file containing tests related to test case functionality."""
 
-import judge0
+from typing import Any
+
 import pytest
+
+import judge0
 from judge0.api import create_submissions_from_test_cases
-from judge0.base_types import LanguageAlias, Status, TestCase
+from judge0.base_types import LanguageAlias, Status, TestCase, TestCaseType
 from judge0.submission import Submission
 
 
@@ -15,7 +18,7 @@ from judge0.submission import Submission
             TestCase(input="input_1", expected_output="output_1"),
         ],
         [
-            tuple([]),
+            (),
             TestCase(input=None, expected_output=None),
         ],
         [
@@ -48,7 +51,9 @@ from judge0.submission import Submission
         ],
     ],
 )
-def test_test_case_from_record(test_case, expected_output):
+def test_test_case_from_record(
+    test_case: TestCaseType | None, expected_output: TestCase | None
+) -> None:
     assert TestCase.from_record(test_case) == expected_output
 
 
@@ -62,8 +67,10 @@ def test_test_case_from_record(test_case, expected_output):
     ],
 )
 def test_create_submissions_from_test_cases_return_type(
-    submissions, test_cases, expected_type
-):
+    submissions: Submission | list[Submission],
+    test_cases: TestCase | list[TestCase],
+    expected_type: type[Any],
+) -> None:
     output = create_submissions_from_test_cases(submissions, test_cases)
     assert type(output) is expected_type
 
@@ -75,10 +82,15 @@ class TestCreateSubmissionsFromTestCases:
             [TestCase(), None, None],
             [[], None, None],
             [{}, None, None],
-            [tuple([]), None, None],
+            [(), None, None],
         ],
     )
-    def test_empty_test_case(self, test_case, stdin, expected_output):
+    def test_empty_test_case(
+        self,
+        test_case: TestCaseType,
+        stdin: str | None,
+        expected_output: str | None,
+    ) -> None:
         submission = create_submissions_from_test_cases(
             Submission(), test_cases=test_case
         )
@@ -105,7 +117,12 @@ class TestCreateSubmissionsFromTestCases:
             [("input_tuple", "output_tuple"), "input_tuple", "output_tuple"],
         ],
     )
-    def test_single_test_case(self, test_case, stdin, expected_output):
+    def test_single_test_case(
+        self,
+        test_case: TestCaseType,
+        stdin: str | None,
+        expected_output: str | None,
+    ) -> None:
         submission = create_submissions_from_test_cases(
             Submission(), test_cases=test_case
         )
@@ -144,7 +161,12 @@ class TestCreateSubmissionsFromTestCases:
             ],
         ],
     )
-    def test_single_test_case_in_iterable(self, test_cases, stdin, expected_output):
+    def test_single_test_case_in_iterable(
+        self,
+        test_cases: list[TestCaseType] | tuple[TestCaseType, ...],
+        stdin: str | None,
+        expected_output: str | None,
+    ) -> None:
         submissions = create_submissions_from_test_cases(
             Submission(), test_cases=test_cases
         )
@@ -218,9 +240,12 @@ class TestCreateSubmissionsFromTestCases:
     ],
 )
 def test_test_cases_from_run(
-    source_code_or_submissions, test_cases, expected_status, request
-):
-    client = request.getfixturevalue("ce_client")
+    source_code_or_submissions: str | Submission | list[Submission],
+    test_cases: list[TestCase],
+    expected_status: list[Status],
+    request: pytest.FixtureRequest,
+) -> None:
+    client: judge0.Client = request.getfixturevalue("ce_client")
 
     if isinstance(source_code_or_submissions, str):
         submissions = judge0.run(
@@ -270,23 +295,27 @@ def test_test_cases_from_run(
         ],
     ],
 )
-def test_no_test_cases(submissions, expected_status, request):
-    client = request.getfixturevalue("ce_client")
+def test_no_test_cases(
+    submissions: Submission | list[Submission],
+    expected_status: Status | list[Status],
+    request: pytest.FixtureRequest,
+) -> None:
+    client: judge0.Client = request.getfixturevalue("ce_client")
 
-    submissions = judge0.run(
+    results = judge0.run(
         client=client,
         submissions=submissions,
     )
 
-    if isinstance(submissions, list):
-        assert [submission.status for submission in submissions] == expected_status
+    if isinstance(results, Submission):
+        assert results.status == expected_status
     else:
-        assert submissions.status == expected_status
+        assert [submission.status for submission in results] == expected_status
 
 
 @pytest.mark.parametrize("n_submissions", [42, 84])
-def test_batched_test_cases(n_submissions, request):
-    client = request.getfixturevalue("ce_client")
+def test_batched_test_cases(n_submissions: int, request: pytest.FixtureRequest) -> None:
+    client: judge0.Client = request.getfixturevalue("ce_client")
     submissions = [
         Submission(
             source_code=f"print({i})",
@@ -299,4 +328,4 @@ def test_batched_test_cases(n_submissions, request):
     results = judge0.run(client=client, submissions=submissions)
 
     assert len(results) == n_submissions
-    assert all([result.status == Status.ACCEPTED for result in results])
+    assert all(result.status == Status.ACCEPTED for result in results)

@@ -2,7 +2,6 @@ import logging
 import os
 
 from ._logging import setup_logging
-
 from .api import (
     async_execute,
     async_run,
@@ -30,6 +29,8 @@ from .filesystem import File, Filesystem
 from .retry import MaxRetries, MaxWaitTime, RegularPeriodRetry
 from .submission import Submission
 from .version import __version__
+
+logger = logging.getLogger(__name__)
 
 __all__ = [
     "ATD",
@@ -69,13 +70,12 @@ try:
     from dotenv import load_dotenv
 
     load_dotenv()
-except:  # noqa: E722
-    pass
+except (ImportError, OSError) as error:
+    logger.debug("Could not load environment file: %s", error)
 
 if os.getenv("JUDGE0_ENABLE_LOGGING"):
     setup_logging()
 
-logger = logging.getLogger(__name__)
 suppress_preview_warning = os.getenv("JUDGE0_SUPPRESS_PREVIEW_WARNING") is not None
 
 
@@ -94,8 +94,8 @@ def _get_implicit_client(flavor: Flavor) -> Client:
         from dotenv import load_dotenv
 
         load_dotenv()
-    except:  # noqa: E722
-        pass
+    except (ImportError, OSError) as error:
+        logger.debug("Could not load environment file: %s", error)
 
     # Let's check if we can find a self-hosted client.
     client = _get_custom_client(flavor)
@@ -167,7 +167,10 @@ def _get_hub_client(flavor: Flavor) -> Client | None:
         client_classes = EXTRA_CE
 
     for client_class in client_classes:
-        api_key = os.getenv(client_class.API_KEY_ENV)
+        api_key_env = client_class.API_KEY_ENV
+        if api_key_env is None:
+            continue
+        api_key = os.getenv(api_key_env)
         if api_key is not None:
             client = client_class(api_key)
             break

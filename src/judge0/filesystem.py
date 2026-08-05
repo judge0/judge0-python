@@ -2,8 +2,10 @@ import copy
 import io
 import zipfile
 from base64 import b64decode, b64encode
+from collections.abc import Iterator
+from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .base_types import Iterable
 
@@ -22,7 +24,7 @@ class File(BaseModel):
     name: str
     content: str | bytes | None = None
 
-    def __init__(self, **data):
+    def __init__(self, **data: Any) -> None:
         super().__init__(**data)
         # Let's keep content attribute internally encoded as bytes.
         if isinstance(self.content, str):
@@ -32,8 +34,9 @@ class File(BaseModel):
         else:
             self.content = b""
 
-    def __str__(self):
-        return self.content.decode(errors="backslashreplace")
+    def __str__(self) -> str:
+        content = self.content if isinstance(self.content, bytes) else b""
+        return content.decode(errors="backslashreplace")
 
 
 class Filesystem(BaseModel):
@@ -46,9 +49,9 @@ class Filesystem(BaseModel):
         files.
     """
 
-    files: list[File] = []
+    files: list[File] = Field(default_factory=list)
 
-    def __init__(self, **data):
+    def __init__(self, **data: Any) -> None:
         content = data.pop("content", None)
         super().__init__(**data)
         self.files = []
@@ -87,7 +90,7 @@ class Filesystem(BaseModel):
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, "w") as zip_file:
             for file in self.files:
-                zip_file.writestr(file.name, file.content)
+                zip_file.writestr(file.name, file.content or b"")
         return zip_buffer.getvalue()
 
     def find(self, name: str) -> File | None:
@@ -115,5 +118,5 @@ class Filesystem(BaseModel):
         """Create string representation of Filesystem object."""
         return b64encode(self.encode()).decode()
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[File]:  # pyright: ignore[reportIncompatibleMethodOverride]
         return iter(self.files)

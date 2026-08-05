@@ -1,12 +1,17 @@
 import copy
-from datetime import datetime
-from typing import Any, Optional
+from binascii import Error as BinasciiError
+from collections.abc import Iterator
+from datetime import datetime, timezone
+from typing import TYPE_CHECKING, Any, cast
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, UUID4
+from pydantic import UUID4, BaseModel, ConfigDict, Field, field_validator
 
-from .base_types import Iterable, LanguageAlias, Status
+from .base_types import Iterable, JsonObject, LanguageAlias, Status
 from .common import decode, encode
-from .filesystem import Filesystem
+from .filesystem import File, Filesystem
+
+if TYPE_CHECKING:
+    from .clients import Client
 
 ENCODED_REQUEST_FIELDS = {
     "source_code",
@@ -164,7 +169,7 @@ class Submission(BaseModel):
     status: Status | None = Field(default=None, repr=True)
     created_at: datetime | None = Field(default=None, repr=True)
     finished_at: datetime | None = Field(default=None, repr=True)
-    token: Optional[UUID4] = Field(default=None, repr=True)
+    token: UUID4 | None = Field(default=None, repr=True)
     time: float | None = Field(default=None, repr=True)
     wall_time: float | None = Field(default=None, repr=True)
     memory: float | None = Field(default=None, repr=True)
@@ -174,14 +179,14 @@ class Submission(BaseModel):
 
     @field_validator(*ENCODED_FIELDS, mode="before")
     @classmethod
-    def process_encoded_fields(cls, value: str) -> str | None:
+    def process_encoded_fields(cls, value: str | bytes | None) -> str | bytes | None:
         """Validate all encoded attributes."""
         if value is None:
             return None
         else:
             try:
                 return decode(value)
-            except Exception:
+            except (BinasciiError, UnicodeDecodeError, ValueError):
                 return value
 
     @field_validator("post_execution_filesystem", mode="before")
@@ -192,18 +197,21 @@ class Submission(BaseModel):
 
     @field_validator("status", mode="before")
     @classmethod
-    def process_status(cls, value: dict) -> Status:
+    def process_status(cls, value: Status | JsonObject | int) -> Status:
         """Validate status attribute."""
-        return Status(value["id"])
+        if isinstance(value, dict):
+            return Status(cast(int, value["id"]))
+        return Status(value)
 
     @field_validator("language", mode="before")
     @classmethod
-    def process_language(cls, value: LanguageAlias | dict) -> LanguageAlias | int:
+    def process_language(
+        cls, value: LanguageAlias | JsonObject | int
+    ) -> LanguageAlias | int:
         """Validate status attribute."""
         if isinstance(value, dict):
-            return value["id"]
-        else:
-            return value
+            return cast(int, value["id"])
+        return value
 
     def set_attributes(self, attributes: dict[str, Any]) -> None:
         """Set submissions attributes while taking into account different
@@ -224,7 +232,9 @@ class Submission(BaseModel):
             elif attr == "status":
                 value = Status(value["id"])
             elif attr in DATETIME_FIELDS and value is not None:
-                value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
+                value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ").replace(
+                    tzinfo=timezone.utc
+                )
             elif attr in FLOATING_POINT_FIELDS and value is not None:
                 value = float(value)
             elif attr == "post_execution_filesystem":
@@ -232,11 +242,19 @@ class Submission(BaseModel):
 
             setattr(self, attr, value)
 
-    def as_body(self, client: "Client") -> dict:
+    def as_body(self, client: "Client") -> dict[str, Any]:
         """Prepare Submission as a dictionary while taking into account
         the client's restrictions.
+
+        Raises
+        ------
+        ValueError
+            If source code is missing.
         """
-        body = {
+        if self.source_code is None:
+            raise ValueError("source_code must be provided before serialization.")
+
+        body: dict[str, Any] = {
             "source_code": encode(self.source_code),
             "language_id": client.get_language_id(self.language),
         }
@@ -272,7 +290,7 @@ class Submission(BaseModel):
         new_submission.language = self.language
         return new_submission
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[File]:  # pyright: ignore[reportIncompatibleMethodOverride]
         if self.post_execution_filesystem is None:
             return iter([])
         else:

@@ -1,7 +1,9 @@
-import judge0
+from typing import cast
+
 import pytest
 
-from judge0 import Flavor, LanguageAlias, Submission
+import judge0
+from judge0 import Flavor, LanguageAlias, Submission, get_client
 from judge0.api import _resolve_client
 
 DEFAULT_CLIENTS = (
@@ -15,9 +17,11 @@ DEFAULT_CLIENTS = (
 
 
 @pytest.mark.parametrize("client", DEFAULT_CLIENTS)
-def test_resolve_client_with_explicit_client(client, request):
-    client = request.getfixturevalue(client)
-    assert _resolve_client(client) is client
+def test_resolve_client_with_explicit_client(
+    client: str, request: pytest.FixtureRequest
+) -> None:
+    resolved_client: judge0.Client = request.getfixturevalue(client)
+    assert _resolve_client(resolved_client) is resolved_client
 
 
 @pytest.mark.parametrize(
@@ -34,9 +38,9 @@ def test_resolve_client_with_explicit_client(client, request):
     ],
 )
 def test_resolve_client_with_flavor(
-    flavor,
-    expected_client,
-):
+    flavor: Flavor,
+    expected_client: str,
+) -> None:
     # We have to use getattr since both implicit clients are initially None.
     assert _resolve_client(client=flavor) is getattr(judge0, expected_client)
 
@@ -48,12 +52,19 @@ def test_resolve_client_with_flavor(
         None,
     ],
 )
-def test_resolve_client_empty_submissions_argument(submissions):
+def test_resolve_client_empty_submissions_argument(
+    submissions: list[Submission] | None,
+) -> None:
     with pytest.raises(ValueError):
         _resolve_client(submissions=submissions)
 
 
-def test_resolve_client_no_common_client_for_submissions():
+def test_get_client_rejects_invalid_flavor_type() -> None:
+    with pytest.raises(TypeError, match="Flavor"):
+        get_client(cast(Flavor, "CE"))
+
+
+def test_resolve_client_no_common_client_for_submissions() -> None:
     cpp_submission = Submission(
         source_code="",  # source code is not important in this test
         language=LanguageAlias.CPP_GCC,
@@ -70,7 +81,7 @@ def test_resolve_client_no_common_client_for_submissions():
         _resolve_client(submissions=submissions)
 
 
-def test_resolve_client_common_ce_client():
+def test_resolve_client_common_ce_client() -> None:
     cpp_submission = Submission(
         source_code="",  # source code is not important in this test
         language=LanguageAlias.CPP_GCC,
@@ -86,7 +97,7 @@ def test_resolve_client_common_ce_client():
     assert _resolve_client(submissions=submissions) is judge0.JUDGE0_IMPLICIT_CE_CLIENT
 
 
-def test_resolve_client_common_extra_ce_client():
+def test_resolve_client_common_extra_ce_client() -> None:
     cpp_submission = Submission(
         source_code="",  # source code is not important in this test
         language=LanguageAlias.CPP_CLANG,

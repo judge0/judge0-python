@@ -1,15 +1,22 @@
 import copy
 from collections.abc import Sequence
 from dataclasses import dataclass
-from enum import auto, IntEnum
-from typing import Protocol, runtime_checkable, Union
+from enum import IntEnum, auto
+from typing import Protocol, TypeAlias, runtime_checkable
 
 from pydantic import BaseModel
 
 Iterable = Sequence
 
-TestCaseType = Union["TestCase", list, tuple, dict]
-TestCases = Iterable[TestCaseType]
+JsonValue: TypeAlias = (
+    str | int | float | bool | None | list["JsonValue"] | dict[str, "JsonValue"]
+)
+JsonObject: TypeAlias = dict[str, JsonValue]
+Headers: TypeAlias = dict[str, str]
+TestCaseValue: TypeAlias = str | None
+TestCaseRecord: TypeAlias = (
+    list[TestCaseValue] | tuple[TestCaseValue, ...] | dict[str, TestCaseValue]
+)
 
 
 @dataclass(frozen=True)
@@ -22,7 +29,7 @@ class TestCase:
     expected_output: str | None = None
 
     @classmethod
-    def from_record(cls, test_case: TestCaseType | None) -> Union["TestCase", None]:
+    def from_record(cls, test_case: "TestCaseType | None") -> "TestCase | None":
         """Create a TestCase from built-in types.
 
         Parameters
@@ -52,6 +59,10 @@ class TestCase:
         raise ValueError(
             f"Cannot create TestCase object from object of type {type(test_case)}."
         )
+
+
+TestCaseType: TypeAlias = TestCase | TestCaseRecord
+TestCases = Iterable[TestCaseType]
 
 
 @runtime_checkable
@@ -183,7 +194,7 @@ class Status(IntEnum):
     INTERNAL_ERROR = 13
     EXEC_FORMAT_ERROR = 14
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name.lower().replace("_", " ").title()
 
 
