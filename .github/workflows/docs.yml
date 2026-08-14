@@ -35,7 +35,7 @@ jobs:
           uv sync --group docs
 
       - name: Build documentation
-        run: uv run sphinx-multiversion docs/source docs/build/html --keep-going --no-color
+        run: uv run sphinx-multiversion docs/source docs/build/html --keep-going -W --no-color
 
       - name: Generate index.html.
         run: |
