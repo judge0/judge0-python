@@ -8,4 +8,6 @@
 - Parse Judge0 UTC timestamps as timezone-aware values and validate submission
 - Replace Flake8 and ufmt checks with pinned Ruff and Pyright hooks.
   source code and batch tokens before serialization.
+- Pin Ruff, Pyright, and pre-commit as project-scoped dependencies in the dev
+  `lint` group, replacing global `uv tool` installs for reproducible setups.
 - Add `AGENTS.md` and `CHANGELOG.md`

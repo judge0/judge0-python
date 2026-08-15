@@ -46,7 +46,12 @@ docs = [
     "sphinx-multiversion==0.2.4",
     "sphinx-autobuild>=2024.10.3",
 ]
-dev = [{ include-group = "test" }, { include-group = "docs" }]
+dev = [{ include-group = "test" }, { include-group = "docs" }, { include-group = "lint" }]
+lint = [
+    "pre-commit==4.6.0",
+    "pyright==1.1.409",
+    "ruff==0.15.12",
+]
 
 
 [tool.ruff.lint.per-file-ignores]

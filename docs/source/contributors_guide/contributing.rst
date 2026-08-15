@@ -18,23 +18,16 @@ Preparing the development setup
 
     $ uv sync --group dev
 
-4. Install the necessary development tools:
+4. Install the pre-commit hooks:
 
 .. code-block:: console
 
-    $ uv tool install pre-commit
+    $ uv run pre-commit install
 
-5. Make sure all the necessary tools are installed:
-
-.. code-block:: console
-
-    $ uv tool list
-
-6. Finally, install the pre-commit hooks:
-
-.. code-block:: console
-
-    $ uv tool run pre-commit install
+All project tooling — including the test, documentation, and linting dependencies
+(``pytest``, Sphinx, ``ruff``, ``pyright``, and ``pre-commit``) — is project-scoped.
+Everything is installed by ``uv sync --group dev`` and invoked with ``uv run``,
+so there is no need to install any tools globally.
 
 Building documentation
 ----------------------
@@ -88,7 +81,7 @@ To run the tests locally, you can use the following command:
 
 .. code-block:: console
 
-    $ pytest tests -k '<test_name>'
+    $ uv run pytest tests -k '<test_name>'
 
 This will enable you to run a single test, without incurring the cost of
 running the full test suite. If you want to run the full test suite, you can
@@ -96,9 +89,15 @@ use the following command:
 
 .. code-block:: console
 
-    $ pytest tests
+    $ uv run pytest tests
 
 or you can create a draft PR and let the CI pipeline run the tests for you.
 The CI pipeline will run the tests on every PR, using a private instance
 of Judge0, so you can be sure that your changes are not breaking the existing
 functionality.
+
+Before committing, run all linting and type-checking checks with pre-commit:
+
+.. code-block:: console
+
+    $ uv run pre-commit run --all-files
