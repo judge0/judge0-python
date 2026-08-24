@@ -27,7 +27,7 @@
   - `version.py` exposes the package version constant.
 - `tests/` contains the pytest suite. Shared fixtures belong in `conftest.py`, and focused tests should use `test_<area>.py` modules that correspond to SDK behavior.
 - `examples/` contains runnable SDK usage examples, including the standalone HTTP callback example in `examples/1000_http_callback_aka_webhook/`.
-- `docs/source/` contains the Sphinx documentation sources. API reference pages live in `docs/source/api/`, contributor documentation in `docs/source/contributors_guide/`, and conceptual guides in `docs/source/in_depth/`. Sphinx configuration and templates also live under `docs/source/`; `docs/assets/` contains documentation assets.
+- `docs/source/` contains the Sphinx documentation sources. API reference pages live in `docs/source/api/`, contributor documentation in `docs/source/contributors_guide/`, conceptual guides in `docs/source/in_depth/`, and the FAQ in `docs/source/faq.rst`. Sphinx configuration and templates also live under `docs/source/`; `docs/assets/` contains documentation assets.
 - `.github/` contains CI workflows and GitHub issue templates.
 - `pyproject.toml` defines package metadata, dependencies, dependency groups, and tool configuration; `uv.lock` pins the resolved environment. Manage both through `uv` as described above.
 - Root-level Markdown files contain the project overview, contribution and conduct policies, release-note template, changelog, and agent instructions.
