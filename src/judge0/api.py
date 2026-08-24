@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_client(flavor: Flavor = Flavor.CE) -> Client:
-    """Resolve client from API keys from environment or default to preview client.
+    """Resolve client from API keys or default to the free tier cloud client.
 
     Parameters
     ----------

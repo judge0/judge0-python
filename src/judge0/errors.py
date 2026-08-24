@@ -1,8 +1,8 @@
 """Library specific errors."""
 
 
-class PreviewClientLimitError(RuntimeError):
-    """Limited usage of a preview client exceeded."""
+class FreeTierCloudClientLimitError(RuntimeError):
+    """Limited usage of the free tier cloud client exceeded."""
 
 
 class ClientResolutionError(RuntimeError):

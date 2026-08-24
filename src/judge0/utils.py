@@ -7,7 +7,7 @@ from typing import ParamSpec, TypeVar
 
 from httpx import HTTPError, HTTPStatusError
 
-from .errors import PreviewClientLimitError
+from .errors import FreeTierCloudClientLimitError
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -20,7 +20,7 @@ def is_http_too_many_requests_error(exception: Exception) -> bool:
     )
 
 
-def handle_too_many_requests_error_for_preview_client(
+def handle_too_many_requests_error_for_free_tier_cloud_client(
     func: Callable[P, R],
 ) -> Callable[P, R]:
     @wraps(func)
@@ -33,13 +33,13 @@ def handle_too_many_requests_error_for_preview_client(
                 # let's check if we are dealing with the implicit client.
                 instance = args[0]
                 class_name = instance.__class__.__name__
-                # Check if we are using a preview version of the client.
+                # Check if we are using the free tier cloud client.
                 if (
                     class_name in ("Judge0CloudCE", "Judge0CloudExtraCE")
                     and getattr(instance, "api_key", None) is None
                 ):
-                    raise PreviewClientLimitError(
-                        "You are using a preview version of a client and "
+                    raise FreeTierCloudClientLimitError(
+                        "You are using the free tier cloud client and "
                         "you've hit a rate limit on it. Visit "
                         f"{getattr(instance, 'HOME_URL', None)} "
                         "to get your authentication credentials."

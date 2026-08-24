@@ -2,6 +2,9 @@
 
 ## v0.1.0-dev
 
+- Rename "preview" terminology to "free tier cloud" and rename the
+  `JUDGE0_SUPPRESS_PREVIEW_WARNING` environment variable to
+  `JUDGE0_SUPPRESS_FREE_TIER_CLOUD_WARNING`.
 - Fix Sphinx autodoc imports for Pydantic-backed submission types.
 - Add complete static typing across the SDK and tests, with typed single and batch
   submission return values.
