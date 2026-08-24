@@ -243,20 +243,19 @@ def test_test_cases_from_run(
     source_code_or_submissions: str | Submission | list[Submission],
     test_cases: list[TestCase],
     expected_status: list[Status],
-    request: pytest.FixtureRequest,
+    ce_client: judge0.Client,
 ) -> None:
-    client: judge0.Client = request.getfixturevalue("ce_client")
 
     if isinstance(source_code_or_submissions, str):
         submissions = judge0.run(
-            client=client,
+            client=ce_client,
             source_code=source_code_or_submissions,
             test_cases=test_cases,
             language=LanguageAlias.PYTHON,
         )
     else:
         submissions = judge0.run(
-            client=client,
+            client=ce_client,
             submissions=source_code_or_submissions,
             test_cases=test_cases,
         )
@@ -298,12 +297,10 @@ def test_test_cases_from_run(
 def test_no_test_cases(
     submissions: Submission | list[Submission],
     expected_status: Status | list[Status],
-    request: pytest.FixtureRequest,
+    ce_client: judge0.Client,
 ) -> None:
-    client: judge0.Client = request.getfixturevalue("ce_client")
-
     results = judge0.run(
-        client=client,
+        client=ce_client,
         submissions=submissions,
     )
 
@@ -314,8 +311,7 @@ def test_no_test_cases(
 
 
 @pytest.mark.parametrize("n_submissions", [42, 84])
-def test_batched_test_cases(n_submissions: int, request: pytest.FixtureRequest) -> None:
-    client: judge0.Client = request.getfixturevalue("ce_client")
+def test_batched_test_cases(n_submissions: int, ce_client: judge0.Client) -> None:
     submissions = [
         Submission(
             source_code=f"print({i})",
@@ -325,7 +321,7 @@ def test_batched_test_cases(n_submissions: int, request: pytest.FixtureRequest) 
         for i in range(n_submissions)
     ]
 
-    results = judge0.run(client=client, submissions=submissions)
+    results = judge0.run(client=ce_client, submissions=submissions)
 
     assert len(results) == n_submissions
     assert all(result.status == Status.ACCEPTED for result in results)

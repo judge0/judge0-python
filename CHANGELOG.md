@@ -2,6 +2,8 @@
 
 ## v0.1.0-dev
 
+- Clean up the test suite: skip unconfigured live clients, share one client
+  matrix, and inject `ce_client` as a fixture instead of `getfixturevalue`.
 - Fix Sphinx autodoc imports for Pydantic-backed submission types.
 - Add complete static typing across the SDK and tests, with typed single and batch
   submission return values.
