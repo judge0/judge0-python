@@ -1,11 +1,21 @@
 {% if versions %}
-{% set master_version = versions | selectattr('name', 'equalto', 'master') | list %}
-{% set other_versions = versions | rejectattr('name', 'equalto', 'master') | sort(attribute='name', reverse=true) %}
-{% set sorted_versions = master_version + other_versions %}
+{% set version_groups = versions | split_doc_versions %}
+{% set visible_versions = version_groups[0] %}
+{% set older_versions = version_groups[1] %}
 <h3>{{ _('Versions') }}</h3>
 <ul>
-    {%- for item in sorted_versions %}
+    {%- for item in visible_versions %}
     <li><a href="{{ item.url }}">{{ item.name }}</a></li>
     {%- endfor %}
 </ul>
+{% if older_versions %}
+<details class="versions-more">
+    <summary>{{ _('View more...') }}</summary>
+    <ul>
+        {%- for item in older_versions %}
+        <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+        {%- endfor %}
+    </ul>
+</details>
+{% endif %}
 {% endif %}
