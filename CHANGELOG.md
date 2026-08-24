@@ -2,6 +2,8 @@
 
 ## v0.1.0-dev
 
+- Document the general API overview: high-level versus low-level functions,
+  core types, and the typical `run` / `async_run` flow.
 - Fix Sphinx autodoc imports for Pydantic-backed submission types.
 - Add complete static typing across the SDK and tests, with typed single and batch
   submission return values.
