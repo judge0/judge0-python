@@ -2,6 +2,8 @@
 
 ## v0.1.0-dev
 
+- Add paired synchronous and asynchronous client APIs, including flavor-specific
+  async clients and optional HTTPX client injection.
 - Fix Sphinx autodoc imports for Pydantic-backed submission types.
 - Add complete static typing across the SDK and tests, with typed single and batch
   submission return values.
