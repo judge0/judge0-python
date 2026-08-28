@@ -2,7 +2,7 @@ import copy
 from binascii import Error as BinasciiError
 from collections.abc import Iterator
 from datetime import datetime, timezone
-from typing import TYPE_CHECKING, Any, cast
+from typing import Any, Protocol, cast
 
 from pydantic import UUID4, BaseModel, ConfigDict, Field, field_validator
 
@@ -10,8 +10,10 @@ from .base_types import Iterable, JsonObject, LanguageAlias, Status
 from .common import decode, encode
 from .filesystem import File, Filesystem
 
-if TYPE_CHECKING:
-    from .clients import Client
+
+class SupportsLanguageId(Protocol):
+    def get_language_id(self, language: LanguageAlias | int) -> int: ...
+
 
 ENCODED_REQUEST_FIELDS = {
     "source_code",
@@ -242,7 +244,7 @@ class Submission(BaseModel):
 
             setattr(self, attr, value)
 
-    def as_body(self, client: "Client") -> dict[str, Any]:
+    def as_body(self, client: SupportsLanguageId) -> dict[str, Any]:
         """Prepare Submission as a dictionary while taking into account
         the client's restrictions.
 
