@@ -2,6 +2,8 @@
 
 ## v0.1.0-dev
 
+- Bump the uv version used in GitHub Actions from 0.9.8 to 0.11.33 so that the
+  CI can parse the relative `exclude-newer` value in `pyproject.toml`.
 - Fix Sphinx autodoc imports for Pydantic-backed submission types.
 - Add complete static typing across the SDK and tests, with typed single and batch
   submission return values.

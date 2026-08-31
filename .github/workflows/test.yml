@@ -24,7 +24,7 @@ jobs:
           python-version: "3.10"
       - name: Install uv and project
         run: |
-          curl -LsSf https://astral.sh/uv/0.9.8/install.sh | sh
+          curl -LsSf https://astral.sh/uv/0.11.33/install.sh | sh
           uv sync --group test
       - name: Test with pytest
         env: # Add necessary api keys as env variables.
