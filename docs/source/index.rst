@@ -83,3 +83,11 @@ Every contribution, big or small, is valuable!
 
       contributors_guide/contributing
       contributors_guide/release_notes
+
+
+.. toctree::
+      :caption: FAQ
+      :titlesonly:
+      :hidden:
+
+      faq
