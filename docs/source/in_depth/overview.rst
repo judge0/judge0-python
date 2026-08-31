@@ -68,8 +68,11 @@ automatically.
 ``async_run`` versus ``run``
 ----------------------------
 
-:func:`judge0.run` blocks until Judge0 reports a terminal status.
-:func:`judge0.async_run` only creates the submission(s) and returns tokens.
+:func:`judge0.run` blocks until Judge0 reports a terminal status or the
+client's retry strategy is exhausted, which may return a queued or processing
+submission.
+:func:`judge0.async_run` only creates the submission(s) and returns the
+submission objects with their token fields populated.
 Call :func:`judge0.wait` later, or poll with
 :func:`judge0.api.get_submissions`.
 
