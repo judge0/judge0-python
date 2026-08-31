@@ -26,6 +26,10 @@ class Client:
         Client's default endpoint.
     headers : dict
         Request authentication headers.
+    retry_strategy : RetryStrategy, optional
+        Polling strategy used by high-level helpers.
+    http_client : httpx.Client, optional
+        Injected HTTPX client. The SDK does not close an injected client.
 
     Attributes
     ----------
@@ -44,6 +48,7 @@ class Client:
         headers: Headers | None = None,
         *,
         retry_strategy: RetryStrategy | None = None,
+        http_client: httpx.Client | None = None,
     ) -> None:
         self.endpoint: str = endpoint
         self.headers: Headers = headers if headers is not None else {}
@@ -54,7 +59,8 @@ class Client:
             }
         )
         self.retry_strategy = retry_strategy
-        self.client = httpx.Client(base_url=self.endpoint)
+        self._owns_http_client = http_client is None
+        self.client = http_client or httpx.Client(base_url=self.endpoint)
         self._version: str | None = None
 
         try:
@@ -67,8 +73,22 @@ class Client:
                 "review your authentication credentials."
             ) from e
 
+    def close(self) -> None:
+        """Close the underlying HTTP client if this instance owns it."""
+        if self._owns_http_client:
+            self.client.close()
+
+    def __enter__(self) -> "Client":
+        return self
+
+    def __exit__(self, *args: object) -> None:
+        self.close()
+
     def __del__(self) -> None:
-        self.client.close()
+        try:
+            self.close()
+        except Exception:
+            return None
 
     @handle_too_many_requests_error_for_preview_client
     def get_about(self) -> JsonObject:
@@ -367,6 +387,441 @@ class Client:
         params["tokens"] = ",".join(tokens)
 
         response = self.client.get(
+            "/submissions/batch",
+            params=params,
+            headers=self.headers,
+        )
+        response.raise_for_status()
+
+        response_body = cast(dict[str, list[dict[str, Any]]], response.json())
+        for submission, attrs in zip(submissions, response_body["submissions"]):
+            submission.set_attributes(attrs)
+
+        return submissions
+
+    def _prepare_request(self, operation: str) -> None:
+        """Hook for flavor-specific request headers.
+
+        Parameters
+        ----------
+        operation : str
+            Logical operation name, such as ``about`` or ``create_submission``.
+        """
+        return None
+
+
+class AsyncClient:
+    """Asynchronous base class for Judge0 clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Client's default endpoint.
+    headers : dict
+        Request authentication headers.
+    retry_strategy : RetryStrategy, optional
+        Polling strategy used by high-level helpers.
+    http_client : httpx.AsyncClient, optional
+        Injected HTTPX async client. The SDK does not close an injected client.
+
+    Attributes
+    ----------
+    API_KEY_ENV : str
+        Environment variable where judge0-python should look for API key for
+        the client. Set to default values for RapidAPI and ATD clients.
+    """
+
+    API_KEY_ENV: ClassVar[str | None] = None
+
+    def __init__(
+        self,
+        endpoint: str,
+        headers: Headers | None = None,
+        *,
+        retry_strategy: RetryStrategy | None = None,
+        http_client: httpx.AsyncClient | None = None,
+    ) -> None:
+        self.endpoint: str = endpoint
+        self.headers: Headers = headers if headers is not None else {}
+        self.headers.update(
+            {
+                "X-Judge0-App": "Judge0 Python SDK",
+                "X-Judge0-App-Version": __version__,
+            }
+        )
+        self.retry_strategy = retry_strategy
+        self._owns_http_client = http_client is None
+        self.client = http_client or httpx.AsyncClient(base_url=self.endpoint)
+        self._version: str | None = None
+        self._ready = False
+        self.languages: list[Language] = []
+        self.config: Config | None = None
+
+    async def aclose(self) -> None:
+        """Close the underlying HTTP client if this instance owns it."""
+        if self._owns_http_client:
+            await self.client.aclose()
+
+    async def __aenter__(self) -> "AsyncClient":
+        await self._ensure_ready()
+        return self
+
+    async def __aexit__(self, *args: object) -> None:
+        await self.aclose()
+
+    def _prepare_request(self, operation: str) -> None:
+        """Hook for flavor-specific request headers.
+
+        Parameters
+        ----------
+        operation : str
+            Logical operation name, such as ``about`` or ``create_submission``.
+        """
+        return None
+
+    async def _ensure_ready(self) -> None:
+        if self._ready:
+            return
+        try:
+            self.languages = await self.get_languages()
+            self.config = await self.get_config_info()
+            about = await self._request_about()
+            self._version = cast(str, about["version"])
+            self._ready = True
+        except Exception as e:
+            home_url = getattr(self, "HOME_URL", None)
+            raise RuntimeError(
+                f"Authentication failed. Visit {home_url} to get or "
+                "review your authentication credentials."
+            ) from e
+
+    async def _request_about(self) -> JsonObject:
+        self._prepare_request("about")
+        response = await self.client.get(
+            "/about",
+            headers=self.headers,
+        )
+        response.raise_for_status()
+        return cast(JsonObject, response.json())
+
+    @handle_too_many_requests_error_for_preview_client
+    async def get_about(self) -> JsonObject:
+        """Get general information about judge0.
+
+        Returns
+        -------
+        dict
+            General information about judge0.
+        """
+        await self._ensure_ready()
+        return await self._request_about()
+
+    @handle_too_many_requests_error_for_preview_client
+    async def get_config_info(self) -> Config:
+        """Get information about client's configuration.
+
+        Returns
+        -------
+        Config
+            Client's configuration.
+        """
+        self._prepare_request("config_info")
+        response = await self.client.get(
+            "/config_info",
+            headers=self.headers,
+        )
+        response.raise_for_status()
+        return Config.model_validate(response.json())
+
+    @handle_too_many_requests_error_for_preview_client
+    async def get_language(self, language_id: int) -> Language:
+        """Get language corresponding to the id.
+
+        Parameters
+        ----------
+        language_id : int
+            Language id.
+
+        Returns
+        -------
+        Language
+            Language corresponding to the passed id.
+        """
+        await self._ensure_ready()
+        self._prepare_request("language")
+        request_url = f"/languages/{language_id}"
+        response = await self.client.get(request_url, headers=self.headers)
+        response.raise_for_status()
+        return Language.model_validate(response.json())
+
+    @handle_too_many_requests_error_for_preview_client
+    async def get_languages(self) -> list[Language]:
+        """Get a list of supported languages.
+
+        Returns
+        -------
+        list of language
+            A list of supported languages.
+        """
+        self._prepare_request("languages")
+        response = await self.client.get("/languages", headers=self.headers)
+        response.raise_for_status()
+        languages = cast(list[JsonObject], response.json())
+        return [Language.model_validate(language) for language in languages]
+
+    @handle_too_many_requests_error_for_preview_client
+    async def get_statuses(self) -> list[JsonObject]:
+        """Get a list of possible submission statuses.
+
+        Returns
+        -------
+        list of dict
+            A list of possible submission statues.
+        """
+        await self._ensure_ready()
+        self._prepare_request("statuses")
+        response = await self.client.get(
+            "/statuses",
+            headers=self.headers,
+        )
+        response.raise_for_status()
+        return cast(list[JsonObject], response.json())
+
+    @property
+    def version(self) -> str:
+        """Property corresponding to the current client's version."""
+        if self._version is None:
+            raise RuntimeError(
+                "Async client version is available after the first awaited request."
+            )
+        return self._version
+
+    def get_language_id(self, language: LanguageAlias | int) -> int:
+        """Get language id corresponding to the language alias for the client.
+
+        Parameters
+        ----------
+        language : LanguageAlias or int
+            Language alias or language id.
+
+        Returns
+        -------
+            Language id corresponding to the language alias.
+        """
+        if isinstance(language, LanguageAlias):
+            supported_language_ids = LANGUAGE_TO_LANGUAGE_ID[self.version]
+            language = supported_language_ids.get(language, -1)
+        return language
+
+    def is_language_supported(self, language: LanguageAlias | int) -> bool:
+        """Check if language is supported by the client.
+
+        Parameters
+        ----------
+        language : LanguageAlias or int
+            Language alias or language id.
+
+        Returns
+        -------
+        bool
+            Return True if language is supported by the client, otherwise returns
+            False.
+        """
+        language_id = self.get_language_id(language)
+        return any(language_id == lang.id for lang in self.languages)
+
+    @handle_too_many_requests_error_for_preview_client
+    async def create_submission(self, submission: Submission) -> Submission:
+        """Send submission for execution to a client.
+
+        Directly send a submission to create_submission route for execution.
+
+        Parameters
+        ----------
+        submission : Submission
+            A submission to create.
+
+        Returns
+        -------
+        Submission
+            A submission with updated token attribute.
+
+        Raises
+        ------
+        RuntimeError
+            If the client does not support the submission language.
+        """
+        await self._ensure_ready()
+        if not self.is_language_supported(language=submission.language):
+            raise RuntimeError(
+                f"Client {type(self).__name__} does not support language with "
+                f"id {submission.language}!"
+            )
+
+        params = {
+            "base64_encoded": "true",
+            "wait": "false",
+        }
+
+        body = submission.as_body(self)
+
+        self._prepare_request("create_submission")
+        response = await self.client.post(
+            "/submissions",
+            json=body,
+            params=params,
+            headers=self.headers,
+        )
+        response.raise_for_status()
+
+        submission.set_attributes(response.json())
+
+        return submission
+
+    @handle_too_many_requests_error_for_preview_client
+    async def get_submission(
+        self,
+        submission: Submission,
+        *,
+        fields: str | Iterable[str] | None = None,
+    ) -> Submission:
+        """Get submissions status.
+
+        Directly send submission's token to get_submission route for status
+        check. By default, all submissions attributes (fields) are requested.
+
+        Parameters
+        ----------
+        submission : Submission
+            Submission to update.
+
+        Returns
+        -------
+        Submission
+            A Submission with updated attributes.
+        """
+        await self._ensure_ready()
+        params = {
+            "base64_encoded": "true",
+        }
+
+        if isinstance(fields, str):
+            fields = [fields]
+
+        if fields is not None:
+            params["fields"] = ",".join(fields)
+        else:
+            params["fields"] = "*"
+
+        self._prepare_request("get_submission")
+        response = await self.client.get(
+            f"/submissions/{submission.token}",
+            params=params,
+            headers=self.headers,
+        )
+        response.raise_for_status()
+
+        submission.set_attributes(response.json())
+
+        return submission
+
+    @handle_too_many_requests_error_for_preview_client
+    async def create_submissions(self, submissions: Submissions) -> Submissions:
+        """Send submissions for execution to a client.
+
+        Directly send submissions to create_submissions route for execution.
+        Cannot handle more submissions than the client supports.
+
+        Parameters
+        ----------
+        submissions : Submissions
+            A sequence of submissions to create.
+
+        Returns
+        -------
+        Submissions
+            A sequence of submissions with updated token attribute.
+
+        Raises
+        ------
+        RuntimeError
+            If the client does not support a submission language.
+        """
+        await self._ensure_ready()
+        for submission in submissions:
+            if not self.is_language_supported(language=submission.language):
+                raise RuntimeError(
+                    f"Client {type(self).__name__} does not support language "
+                    f"{submission.language}!"
+                )
+
+        submissions_body = [submission.as_body(self) for submission in submissions]
+
+        self._prepare_request("create_submissions")
+        response = await self.client.post(
+            "/submissions/batch",
+            headers=self.headers,
+            params={"base64_encoded": "true"},
+            json={"submissions": submissions_body},
+        )
+        response.raise_for_status()
+
+        attributes = cast(list[dict[str, Any]], response.json())
+        for submission, attrs in zip(submissions, attributes):
+            submission.set_attributes(attrs)
+
+        return submissions
+
+    @handle_too_many_requests_error_for_preview_client
+    async def get_submissions(
+        self,
+        submissions: Submissions,
+        *,
+        fields: str | Iterable[str] | None = None,
+    ) -> Submissions:
+        """Get submissions status.
+
+        Directly send submissions' tokens to get_submissions route for status
+        check. By default, all submissions attributes (fields) are requested.
+        Cannot handle more submissions than the client supports.
+
+        Parameters
+        ----------
+        submissions : Submissions
+            Submissions to update.
+
+        Returns
+        -------
+        Submissions
+            A sequence of submissions with updated attributes.
+
+        Raises
+        ------
+        ValueError
+            If any submission does not have a token.
+        """
+        await self._ensure_ready()
+        params = {
+            "base64_encoded": "true",
+        }
+
+        if isinstance(fields, str):
+            fields = [fields]
+
+        if fields is not None:
+            params["fields"] = ",".join(fields)
+        else:
+            params["fields"] = "*"
+
+        tokens: list[str] = []
+        for submission in submissions:
+            if submission.token is None:
+                raise ValueError("Every submission must have a token before retrieval.")
+            tokens.append(str(submission.token))
+        params["tokens"] = ",".join(tokens)
+
+        self._prepare_request("get_submissions")
+        response = await self.client.get(
             "/submissions/batch",
             params=params,
             headers=self.headers,
@@ -766,3 +1221,317 @@ class Judge0CloudExtraCE(Judge0Cloud):
 
 CE = (Judge0CloudCE, RapidJudge0CE, ATDJudge0CE)
 EXTRA_CE = (Judge0CloudExtraCE, RapidJudge0ExtraCE, ATDJudge0ExtraCE)
+
+_ATD_OPERATION_ATTRS: dict[str, str] = {
+    "about": "DEFAULT_ABOUT_ENDPOINT",
+    "config_info": "DEFAULT_CONFIG_INFO_ENDPOINT",
+    "language": "DEFAULT_LANGUAGE_ENDPOINT",
+    "languages": "DEFAULT_LANGUAGES_ENDPOINT",
+    "statuses": "DEFAULT_STATUSES_ENDPOINT",
+    "create_submission": "DEFAULT_CREATE_SUBMISSION_ENDPOINT",
+    "get_submission": "DEFAULT_GET_SUBMISSION_ENDPOINT",
+    "create_submissions": "DEFAULT_CREATE_SUBMISSIONS_ENDPOINT",
+    "get_submissions": "DEFAULT_GET_SUBMISSIONS_ENDPOINT",
+}
+
+
+class AsyncATD(AsyncClient):
+    """Asynchronous base class for all AllThingsDev clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    host_header_value : str
+        Value for the x-apihub-host header.
+    api_key : str
+        AllThingsDev API key.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    API_KEY_ENV: ClassVar[str | None] = "JUDGE0_ATD_API_KEY"
+
+    def __init__(
+        self,
+        endpoint: str,
+        host_header_value: str,
+        api_key: str,
+        **kwargs: Any,
+    ) -> None:
+        self.api_key = api_key
+        super().__init__(
+            endpoint,
+            {
+                "x-apihub-host": host_header_value,
+                "x-apihub-key": api_key,
+            },
+            **kwargs,
+        )
+
+    def _update_endpoint_header(self, header_value: str) -> None:
+        self.headers["x-apihub-endpoint"] = header_value
+
+    def _prepare_request(self, operation: str) -> None:
+        self._update_endpoint_header(getattr(self, _ATD_OPERATION_ATTRS[operation]))
+
+
+class AsyncATDJudge0CE(AsyncATD):
+    """Asynchronous AllThingsDev client for CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        AllThingsDev API key.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    DEFAULT_ENDPOINT: ClassVar[str] = ATDJudge0CE.DEFAULT_ENDPOINT
+    DEFAULT_HOST: ClassVar[str] = ATDJudge0CE.DEFAULT_HOST
+    HOME_URL: ClassVar[str] = ATDJudge0CE.HOME_URL
+    DEFAULT_ABOUT_ENDPOINT: ClassVar[str] = ATDJudge0CE.DEFAULT_ABOUT_ENDPOINT
+    DEFAULT_CONFIG_INFO_ENDPOINT: ClassVar[str] = (
+        ATDJudge0CE.DEFAULT_CONFIG_INFO_ENDPOINT
+    )
+    DEFAULT_LANGUAGE_ENDPOINT: ClassVar[str] = ATDJudge0CE.DEFAULT_LANGUAGE_ENDPOINT
+    DEFAULT_LANGUAGES_ENDPOINT: ClassVar[str] = ATDJudge0CE.DEFAULT_LANGUAGES_ENDPOINT
+    DEFAULT_STATUSES_ENDPOINT: ClassVar[str] = ATDJudge0CE.DEFAULT_STATUSES_ENDPOINT
+    DEFAULT_CREATE_SUBMISSION_ENDPOINT: ClassVar[str] = (
+        ATDJudge0CE.DEFAULT_CREATE_SUBMISSION_ENDPOINT
+    )
+    DEFAULT_GET_SUBMISSION_ENDPOINT: ClassVar[str] = (
+        ATDJudge0CE.DEFAULT_GET_SUBMISSION_ENDPOINT
+    )
+    DEFAULT_CREATE_SUBMISSIONS_ENDPOINT: ClassVar[str] = (
+        ATDJudge0CE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT
+    )
+    DEFAULT_GET_SUBMISSIONS_ENDPOINT: ClassVar[str] = (
+        ATDJudge0CE.DEFAULT_GET_SUBMISSIONS_ENDPOINT
+    )
+
+    def __init__(self, api_key: str, **kwargs: Any) -> None:
+        super().__init__(
+            self.DEFAULT_ENDPOINT,
+            self.DEFAULT_HOST,
+            api_key,
+            **kwargs,
+        )
+
+
+class AsyncATDJudge0ExtraCE(AsyncATD):
+    """Asynchronous AllThingsDev client for Extra CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        AllThingsDev API key.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    DEFAULT_ENDPOINT: ClassVar[str] = ATDJudge0ExtraCE.DEFAULT_ENDPOINT
+    DEFAULT_HOST: ClassVar[str] = ATDJudge0ExtraCE.DEFAULT_HOST
+    HOME_URL: ClassVar[str] = ATDJudge0ExtraCE.HOME_URL
+    DEFAULT_ABOUT_ENDPOINT: ClassVar[str] = ATDJudge0ExtraCE.DEFAULT_ABOUT_ENDPOINT
+    DEFAULT_CONFIG_INFO_ENDPOINT: ClassVar[str] = (
+        ATDJudge0ExtraCE.DEFAULT_CONFIG_INFO_ENDPOINT
+    )
+    DEFAULT_LANGUAGE_ENDPOINT: ClassVar[str] = (
+        ATDJudge0ExtraCE.DEFAULT_LANGUAGE_ENDPOINT
+    )
+    DEFAULT_LANGUAGES_ENDPOINT: ClassVar[str] = (
+        ATDJudge0ExtraCE.DEFAULT_LANGUAGES_ENDPOINT
+    )
+    DEFAULT_STATUSES_ENDPOINT: ClassVar[str] = (
+        ATDJudge0ExtraCE.DEFAULT_STATUSES_ENDPOINT
+    )
+    DEFAULT_CREATE_SUBMISSION_ENDPOINT: ClassVar[str] = (
+        ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSION_ENDPOINT
+    )
+    DEFAULT_GET_SUBMISSION_ENDPOINT: ClassVar[str] = (
+        ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSION_ENDPOINT
+    )
+    DEFAULT_CREATE_SUBMISSIONS_ENDPOINT: ClassVar[str] = (
+        ATDJudge0ExtraCE.DEFAULT_CREATE_SUBMISSIONS_ENDPOINT
+    )
+    DEFAULT_GET_SUBMISSIONS_ENDPOINT: ClassVar[str] = (
+        ATDJudge0ExtraCE.DEFAULT_GET_SUBMISSIONS_ENDPOINT
+    )
+
+    def __init__(self, api_key: str, **kwargs: Any) -> None:
+        super().__init__(
+            self.DEFAULT_ENDPOINT,
+            self.DEFAULT_HOST,
+            api_key,
+            **kwargs,
+        )
+
+
+class AsyncRapid(AsyncClient):
+    """Asynchronous base class for all RapidAPI clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    host_header_value : str
+        Value for the x-rapidapi-host header.
+    api_key : str
+        RapidAPI API key.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    API_KEY_ENV: ClassVar[str | None] = "JUDGE0_RAPID_API_KEY"
+
+    def __init__(
+        self,
+        endpoint: str,
+        host_header_value: str,
+        api_key: str,
+        **kwargs: Any,
+    ) -> None:
+        self.api_key = api_key
+        super().__init__(
+            endpoint,
+            {
+                "x-rapidapi-host": host_header_value,
+                "x-rapidapi-key": api_key,
+            },
+            **kwargs,
+        )
+
+
+class AsyncRapidJudge0CE(AsyncRapid):
+    """Asynchronous RapidAPI client for CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        RapidAPI API key.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    DEFAULT_ENDPOINT: ClassVar[str] = RapidJudge0CE.DEFAULT_ENDPOINT
+    DEFAULT_HOST: ClassVar[str] = RapidJudge0CE.DEFAULT_HOST
+    HOME_URL: ClassVar[str] = RapidJudge0CE.HOME_URL
+
+    def __init__(self, api_key: str, **kwargs: Any) -> None:
+        super().__init__(
+            self.DEFAULT_ENDPOINT,
+            self.DEFAULT_HOST,
+            api_key,
+            **kwargs,
+        )
+
+
+class AsyncRapidJudge0ExtraCE(AsyncRapid):
+    """Asynchronous RapidAPI client for Extra CE flavor.
+
+    Parameters
+    ----------
+    api_key : str
+        RapidAPI API key.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    DEFAULT_ENDPOINT: ClassVar[str] = RapidJudge0ExtraCE.DEFAULT_ENDPOINT
+    DEFAULT_HOST: ClassVar[str] = RapidJudge0ExtraCE.DEFAULT_HOST
+    HOME_URL: ClassVar[str] = RapidJudge0ExtraCE.HOME_URL
+
+    def __init__(self, api_key: str, **kwargs: Any) -> None:
+        super().__init__(
+            self.DEFAULT_ENDPOINT,
+            self.DEFAULT_HOST,
+            api_key,
+            **kwargs,
+        )
+
+
+class AsyncJudge0Cloud(AsyncClient):
+    """Asynchronous base class for all Judge0 Cloud clients.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    headers : str or dict
+        Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    def __init__(
+        self,
+        endpoint: str,
+        headers: str | Headers | None = None,
+        **kwargs: Any,
+    ) -> None:
+        self.api_key = headers
+        if isinstance(headers, str):
+            from json import loads
+
+            headers = cast(Headers, loads(headers))
+
+        super().__init__(
+            endpoint,
+            headers,
+            **kwargs,
+        )
+
+
+class AsyncJudge0CloudCE(AsyncJudge0Cloud):
+    """Asynchronous Judge0 Cloud client for CE flavor.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    headers : str or dict
+        Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    DEFAULT_ENDPOINT: ClassVar[str] = Judge0CloudCE.DEFAULT_ENDPOINT
+    HOME_URL: ClassVar[str] = Judge0CloudCE.HOME_URL
+    API_KEY_ENV: ClassVar[str | None] = Judge0CloudCE.API_KEY_ENV
+
+    def __init__(self, headers: str | Headers | None = None, **kwargs: Any) -> None:
+        super().__init__(
+            self.DEFAULT_ENDPOINT,
+            headers,
+            **kwargs,
+        )
+
+
+class AsyncJudge0CloudExtraCE(AsyncJudge0Cloud):
+    """Asynchronous Judge0 Cloud client for Extra CE flavor.
+
+    Parameters
+    ----------
+    endpoint : str
+        Default request endpoint.
+    headers : str or dict
+        Judge0 Cloud authentication headers, either as a JSON string or a dictionary.
+    **kwargs : dict
+        Additional keyword arguments for the base AsyncClient.
+    """
+
+    DEFAULT_ENDPOINT: ClassVar[str] = Judge0CloudExtraCE.DEFAULT_ENDPOINT
+    HOME_URL: ClassVar[str] = Judge0CloudExtraCE.HOME_URL
+    API_KEY_ENV: ClassVar[str | None] = Judge0CloudExtraCE.API_KEY_ENV
+
+    def __init__(self, headers: str | Headers | None = None, **kwargs: Any) -> None:
+        super().__init__(self.DEFAULT_ENDPOINT, headers, **kwargs)
+
+
+ASYNC_CE = (AsyncJudge0CloudCE, AsyncRapidJudge0CE, AsyncATDJudge0CE)
+ASYNC_EXTRA_CE = (
+    AsyncJudge0CloudExtraCE,
+    AsyncRapidJudge0ExtraCE,
+    AsyncATDJudge0ExtraCE,
+)
