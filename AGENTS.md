@@ -19,11 +19,11 @@
   - `clients.py` implements the base HTTP client and the provider- and flavor-specific clients for Judge0 Cloud, RapidAPI, and AllThingsDev.
   - `common.py` contains shared base64 encoding and decoding helpers and iterable batching.
   - `data.py` maps language aliases to Judge0 language IDs by server version and flavor.
-  - `errors.py` defines SDK-specific exception types for client resolution and preview-client usage limits.
+  - `errors.py` defines SDK-specific exception types for client resolution and free-tier-cloud-client usage limits.
   - `filesystem.py` models individual files and ZIP-backed collections used for additional and post-execution files.
   - `retry.py` defines the polling strategy interface and retry-count, wait-time, and periodic retry implementations.
   - `submission.py` models submission request and response data, including serialization, response updates, completion checks, and execution filesystem handling.
-  - `utils.py` detects HTTP rate-limit responses and translates preview-client rate limits into SDK-specific errors.
+  - `utils.py` detects HTTP rate-limit responses and translates free-tier-cloud-client rate limits into SDK-specific errors.
   - `version.py` exposes the package version constant.
 - `tests/` contains the pytest suite. Shared fixtures belong in `conftest.py`, and focused tests should use `test_<area>.py` modules that correspond to SDK behavior.
 - `examples/` contains runnable SDK usage examples, including the standalone HTTP callback example in `examples/1000_http_callback_aka_webhook/`.
