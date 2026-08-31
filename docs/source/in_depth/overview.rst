@@ -14,8 +14,10 @@ when you need a single HTTP call, custom polling, or server metadata.
 High-level and low-level API
 ----------------------------
 
-High-level functions live in :mod:`judge0.api` and are re-exported from the
-``judge0`` package. They accept either source code, a
+High-level functions live in :mod:`judge0.api`. The entry-point functions
+(:func:`judge0.run`, :func:`judge0.async_run`, :func:`judge0.wait`, and
+:func:`judge0.get_client`) are re-exported from the ``judge0`` package.
+They accept either source code, a
 :class:`~judge0.submission.Submission`, or a sequence of submissions. If you
 omit ``client``, the SDK resolves one from the environment. See
 :doc:`client_resolution`.
