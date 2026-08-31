@@ -34,11 +34,11 @@ If a custom client is not configured, the SDK will try to find API keys for one 
 
 The first API key found determines the client that will be used.
 
-3. **Preview Client**
+3. **Free Tier Cloud Client**
 
-If none of the above environment variables are set, the SDK falls back to using a **preview client**. This is an unauthenticated client that connects to the official Judge0 Cloud service. It initializes ``Judge0CloudCE()`` and ``Judge0CloudExtraCE()`` for the CE and Extra CE flavors, respectively.
+If none of the above environment variables are set, the SDK falls back to using a **free tier cloud client**. This is an unauthenticated client that connects to the official Judge0 Cloud service. It initializes ``Judge0CloudCE()`` and ``Judge0CloudExtraCE()`` for the CE and Extra CE flavors, respectively.
 
-When the preview client is used, a warning message is logged to the console, as this option is not recommended for production use. To suppress this warning, you can set the ``JUDGE0_SUPPRESS_PREVIEW_WARNING`` environment variable.
+When the free tier cloud client is used, a warning message is logged to the console, as this option is not recommended for production use. To suppress this warning, you can set the ``JUDGE0_SUPPRESS_FREE_TIER_CLOUD_WARNING`` environment variable.
 
 Example Resolution Flow
 -----------------------
@@ -50,6 +50,6 @@ When you call a function like ``judge0.run(..., flavor=judge0.CE)``, the SDK wil
 3.  Check for ``JUDGE0_CLOUD_CE_AUTH_HEADERS`` to configure a ``Judge0CloudCE`` client.
 4.  Check for ``JUDGE0_RAPID_API_KEY`` to configure a ``RapidJudge0CE`` client.
 5.  Check for ``JUDGE0_ATD_API_KEY`` to configure an ``ATDJudge0CE`` client.
-6.  If none of the above are found, initialize a preview ``Judge0CloudCE`` client and log a warning.
+6.  If none of the above are found, initialize a free tier cloud ``Judge0CloudCE`` client and log a warning.
 
 This implicit client resolution makes it easy to get started with the Judge0 Python SDK while providing the flexibility to configure it for different environments and services.
