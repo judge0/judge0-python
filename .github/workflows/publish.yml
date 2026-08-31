@@ -21,7 +21,7 @@ jobs:
           python-version: "3.10"
 
       - name: Install uv
-        run: curl -LsSf https://astral.sh/uv/0.9.8/install.sh | sh
+        run: curl -LsSf https://astral.sh/uv/0.11.33/install.sh | sh
 
       - name: Build package with uv
         run: uv build
