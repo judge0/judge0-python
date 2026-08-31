@@ -143,14 +143,176 @@
 <div id="content" role="main">
 <section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<p>TODO:</p>
+<p>The Judge0 Python SDK has two layers:</p>
 <ul class="simple">
-<li><p>add a brief overview of the most important classes (Client, Submission, etc.)</p></li>
-<li><p>add a brief overview of the most important functions (create_submission, get_submission, etc.)</p></li>
-<li><p>write about the difference between high-level api and low-level api</p></li>
+<li><p>a <strong>high-level API</strong> that creates submissions, expands test cases, batches
+requests, and optionally waits for results;</p></li>
+<li><p>a <strong>low-level API</strong> on <a class="reference internal" href="../api/clients.html#judge0.clients.Client" title="judge0.clients.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a> that maps one-to-one
+to Judge0 HTTP routes.</p></li>
+</ul>
+<p>Most applications should start with <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.run()</span></code>. Use the client methods
+when you need a single HTTP call, custom polling, or server metadata.</p>
+<section id="high-level-and-low-level-api">
+<h2>High-level and low-level API<a class="headerlink" href="#high-level-and-low-level-api" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#high-level-and-low-level-api'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>High-level functions live in <a class="reference internal" href="../api/api.html#module-judge0.api" title="judge0.api"><code class="xref py py-mod docutils literal notranslate"><span class="pre">judge0.api</span></code></a>. The entry-point functions
+(<code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.run()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.async_run()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.wait()</span></code>, and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.get_client()</span></code>) are re-exported from the <code class="docutils literal notranslate"><span class="pre">judge0</span></code> package.
+They accept either source code, a
+<a class="reference internal" href="../api/submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Submission</span></code></a>, or a sequence of submissions. If you
+omit <code class="docutils literal notranslate"><span class="pre">client</span></code>, the SDK resolves one from the environment. See
+<a class="reference internal" href="client_resolution.html"><span class="doc">Client Resolution</span></a>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28.0%"/>
+<col style="width: 72.0%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Role</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.run()</span></code> / <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.execute()</span></code> / <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.sync_run()</span></code></p></td>
+<td><p>Create submission(s) and wait until they finish. These names are aliases
+of <a class="reference internal" href="../api/api.html#judge0.api.sync_execute" title="judge0.api.sync_execute"><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.api.sync_execute()</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.async_run()</span></code> / <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.async_execute()</span></code></p></td>
+<td><p>Create submission(s) and return immediately. These are <strong>not</strong>
+<code class="docutils literal notranslate"><span class="pre">asyncio</span></code> coroutines.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.wait()</span></code></p></td>
+<td><p>Poll existing submission(s) until they finish or the retry strategy
+stops.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.get_client()</span></code></p></td>
+<td><p>Resolve the implicit client for CE (<code class="docutils literal notranslate"><span class="pre">Flavor.CE</span></code>) or Extra CE
+(<code class="docutils literal notranslate"><span class="pre">Flavor.EXTRA_CE</span></code>).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/api.html#judge0.api.create_submissions" title="judge0.api.create_submissions"><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.api.create_submissions()</span></code></a></p></td>
+<td><p>Send already-built submissions, splitting them into batches that fit
+the server limit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/api.html#judge0.api.get_submissions" title="judge0.api.get_submissions"><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.api.get_submissions()</span></code></a></p></td>
+<td><p>Refresh status and result fields on existing submissions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/api.html#judge0.api.create_submissions_from_test_cases" title="judge0.api.create_submissions_from_test_cases"><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.api.create_submissions_from_test_cases()</span></code></a></p></td>
+<td><p>Expand one or more submissions across test cases. Used internally by
+<code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.run()</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The low-level API is the methods on <a class="reference internal" href="../api/clients.html#judge0.clients.Client" title="judge0.clients.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/clients.html#judge0.clients.Client.create_submission" title="judge0.clients.Client.create_submission"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_submission()</span></code></a> /
+<a class="reference internal" href="../api/clients.html#judge0.clients.Client.create_submissions" title="judge0.clients.Client.create_submissions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_submissions()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/clients.html#judge0.clients.Client.get_submission" title="judge0.clients.Client.get_submission"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_submission()</span></code></a> /
+<a class="reference internal" href="../api/clients.html#judge0.clients.Client.get_submissions" title="judge0.clients.Client.get_submissions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_submissions()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/clients.html#judge0.clients.Client.get_languages" title="judge0.clients.Client.get_languages"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_languages()</span></code></a>,
+<a class="reference internal" href="../api/clients.html#judge0.clients.Client.get_language" title="judge0.clients.Client.get_language"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_language()</span></code></a>,
+<a class="reference internal" href="../api/clients.html#judge0.clients.Client.get_statuses" title="judge0.clients.Client.get_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_statuses()</span></code></a>,
+<a class="reference internal" href="../api/clients.html#judge0.clients.Client.get_about" title="judge0.clients.Client.get_about"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_about()</span></code></a>,
+<a class="reference internal" href="../api/clients.html#judge0.clients.Client.get_config_info" title="judge0.clients.Client.get_config_info"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_config_info()</span></code></a></p></li>
+</ul>
+<p>Low-level calls do not wait for execution, do not expand test cases, and do
+not pick a client for you. <code class="docutils literal notranslate"><span class="pre">create_submissions</span></code> and <code class="docutils literal notranslate"><span class="pre">get_submissions</span></code> on
+the client cannot send more items than
+<code class="docutils literal notranslate"><span class="pre">client.config.max_submission_batch_size</span></code>. The high-level helpers batch
+automatically.</p>
+</section>
+<section id="async-run-versus-run">
+<h2><code class="docutils literal notranslate"><span class="pre">async_run</span></code> versus <code class="docutils literal notranslate"><span class="pre">run</span></code><a class="headerlink" href="#async-run-versus-run" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#async-run-versus-run'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.run()</span></code> blocks until Judge0 reports a terminal status or the
+client’s retry strategy is exhausted, which may return a queued or processing
+submission.
+<code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.async_run()</span></code> only creates the submission(s) and returns the
+submission objects with their token fields populated.
+Call <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.wait()</span></code> later, or poll with
+<a class="reference internal" href="../api/api.html#judge0.api.get_submissions" title="judge0.api.get_submissions"><code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.api.get_submissions()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">judge0</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="n">submission</span> <span class="o">=</span> <span class="n">judge0</span><span class="o">.</span><span class="n">async_run</span><span class="p">(</span><span class="n">source_code</span><span class="o">=</span><span class="s2">"print('hello, world')"</span><span class="p">)</span>
+</span><span id="line-4"><span class="nb">print</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>  <span class="c1"># None; the job is not finished yet.</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="n">judge0</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">submissions</span><span class="o">=</span><span class="n">submission</span><span class="p">)</span>
+</span><span id="line-7"><span class="nb">print</span><span class="p">(</span><span class="n">submission</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>  <span class="c1"># hello, world</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="important-classes">
+<h2>Important classes<a class="headerlink" href="#important-classes" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#important-classes'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/clients.html#judge0.clients.Client" title="judge0.clients.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a>: HTTP client for one Judge0 server.
+Provider subclasses include <code class="xref py py-class docutils literal notranslate"><span class="pre">Judge0CloudCE</span></code>,
+<a class="reference internal" href="../api/clients.html#judge0.clients.RapidJudge0CE" title="judge0.clients.RapidJudge0CE"><code class="xref py py-class docutils literal notranslate"><span class="pre">RapidJudge0CE</span></code></a>, and
+<a class="reference internal" href="../api/clients.html#judge0.clients.ATDJudge0CE" title="judge0.clients.ATDJudge0CE"><code class="xref py py-class docutils literal notranslate"><span class="pre">ATDJudge0CE</span></code></a>, plus the Extra CE variants.</p></li>
+<li><p><a class="reference internal" href="../api/submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Submission</span></code></a>: request and response for one
+program run. Set <code class="docutils literal notranslate"><span class="pre">source_code</span></code>, <code class="docutils literal notranslate"><span class="pre">language</span></code>, <code class="docutils literal notranslate"><span class="pre">stdin</span></code>, and optional
+limits before sending. After execution, read <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">stderr</span></code>,
+<code class="docutils literal notranslate"><span class="pre">status</span></code>, <code class="docutils literal notranslate"><span class="pre">time</span></code>, and <code class="docutils literal notranslate"><span class="pre">memory</span></code>.</p></li>
+<li><p><a class="reference internal" href="../api/types.html#judge0.base_types.TestCase" title="judge0.base_types.TestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></a>: pair of <code class="docutils literal notranslate"><span class="pre">input</span></code> and
+<code class="docutils literal notranslate"><span class="pre">expected_output</span></code>. <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.run()</span></code> also accepts tuples, lists, and
+dicts and normalizes them to this type.</p></li>
+<li><p><a class="reference internal" href="../api/types.html#judge0.base_types.LanguageAlias" title="judge0.base_types.LanguageAlias"><code class="xref py py-class docutils literal notranslate"><span class="pre">LanguageAlias</span></code></a> and
+<a class="reference internal" href="../api/types.html#judge0.base_types.Flavor" title="judge0.base_types.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flavor</span></code></a>: language aliases such as
+<code class="docutils literal notranslate"><span class="pre">judge0.PYTHON</span></code> or <code class="docutils literal notranslate"><span class="pre">judge0.C</span></code>, and the CE / Extra CE flavors used
+for client resolution.</p></li>
+<li><p><a class="reference internal" href="../api/types.html#judge0.base_types.Status" title="judge0.base_types.Status"><code class="xref py py-class docutils literal notranslate"><span class="pre">Status</span></code></a>: submission status, including
+<code class="docutils literal notranslate"><span class="pre">Accepted</span></code>, compile errors, and runtime errors.</p></li>
+<li><p><a class="reference internal" href="../api/filesystem.html#judge0.filesystem.File" title="judge0.filesystem.File"><code class="xref py py-class docutils literal notranslate"><span class="pre">File</span></code></a> and
+<a class="reference internal" href="../api/filesystem.html#judge0.filesystem.Filesystem" title="judge0.filesystem.Filesystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">Filesystem</span></code></a>: extra files sent with a
+submission, or files produced after execution.</p></li>
+<li><p><a class="reference internal" href="../api/retry.html#judge0.retry.RegularPeriodRetry" title="judge0.retry.RegularPeriodRetry"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegularPeriodRetry</span></code></a>,
+<a class="reference internal" href="../api/retry.html#judge0.retry.MaxRetries" title="judge0.retry.MaxRetries"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaxRetries</span></code></a>, and
+<a class="reference internal" href="../api/retry.html#judge0.retry.MaxWaitTime" title="judge0.retry.MaxWaitTime"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaxWaitTime</span></code></a>: polling strategies used by
+<code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.wait()</span></code>.</p></li>
 </ul>
 </section>
-</div></div>
+<section id="typical-flow">
+<h2>Typical flow<a class="headerlink" href="#typical-flow" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#typical-flow'"><svg height="1em" viewbox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<ol class="arabic simple">
+<li><p>Build source code or a <a class="reference internal" href="../api/submission.html#judge0.submission.Submission" title="judge0.submission.Submission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Submission</span></code></a>.</p></li>
+<li><p>Optionally attach test cases or extra files.</p></li>
+<li><p>Call <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.run()</span></code>, or <code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.async_run()</span></code> plus
+<code class="xref py py-func docutils literal notranslate"><span class="pre">judge0.wait()</span></code>.</p></li>
+<li><p>Inspect <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">status</span></code>, and other result fields.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">judge0</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="n">result</span> <span class="o">=</span> <span class="n">judge0</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+</span><span id="line-4">    <span class="n">source_code</span><span class="o">=</span><span class="s2">"print(f'Hello, {input()}!')"</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">language</span><span class="o">=</span><span class="n">judge0</span><span class="o">.</span><span class="n">PYTHON</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">test_cases</span><span class="o">=</span><span class="p">[</span>
+</span><span id="line-7">        <span class="p">(</span><span class="s2">"Ada"</span><span class="p">,</span> <span class="s2">"Hello, Ada!"</span><span class="p">),</span>
+</span><span id="line-8">        <span class="p">{</span><span class="s2">"input"</span><span class="p">:</span> <span class="s2">"Bob"</span><span class="p">,</span> <span class="s2">"expected_output"</span><span class="p">:</span> <span class="s2">"Hello, Bob!"</span><span class="p">},</span>
+</span><span id="line-9">    <span class="p">],</span>
+</span><span id="line-10"><span class="p">)</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="k">for</span> <span class="n">case</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+</span><span id="line-13">    <span class="nb">print</span><span class="p">(</span><span class="n">case</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">case</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Pass an explicit client when you do not want implicit resolution:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">judge0</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="n">client</span> <span class="o">=</span> <span class="n">judge0</span><span class="o">.</span><span class="n">RapidJudge0CE</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"xxx"</span><span class="p">)</span>
+</span><span id="line-4"><span class="n">result</span> <span class="o">=</span> <span class="n">judge0</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">source_code</span><span class="o">=</span><span class="s2">"print(42)"</span><span class="p">)</span>
+</span><span id="line-5"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>For the full parameter lists, see the <a class="reference internal" href="../api/api.html"><span class="doc">API Module</span></a> reference, the
+<a class="reference internal" href="../api/clients.html"><span class="doc">Clients Module</span></a> reference, and the <a class="reference internal" href="../api/submission.html"><span class="doc">Submission Module</span></a> reference.</p>
+</section>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#high-level-and-low-level-api'" class="reference internal" href="#high-level-and-low-level-api">High-level and low-level API</a></li>
+<li><a :data-current="activeSection === '#async-run-versus-run'" class="reference internal" href="#async-run-versus-run"><code class="docutils literal notranslate"><span class="pre">async_run</span></code> versus <code class="docutils literal notranslate"><span class="pre">run</span></code></a></li>
+<li><a :data-current="activeSection === '#important-classes'" class="reference internal" href="#important-classes">Important classes</a></li>
+<li><a :data-current="activeSection === '#typical-flow'" class="reference internal" href="#typical-flow">Typical flow</a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
