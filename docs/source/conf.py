@@ -9,6 +9,7 @@
 
 import os
 import sys
+from typing import Any
 
 from sphinxawesome_theme.postprocess import Icons
 
@@ -89,6 +90,9 @@ html_favicon = "../assets/logo.png"
 pygments_style = "sphinx"
 
 sys.path.insert(0, os.path.abspath("../../src/"))  # Adjust as needed
+sys.path.insert(0, os.path.abspath("."))
+
+from version_sidebar import split_doc_versions  # noqa: E402
 
 # -- Awesome theme config --
 html_permalinks_icon = Icons.permalinks_icon
@@ -118,3 +122,19 @@ smv_outputdir_format = "{ref.name}"
 # Determines whether remote or local git branches/tags are preferred if their
 # output dirs conflict
 smv_prefer_remote_refs = False
+
+
+def _register_version_sidebar_filter(app: Any) -> None:
+    """Add the version split helper to the HTML Jinja environment."""
+    app.builder.templates.environment.filters["split_doc_versions"] = (
+        split_doc_versions
+    )
+
+
+def setup(app: Any) -> dict[str, bool]:
+    """Register the version sidebar template filter."""
+    app.connect("builder-inited", _register_version_sidebar_filter)
+    return {
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
