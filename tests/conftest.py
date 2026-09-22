@@ -116,12 +116,12 @@ def judge0_cloud_extra_ce_client() -> clients.Judge0CloudExtraCE | None:
 
 
 @pytest.fixture(scope="session")
-def preview_ce_client() -> clients.Judge0CloudCE:
+def free_tier_cloud_ce_client() -> clients.Judge0CloudCE:
     return clients.Judge0CloudCE(retry_strategy=RegularPeriodRetry(0.5))
 
 
 @pytest.fixture(scope="session")
-def preview_extra_ce_client() -> clients.Judge0CloudExtraCE:
+def free_tier_cloud_extra_ce_client() -> clients.Judge0CloudExtraCE:
     return clients.Judge0CloudExtraCE(retry_strategy=RegularPeriodRetry(0.5))
 
 
@@ -131,7 +131,7 @@ def ce_client(
     judge0_cloud_ce_client: clients.Judge0CloudCE | None,
     rapid_ce_client: clients.RapidJudge0CE | None,
     # atd_ce_client,
-    preview_ce_client: clients.Judge0CloudCE,
+    free_tier_cloud_ce_client: clients.Judge0CloudCE,
 ) -> clients.Client:
     if custom_ce_client is not None:
         return custom_ce_client
@@ -141,8 +141,8 @@ def ce_client(
         return rapid_ce_client
     # if atd_ce_client is not None:
     #     return atd_ce_client
-    if preview_ce_client is not None:
-        return preview_ce_client
+    if free_tier_cloud_ce_client is not None:
+        return free_tier_cloud_ce_client
 
     pytest.fail("No CE client available for testing. This error should not happen!")
 
@@ -153,7 +153,7 @@ def extra_ce_client(
     judge0_cloud_extra_ce_client: clients.Judge0CloudExtraCE | None,
     rapid_extra_ce_client: clients.RapidJudge0ExtraCE | None,
     # atd_extra_ce_client,
-    preview_extra_ce_client: clients.Judge0CloudExtraCE,
+    free_tier_cloud_extra_ce_client: clients.Judge0CloudExtraCE,
 ) -> clients.Client:
     if custom_extra_ce_client is not None:
         return custom_extra_ce_client
@@ -163,8 +163,8 @@ def extra_ce_client(
         return rapid_extra_ce_client
     # if atd_extra_ce_client is not None:
     #     return atd_extra_ce_client
-    if preview_extra_ce_client is not None:
-        return preview_extra_ce_client
+    if free_tier_cloud_extra_ce_client is not None:
+        return free_tier_cloud_extra_ce_client
 
     pytest.fail(
         "No Extra CE client available for testing. This error should not happen!"

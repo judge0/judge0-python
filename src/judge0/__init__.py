@@ -76,7 +76,9 @@ except (ImportError, OSError) as error:
 if os.getenv("JUDGE0_ENABLE_LOGGING"):
     setup_logging()
 
-suppress_preview_warning = os.getenv("JUDGE0_SUPPRESS_PREVIEW_WARNING") is not None
+suppress_free_tier_cloud_warning = (
+    os.getenv("JUDGE0_SUPPRESS_FREE_TIER_CLOUD_WARNING") is not None
+)
 
 
 # TODO: I belive that the whole logic for importing implicit client can be moved
@@ -105,9 +107,9 @@ def _get_implicit_client(flavor: Flavor) -> Client:
         client = _get_hub_client(flavor)
 
     # If we didn't find any of the possible keys, initialize
-    # the preview client based on the flavor.
+    # the free tier cloud client based on the flavor.
     if client is None:
-        client = _get_preview_client(flavor)
+        client = _get_free_tier_cloud_client(flavor)
 
     if flavor == Flavor.CE:
         JUDGE0_IMPLICIT_CE_CLIENT = client
@@ -117,10 +119,10 @@ def _get_implicit_client(flavor: Flavor) -> Client:
     return client
 
 
-def _get_preview_client(flavor: Flavor) -> Judge0CloudCE | Judge0CloudExtraCE:
-    if not suppress_preview_warning:
+def _get_free_tier_cloud_client(flavor: Flavor) -> Judge0CloudCE | Judge0CloudExtraCE:
+    if not suppress_free_tier_cloud_warning:
         logger.warning(
-            "You are using a preview version of the client which is not recommended"
+            "You are using the free tier cloud client which is not recommended"
             " for production.\n"
             "For production, please specify your API key in the environment variable."
         )

@@ -13,7 +13,7 @@ from .base_types import (
 from .data import LANGUAGE_TO_LANGUAGE_ID
 from .retry import RetryStrategy
 from .submission import Submission, Submissions
-from .utils import handle_too_many_requests_error_for_preview_client
+from .utils import handle_too_many_requests_error_for_free_tier_cloud_client
 from .version import __version__
 
 
@@ -70,7 +70,7 @@ class Client:
     def __del__(self) -> None:
         self.client.close()
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def get_about(self) -> JsonObject:
         """Get general information about judge0.
 
@@ -86,7 +86,7 @@ class Client:
         response.raise_for_status()
         return cast(JsonObject, response.json())
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def get_config_info(self) -> Config:
         """Get information about client's configuration.
 
@@ -102,7 +102,7 @@ class Client:
         response.raise_for_status()
         return Config.model_validate(response.json())
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def get_language(self, language_id: int) -> Language:
         """Get language corresponding to the id.
 
@@ -121,7 +121,7 @@ class Client:
         response.raise_for_status()
         return Language.model_validate(response.json())
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def get_languages(self) -> list[Language]:
         """Get a list of supported languages.
 
@@ -135,7 +135,7 @@ class Client:
         languages = cast(list[JsonObject], response.json())
         return [Language.model_validate(language) for language in languages]
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def get_statuses(self) -> list[JsonObject]:
         """Get a list of possible submission statuses.
 
@@ -192,7 +192,7 @@ class Client:
         language_id = self.get_language_id(language)
         return any(language_id == lang.id for lang in self.languages)
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def create_submission(self, submission: Submission) -> Submission:
         """Send submission for execution to a client.
 
@@ -234,7 +234,7 @@ class Client:
 
         return submission
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def get_submission(
         self,
         submission: Submission,
@@ -279,7 +279,7 @@ class Client:
 
         return submission
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def create_submissions(self, submissions: Submissions) -> Submissions:
         """Send submissions for execution to a client.
 
@@ -319,7 +319,7 @@ class Client:
 
         return submissions
 
-    @handle_too_many_requests_error_for_preview_client
+    @handle_too_many_requests_error_for_free_tier_cloud_client
     def get_submissions(
         self,
         submissions: Submissions,
