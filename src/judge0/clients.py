@@ -1,6 +1,6 @@
 from typing import Any, ClassVar, cast
 
-import httpx
+import httpx2
 
 from .base_types import (
     Config,
@@ -54,7 +54,7 @@ class Client:
             }
         )
         self.retry_strategy = retry_strategy
-        self.client = httpx.Client(base_url=self.endpoint)
+        self.client = httpx2.Client(base_url=self.endpoint)
         self._version: str | None = None
 
         try:
