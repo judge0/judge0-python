@@ -2,6 +2,9 @@
 
 ## v0.1.0-dev
 
+- Replace HTTPX with HTTPX2 for SDK requests and HTTP error handling, with
+  regression coverage for client initialization, submissions, and rate limits.
+  Default TLS verification now uses the operating system's trust store.
 - Rename "preview" terminology to "free tier cloud" and rename the
   `JUDGE0_SUPPRESS_PREVIEW_WARNING` environment variable to
   `JUDGE0_SUPPRESS_FREE_TIER_CLOUD_WARNING`.

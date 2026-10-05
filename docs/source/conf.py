@@ -100,7 +100,7 @@ autodoc_default_options = {
     "special-members": False,
     "inherited-members": False,
 }
-autodoc_mock_imports = ["httpx"]
+autodoc_mock_imports = ["httpx2"]
 autodoc_type_aliases = {"Client": "judge0.clients.Client"}
 
 napoleon_google_docstring = False

@@ -5,7 +5,7 @@ from functools import wraps
 from http import HTTPStatus
 from typing import ParamSpec, TypeVar
 
-from httpx import HTTPError, HTTPStatusError
+from httpx2 import HTTPError, HTTPStatusError
 
 from .errors import FreeTierCloudClientLimitError
 
